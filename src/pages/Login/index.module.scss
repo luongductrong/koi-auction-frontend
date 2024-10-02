@@ -1,0 +1,28 @@
+.loginContainer {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../../assets/images/background1.jpg');
+
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  // background-color: rgba(0, 0, 0, 0.5); /* Màu đen trong suốt */
+  // background-blend-mode: overlay;
+}
+
+.loginForm {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+  width: 320px;
+}
+
+.loginTitle {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}

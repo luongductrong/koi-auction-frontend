@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Checkbox } from 'antd';
 import Header from '../../components/Header';
-
+import styles from './index.module.scss';
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -19,9 +19,9 @@ const Login = () => {
   return (
     <>
       <Header />
-      <div>
-        <div>
-          <h2>Đăng nhập</h2>
+      <div className={styles.loginContainer}>
+        <div className={styles.loginForm}>
+          <h2 className={styles.loginTitle}>Đăng nhập</h2>
           <Form name="login" onFinish={handleFinish} onFinishFailed={handleFinishFailed} layout="vertical">
             <Form.Item
               label="Tên đăng nhập/Email"

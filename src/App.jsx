@@ -11,7 +11,7 @@ function App() {
             return <Route key={index} path={route.path} element={<Page />} />;
           })}
         </Routes>
-        <Link to="/login">Login</Link>
+        {/* <Link to="/login">Login</Link> */}
       </div>
     </BrowserRouter>
   );
