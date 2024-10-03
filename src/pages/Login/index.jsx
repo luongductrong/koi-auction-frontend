@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Checkbox, message } from 'antd';
+import { Link } from 'react-router-dom';
 import api from '../../configs';
 import styles from './index.module.scss';
 
@@ -54,9 +55,9 @@ const Login = () => {
               <Input.Password placeholder="Password" />
             </Form.Item>
             <Form.Item>
-              <a href="/forgot-password" className={styles.forgotPasswordLink}>
+              <Link to="/forgot-password" className={styles.forgotPasswordLink}>
                 Quên mật khẩu?
-              </a>
+              </Link>
             </Form.Item>
             <Form.Item name="remember" valuePropName="checked">
               <Checkbox onChange={(e) => setRememberMe(e.target.checked)}>Ghi nhớ cho lần đăng nhập sau</Checkbox>

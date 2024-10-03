@@ -4,7 +4,7 @@ import { publicRoutes } from './routes';
 import Header from './components/Header';
 // import './App.scss';
 
-const { Content, Footer, Sider } = Layout;
+const { Content, Footer } = Layout;
 
 function App() {
   return (
