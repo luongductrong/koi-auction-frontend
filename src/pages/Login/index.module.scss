@@ -1,28 +1,89 @@
-.loginContainer {
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../../assets/images/background1.jpg');
+// Define color variables
+$background-gradient: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+$background-image: url('../../assets/images/background1.jpg');
+$white-transparent: rgba(255, 255, 255, 0.15);
+$box-shadow-color: rgba(0, 0, 0, 0.8);
+$text-shadow-color: rgba(0, 0, 0, 0.6);
+$white: #fff;
 
+// Define size variables
+$padding-large: 30px;
+$padding-medium: 20px;
+$border-radius: 12px;
+$width-large: 320px;
+$width-small: 90%;
+$font-size-large: 24px;
+$margin-bottom-large: 20px;
+
+// Mixin for box shadow
+@mixin box-shadow($x, $y, $blur, $color) {
+  box-shadow: $x $y $blur $color;
+}
+
+// Mixin for responsive width
+@mixin responsive-width($width-large, $width-small, $padding-large, $padding-medium) {
+  width: $width-large;
+  padding: $padding-large;
+
+  @media (max-width: 768px) {
+    width: $width-small;
+    padding: $padding-medium;
+  }
+}
+
+.loginContainer {
+  background: $background-gradient, $background-image;
   background-size: cover;
   background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 90vh;
-  // background-color: rgba(0, 0, 0, 0.5); /* Màu đen trong suốt */
-  // background-blend-mode: overlay;
 }
 
 .loginForm {
-  background-color: rgba(255, 255, 255, 0.15);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
-  width: 320px;
+  background-color: $white-transparent;
+  border-radius: $border-radius;
+  @include box-shadow(0, 4px, 12px, $box-shadow-color);
+  @include responsive-width($width-large, $width-small, $padding-large, $padding-medium);
 }
 
 .loginTitle {
-  font-size: 24px;
+  font-size: $font-size-large;
   text-align: center;
-  margin-bottom: 20px;
-  color: #fff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  margin-bottom: $margin-bottom-large;
+  color: $white;
+  text-shadow: 2px 2px 4px $text-shadow-color;
+}
+
+$button-background-color: #333;
+$button-hover-color: #555;
+
+.submitBtn {
+  width: 100%;
+  background-color: $button-background-color;
+  border-radius: 6px;
+  height: 40px;
+  &:hover {
+    background-color: $button-hover-color;
+  }
+}
+
+.forgotPasswordLink {
+  display: block;
+  margin-bottom: 10px;
+  color: #1890ff;
+}
+
+.googleBtn {
+  width: 100%;
+  background-color: #db4437;
+  color: white;
+  height: 40px;
+  border: none;
+  margin-top: 10px;
+}
+
+.googleBtn:hover {
+  background-color: #c33d2e;
 }
