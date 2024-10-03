@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Layout, Menu, Input } from 'antd';
 import clsx from 'clsx';
 import styles from './index.module.scss';
@@ -8,6 +9,14 @@ const { Header: AntHeader } = Layout;
 function Header() {
   const onSearch = (value) => console.log(value);
 
+  console.log('Header render');
+
+  const menuItems = [
+    { key: '1', label: <Link to="/">Home</Link> },
+    { key: '2', label: <Link to="/about">About</Link> },
+    { key: '3', label: <Link to="/contact">Contact</Link> },
+  ];
+
   return (
     <>
       <AntHeader className={clsx(styles.header)}>
@@ -15,11 +24,7 @@ function Header() {
         <div>
           <Input.Search placeholder="Search" onSearch={onSearch} loading={false} />
         </div>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} className={styles.menu}>
-          <Menu.Item key="1">Home</Menu.Item>
-          <Menu.Item key="2">About</Menu.Item>
-          <Menu.Item key="3">Contact</Menu.Item>
-        </Menu>
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} className={styles.menu} items={menuItems} />
       </AntHeader>
       <SubHeader />
     </>
