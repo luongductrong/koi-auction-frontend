@@ -1,8 +1,21 @@
+import React from 'react';
+import { Layout, Menu } from 'antd';
 import clsx from 'clsx';
 import styles from './index.module.scss';
 
-function Header() {
-  return <div className={clsx(styles.header)}>Header</div>;
-}
+const { Header: AntHeader } = Layout;
+
+const Header = () => {
+  return (
+    <AntHeader className={clsx(styles.customHeader)}>
+      <div className={styles.logo}>Logo</div>
+      {/* <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
+        <Menu.Item key="1">Home</Menu.Item>
+        <Menu.Item key="2">About</Menu.Item>
+        <Menu.Item key="3">Contact</Menu.Item>
+      </Menu> */}
+    </AntHeader>
+  );
+};
 
 export default Header;

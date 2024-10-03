@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Checkbox, message } from 'antd';
 import api from '../../configs';
-import Header from '../../components/Header';
 import styles from './index.module.scss';
 
 const Login = () => {
@@ -36,7 +35,6 @@ const Login = () => {
 
   return (
     <>
-      <Header />
       <div className={styles.loginContainer}>
         <div className={styles.loginForm}>
           <h2 className={styles.loginTitle}>Đăng nhập</h2>
