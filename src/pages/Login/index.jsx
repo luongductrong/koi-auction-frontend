@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import api from '../../configs';
 import styles from './index.module.scss';
 
-const Login = () => {
+function Login() {
+  console.log('Login render');
+
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -77,6 +79,6 @@ const Login = () => {
       </div>
     </>
   );
-};
+}
 
 export default Login;

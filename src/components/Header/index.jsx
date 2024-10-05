@@ -3,6 +3,7 @@ import { Layout, Menu, Input } from 'antd';
 import clsx from 'clsx';
 import styles from './index.module.scss';
 import SubHeader from '../SubHeader';
+import Logo from '../Logo';
 
 const { Header: AntHeader } = Layout;
 
@@ -20,7 +21,7 @@ function Header() {
   return (
     <>
       <AntHeader className={clsx(styles.header)}>
-        <div className={styles.logo}>Logo</div>
+        <Logo />
         <div>
           <Input.Search placeholder="Search" onSearch={onSearch} loading={false} />
         </div>
