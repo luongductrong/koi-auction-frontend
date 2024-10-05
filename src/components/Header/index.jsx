@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Layout, Menu, Input } from 'antd';
+import { Layout, Input, Button } from 'antd';
 import clsx from 'clsx';
 import styles from './index.module.scss';
 import SubHeader from '../SubHeader';
 import Logo from '../Logo';
+import Menu from '../Menu';
 
 const { Header: AntHeader } = Layout;
 
@@ -12,20 +13,24 @@ function Header() {
 
   console.log('Header render');
 
-  const menuItems = [
-    { key: '1', label: <Link to="/">Home</Link> },
-    { key: '2', label: <Link to="/about">About</Link> },
-    { key: '3', label: <Link to="/contact">Contact</Link> },
-  ];
-
   return (
     <>
       <AntHeader className={clsx(styles.header)}>
-        <Logo />
-        <div>
-          <Input.Search placeholder="Search" onSearch={onSearch} loading={false} />
+        <div className={styles.container}>
+          <div className={styles.topHeader}>
+            <Logo />
+            <Input.Search className={styles.searchBar} placeholder="Search" onSearch={onSearch} loading={false} />
+            <div className={styles.btnGroup}>
+              <Button type="primary" className={clsx(styles.btn, styles.btnLogin)} ghost>
+                <Link to="/login">Login</Link>
+              </Button>
+              <Button type="primary" className={clsx(styles.btn, styles.btnRegister)}>
+                <Link to="/register">Register</Link>
+              </Button>
+            </div>
+          </div>
+          <Menu />
         </div>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} className={styles.menu} items={menuItems} />
       </AntHeader>
       <SubHeader />
     </>
