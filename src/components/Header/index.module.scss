@@ -10,12 +10,13 @@
   justify-content: center;
   box-sizing: border-box;
   height: auto;
+  padding: 0;
 }
 
 .container {
   position: relative;
   display: block;
-  width: 80%;
+  width: var(--container-width);
 
   .topHeader {
     display: flex;

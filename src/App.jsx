@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 import { publicRoutes } from './routes';
 import Header from './components/Header';
-// import './App.scss';
+import Content from './components/Content';
 
-const { Content, Footer } = Layout;
+const { Footer } = Layout;
 
 function App() {
   return (
