@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Layout, Input, Button } from 'antd';
+import { Layout, Input, Button, ConfigProvider } from 'antd';
 import clsx from 'clsx';
 import { useRef, useEffect, useState } from 'react';
 import styles from './index.module.scss';
@@ -25,7 +25,7 @@ function Header() {
   console.log('Header render');
 
   return (
-    <>
+    <ConfigProvider>
       <AntHeader className={clsx(styles.header)} ref={headerRef}>
         <div className={styles.container}>
           <div className={styles.topHeader}>
@@ -49,7 +49,7 @@ function Header() {
         </div>
       </AntHeader>
       <SubHeader height={headerHeight} />
-    </>
+    </ConfigProvider>
   );
 }
 

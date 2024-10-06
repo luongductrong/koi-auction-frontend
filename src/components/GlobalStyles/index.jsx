@@ -12,6 +12,7 @@ function GlobalStyles({ children }) {
           borderRadius: 2,
           // Alias Token
           fontFamily: "'Montserrat', sans-serif",
+          // colorBgContainer: '#f6ffed',
         },
       }}
     >

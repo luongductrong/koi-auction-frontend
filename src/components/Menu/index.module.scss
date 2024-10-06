@@ -1,15 +1,15 @@
 .menu {
-  width: 100%;
-  height: 40px;
-  background-color: var(--header-primary-color);
+  // width: 100%;
+  height: auto;
+  line-height: 40px !important;
+}
 
-  .menuItem {
-    line-height: 40px;
+.subMenu {
+  background-color: var(--primary-color);
+
+  .subMenuTitle {
     color: #fff;
-
-    &:first-child {
-      width: 400px;
-      background-color: var(--primary-color);
-    }
+    font-weight: 500;
+    padding-right: 200px !important;
   }
 }
