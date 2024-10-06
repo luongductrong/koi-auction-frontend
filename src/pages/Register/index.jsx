@@ -50,33 +50,39 @@ function Register() {
     <div className={styles.registerContainer}>
       <div className={styles.registerForm}>
         <h2 className={styles.registerTitle}>Đăng ký</h2>
-        <Steps current={currentStep} direction="vertical" size="small">
-          {steps.map((step) => (
-            <Step key={step.title} title={step.title} />
-          ))}
-        </Steps>
-        <Form
-          name="register"
-          onFinish={onFinish}
-          initialValues={formData}
-          layout="vertical"
-          className={styles.formStepContent}
-        >
-          {steps[currentStep].content}
-          <div className={styles.stepActions}>
-            {currentStep > 0 && (
-              <Button onClick={prev} className={styles.stepActions}>
-                Quay lại
+        <div className={styles.registerContent}>
+          <Form
+            name="register"
+            onFinish={onFinish}
+            initialValues={formData}
+            layout="vertical"
+            className={styles.formStepContent}
+          >
+            {steps[currentStep].content}
+            <div className={styles.stepActions}>
+              {currentStep > 0 && (
+                <Button onClick={prev} className={styles.stepActions}>
+                  Quay lại
+                </Button>
+              )}
+              <Button type="primary" htmlType="submit" loading={loading}>
+                {currentStep === steps.length - 1 ? 'Đăng kí' : 'Tiếp tục'}
               </Button>
-            )}
-            <Button type="primary" htmlType="submit" loading={loading}>
-              {currentStep === steps.length - 1 ? 'Đăng kí' : 'Tiếp tục'}
-            </Button>
-          </div>
-        </Form>
-        <Link to="/login" className={styles.loginLink}>
-          Đã có tài khoản? Đăng nhập ngay!
-        </Link>
+            </div>
+          </Form>
+
+          <Link to="/login" className={styles.loginLink}>
+            Đã có tài khoản? Đăng nhập ngay!
+          </Link>
+        </div>
+
+        <div>
+          <Steps current={currentStep} direction="vertical">
+            {steps.map((step) => (
+              <Step key={step.title} title={step.title} />
+            ))}
+          </Steps>
+        </div>
       </div>
     </div>
   );

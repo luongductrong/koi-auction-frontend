@@ -24,6 +24,29 @@ export const steps = [
     ),
   },
   {
+    title: 'Thông tin cá nhân',
+    content: (
+      <>
+        <Form.Item label="Họ và tên" name="fullName" rules={[{ required: true, message: 'Vui lòng nhập họ và tên!' }]}>
+          <Input placeholder="Họ và tên" />
+        </Form.Item>
+        <Form.Item
+          label="Số điện thoại"
+          name="phoneNumber"
+          rules={[
+            { required: true, message: 'Vui lòng nhập số điện thoại!' },
+            { pattern: /^[0-9]{10}$/, message: 'Số điện thoại phải bao gồm 10 chữ số!' },
+          ]}
+        >
+          <Input placeholder="Số điện thoại" />
+        </Form.Item>
+        <Form.Item label="Địa chỉ" name="address" rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}>
+          <Input placeholder="Địa chỉ" />
+        </Form.Item>
+      </>
+    ),
+  },
+  {
     title: 'Mật khẩu',
     content: (
       <>

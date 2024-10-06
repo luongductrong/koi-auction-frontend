@@ -41,7 +41,7 @@ function Header() {
                   marginLeft: '10px',
                 }}
               >
-                <Link to="/register">Đăng kí</Link>
+                <Link to="/register">Đăng ký</Link>
               </Button>
             </div>
           </div>
