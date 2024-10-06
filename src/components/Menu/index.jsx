@@ -9,15 +9,7 @@ function Menu() {
     { key: '3', label: <Link to="/contact">Contact</Link> },
   ];
 
-  return (
-    <AntMenu mode="horizontal" className={styles.menu}>
-      {menuItems.map((item) => (
-        <AntMenu.Item key={item.key} className={styles.menuItem}>
-          {item.label}
-        </AntMenu.Item>
-      ))}
-    </AntMenu>
-  );
+  return <AntMenu mode="horizontal" className={styles.menu} items={menuItems} />;
 }
 
 export default Menu;

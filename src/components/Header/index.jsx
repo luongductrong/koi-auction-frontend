@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Layout, Input } from 'antd';
+import { Layout, Input, Button } from 'antd';
 import clsx from 'clsx';
 import { useRef, useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import SubHeader from '../SubHeader';
 import Logo from '../Logo';
 import Menu from '../Menu';
-import Button from '../Button';
 
 const { Header: AntHeader } = Layout;
 
@@ -33,11 +32,11 @@ function Header() {
             <Logo />
             <Input.Search className={styles.searchBar} placeholder="Tìm kiếm..." onSearch={onSearch} loading={false} />
             <div className={styles.btnGroup}>
-              <Button ghostPrimary>
+              <Button type="primary" ghost>
                 <Link to="/login">Đăng nhập</Link>
               </Button>
               <Button
-                primary
+                type="primary"
                 style={{
                   marginLeft: '10px',
                 }}
