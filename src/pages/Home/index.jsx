@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Logo from '../../components/Logo';
 
 function Home({ children }) {
   return (
@@ -8,7 +7,6 @@ function Home({ children }) {
 
       <Link to="/login">Đăng nhập</Link>
       <h2>{children}</h2>
-      <Logo />
     </>
   );
 }

@@ -1,5 +1,5 @@
-function SubHeader() {
-  return <div style={{ width: '100%', height: '80px' }}></div>;
+function SubHeader({ height }) {
+  return <div style={{ height: height }}></div>;
 }
 
 export default SubHeader;

@@ -4,22 +4,23 @@
   left: 0;
   z-index: 100;
   width: 100%;
-  height: var(--header-full-height);
   background-color: var(header-primary-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 20px;
+  box-sizing: border-box;
+  height: auto;
 }
 
 .container {
+  position: relative;
   display: block;
   width: 80%;
 
   .topHeader {
     display: flex;
     width: 100%;
-    padding: 10px 0;
+    padding: 12px 0;
 
     .searchBar {
       margin: 0 4rem;
