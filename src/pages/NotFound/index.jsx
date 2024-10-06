@@ -3,6 +3,7 @@ import { Button, ConfigProvider } from 'antd';
 import styles from './index.module.scss';
 
 function NotFound() {
+  console.log('Not Found render');
   return (
     <ConfigProvider
       theme={{
