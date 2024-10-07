@@ -12,3 +12,5 @@ function Home({ children }) {
 }
 
 export default Home;
+
+//Add comment to make Git recognize directory name changes
