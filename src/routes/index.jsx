@@ -8,7 +8,7 @@ const publicRoutes = [
   { path: '/', component: Home },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
-  { path: '/account-center', component: AccountCenter },
+  { path: '/account-center/*', component: AccountCenter },
   { path: '*', component: NotFound },
 ]; // No authentication required
 
