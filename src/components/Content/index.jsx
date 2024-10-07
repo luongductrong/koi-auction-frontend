@@ -2,8 +2,9 @@ import { Layout } from 'antd';
 import styles from './index.module.scss';
 import Breadcrumb from '../Breadcrumb';
 
+const { Content: AntContent } = Layout;
+
 function Content({ children }) {
-  const { Content: AntContent } = Layout;
   return (
     <AntContent className={styles.content}>
       <div className={styles.container}>

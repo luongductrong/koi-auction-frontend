@@ -1,8 +1,7 @@
 import { Menu as AntMenu, ConfigProvider } from 'antd';
 import { Link } from 'react-router-dom';
 import styles from './index.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faList } from '@fortawesome/free-solid-svg-icons';
+import { UnorderedListOutlined } from '@ant-design/icons';
 
 function Menu() {
   const menuItems = [
@@ -10,7 +9,7 @@ function Menu() {
       key: 'sub1',
       label: (
         <p className={styles.subMenuTitle}>
-          <FontAwesomeIcon icon={faList} />
+          <UnorderedListOutlined />
           {` Cuộc đấu giá`}
         </p>
       ),

@@ -5,7 +5,7 @@ function Home({ children }) {
   return (
     <>
       <Slider />
-      <Link to="/login">Đăng nhập</Link>
+      <Link to="/account-center">Trung tâm tài khoản</Link>
       <h2>{children}</h2>
     </>
   );
