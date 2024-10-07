@@ -1,0 +1,35 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: auto;
+  padding: 0;
+}
+
+.container {
+  position: relative;
+  display: block;
+  width: var(--container-width);
+
+  .topHeader {
+    display: flex;
+    width: 100%;
+    padding: 12px 0;
+
+    .searchBar {
+      margin: 0 4rem;
+      max-width: 80%;
+    }
+
+    .btnGroup {
+      display: flex;
+    }
+  }
+}

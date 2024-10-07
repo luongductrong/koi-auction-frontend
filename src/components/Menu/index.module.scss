@@ -1,0 +1,15 @@
+.menu {
+  // width: 100%;
+  height: auto;
+  line-height: 40px !important;
+}
+
+.subMenu {
+  background-color: var(--primary-color);
+
+  .subMenuTitle {
+    color: #fff;
+    font-weight: 500;
+    padding-right: 200px !important;
+  }
+}
