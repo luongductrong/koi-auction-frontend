@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
+import Slider from '../../components/Slider';
 
 function Home({ children }) {
   return (
     <>
-      <h1>Home Page</h1>
+      <Slider />
       <Link to="/login">Đăng nhập</Link>
       <h2>{children}</h2>
     </>

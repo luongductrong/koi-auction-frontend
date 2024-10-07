@@ -68,6 +68,9 @@ function Login() {
         <Link to="/forgot-password" className={styles.forgotPasswordLink}>
           Quên mật khẩu?
         </Link>
+        <Link to="/register" className={styles.forgotPasswordLink}>
+          Đăng ký
+        </Link>
       </div>
     </div>
   );
