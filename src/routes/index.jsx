@@ -1,8 +1,8 @@
-import Home from '../pages/Home';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
-import AccountCenter from '../pages/AccountCenter';
-import NotFound from '../pages/NotFound';
+import Home from '../pages/home';
+import Login from '../pages/login';
+import Register from '../pages/register';
+import AccountCenter from '../pages/account-center';
+import NotFound from '../pages/not-found';
 
 const publicRoutes = [
   { path: '/', component: Home },
