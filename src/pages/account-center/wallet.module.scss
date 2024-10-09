@@ -1,0 +1,54 @@
+.header {
+  height: 3rem;
+  background-color: #c70000;
+  color: white;
+  border-radius: 5px 5px 0 0;
+  font-size: 24px;
+  padding: 12px 20px;
+}
+
+.walletContent {
+  display: flex;
+  justify-content: center;
+}
+
+.walletContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  flex-direction: row;
+}
+
+.balanceCard {
+  width: 300px;
+  text-align: center;
+}
+
+.balanceInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.depositButton {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.withdrawButton {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.historyCard {
+  flex: 1;
+  padding: 16px;
+}
+
+.transactionHistory {
+  height: 200px;
+  overflow-y: auto;
+  border-bottom: 1px solid #e8e8e8;
+  margin-bottom: 16px;
+}

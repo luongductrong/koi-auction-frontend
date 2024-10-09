@@ -3,17 +3,22 @@ import { Layout } from 'antd';
 import AntSider from '../../components/AccountSider';
 import NotFound from '../not-found';
 import Profile from './profile';
+import Wallet from './wallet';
+import Schedule from './schedule';
+import Order from './order';
+import AuctionManage from './auction-manage';
+import KoiManage from './koi-manage';
 import styles from './index.module.scss';
 
 const { Content: AntContent } = Layout;
 
 const routes = [
   { path: 'profile', component: Profile },
-  { path: 'wallet-manage', component: NotFound },
-  { path: 'schedule-manage', component: NotFound },
-  { path: 'order-manage', component: NotFound },
-  { path: 'auction-manage', component: NotFound },
-  { path: 'koi-manage', component: NotFound },
+  { path: 'wallet-manage', component: Wallet },
+  { path: 'schedule-manage', component: Schedule },
+  { path: 'order-manage', component: Order },
+  { path: 'auction-manage', component: AuctionManage },
+  { path: 'koi-manage', component: KoiManage },
 ];
 
 function AccountCenter() {
