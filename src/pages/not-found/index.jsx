@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, ConfigProvider } from 'antd';
 import styles from './index.module.scss';
@@ -25,4 +26,4 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default memo(NotFound);

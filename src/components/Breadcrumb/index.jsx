@@ -6,6 +6,12 @@ const breadcrumbNameMap = {
   '/login': 'Đăng nhập',
   '/register': 'Đăng ký',
   '/account-center': 'Trung tâm tài khoản',
+  '/account-center/profile': 'Thông tin cá nhân',
+  '/account-center/wallet-manage': 'Quản lý ví',
+  '/account-center/schedule-manage': 'Quản lý lịch',
+  '/account-center/order-manage': 'Quản lý đơn hàng',
+  '/account-center/auction-manage': 'Quản lý cuộc đấu giá',
+  '/account-center/koi-manage': 'Quản lý cá Koi',
 };
 
 function Breadcrumb() {
