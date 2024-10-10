@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Checkbox, message } from 'antd';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/userSlice';
 import api from '../../configs';
 import styles from './index.module.scss';
 import googleIcon from '../../assets/images/google.svg';
@@ -10,6 +13,8 @@ function Login() {
 
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (values) => {
     setLoading(true);
@@ -18,8 +23,18 @@ function Login() {
         userName: values.username,
         password: values.password,
       });
-      message.success('Đăng nhập thành công!');
-      console.log('Login Response:', response.data);
+
+      if (response.status === 200) {
+        message.success('Đăng nhập thành công!');
+        console.log('Login Response:', response.data);
+
+        localStorage.setItem('userData', JSON.stringify(response.data)); // Save user data to local storage
+        dispatch(setUser(response.data)); // Save user data to redux store
+        navigate('/');
+      } else {
+        message.error('Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.');
+        console.error('Login Error:', response.data);
+      }
     } catch (error) {
       message.error('Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.');
       console.error('Login Error:', error.response ? error.response.data : error.message);
