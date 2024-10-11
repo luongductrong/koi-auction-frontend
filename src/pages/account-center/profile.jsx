@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Flex, Space, Typography, Avatar, ConfigProvider } from 'antd';
 import { Form, Input, Button, Select, DatePicker } from 'antd';
 import { UserOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import api from '../../configs';
 import styles from './profile.module.scss';
@@ -13,32 +13,29 @@ const { Option } = Select;
 
 function Profile() {
   console.log('Profile render');
+  const navigate = useNavigate();
 
-  const user = useSelector((state) => state.user.user); // Get user data from Redux store
   const [profile, setProfile] = useState(null);
-  const [form] = Form.useForm(); // Create a form instance
+  const [form] = Form.useForm();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        if (user) {
-          const response = await api.get('/user/get-profile', {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          });
-          setProfile(response.data);
-          console.log('User profile:', response.data);
-        } else {
-          console.log('No user data found');
-        }
+        const response = await api.get('/user/get-profile', {
+          requiresAuth: true,
+          onUnauthorizedCallback: () => {
+            navigate('/login');
+          },
+        });
+        setProfile(response.data);
+        console.log('User profile:', response.data);
       } catch (error) {
         console.error('Failed to fetch user profile:', error);
       }
     };
 
     fetchUserProfile();
-  }, [user]); // Chỉ gọi API khi `user` có dữ liệu
+  }, []);
 
   useEffect(() => {
     if (profile) {
