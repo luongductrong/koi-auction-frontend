@@ -28,8 +28,7 @@ function Login() {
         message.success('Đăng nhập thành công!');
         console.log('Login Response:', response.data);
 
-        localStorage.setItem('userData', JSON.stringify(response.data)); // Save user data to local storage
-        dispatch(setUser(response.data)); // Save user data to redux store
+        dispatch(setUser(response.data));
         navigate('/');
       } else {
         message.error('Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.');

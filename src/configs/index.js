@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
 
 const baseURL = import.meta.env.VITE_API_URL;
 const api = axios.create({
@@ -11,23 +10,24 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use(
-  (config) => {
-    if (config.requiresAuth) {
-      // const token = localStorage.getItem('token');
-      const token = JSON.parse(localStorage.getItem('userData')).token;
-      if (token) {
+const requestInterceptors = (store) => {
+  api.interceptors.request.use(
+    (config) => {
+      const state = store.getState();
+      const token = state.user.user?.token;
+
+      if (config.requiresAuth && token) {
         config.headers.Authorization = `Bearer ${token}`;
-      } else {
+      } else if (config.requiresAuth) {
         console.error('Token not available!');
       }
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    },
+  );
+};
 
 api.interceptors.response.use(
   (response) => {
@@ -35,7 +35,8 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      console.error('Unauthorized! Redirecting to login...');
+      console.log(error.response.message);
+      console.error('Unauthorized!');
       if (error.config.onUnauthorizedCallback) {
         error.config.onUnauthorizedCallback();
       }
@@ -44,4 +45,26 @@ api.interceptors.response.use(
   },
 );
 
+export { requestInterceptors };
 export default api;
+
+// api.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error) => {
+//     if (error.response && error.response.status === 401) {
+
+//       if (error.config.url.includes('/login')) {
+//         console.error('Sai mật khẩu!');
+//         /////........................
+//       } else {
+//         console.error('Unauthorized! Redirecting to login...');
+//         if (error.config.onUnauthorizedCallback) {
+//           error.config.onUnauthorizedCallback();
+//         }
+//       }
+//     }
+//     return Promise.reject(error);
+//   },
+// );

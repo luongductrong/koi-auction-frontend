@@ -1,10 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Layout, Input, Button, ConfigProvider, Dropdown, Menu as AntMenu } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
-import clsx from 'clsx';
 import { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearUser, setUser } from '../../redux/userSlice';
+import { clearUser } from '../../redux/userSlice';
+import clsx from 'clsx';
 import styles from './index.module.scss';
 import SubHeader from '../SubHeader';
 import Logo from '../Logo';
@@ -15,10 +15,9 @@ const { Header: AntHeader } = Layout;
 function Header() {
   //-------------------------------------> Header component
   const [headerHeight, setHeaderHeight] = useState(0); // State to store Header height
+  const dispatch = useDispatch();
   const headerRef = useRef(null);
   const user = useSelector((state) => state.user.user);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const onSearch = (value) => console.log(value);
 
@@ -29,24 +28,8 @@ function Header() {
     }
   }, []);
 
-  useEffect(() => {
-    const userData = localStorage.getItem('userData');
-    if (userData) {
-      try {
-        const parsedUserData = JSON.parse(userData);
-        if (parsedUserData && parsedUserData.fullname) {
-          dispatch(setUser(parsedUserData));
-        }
-      } catch (error) {
-        console.error('Failed to parse userData from localStorage:', error);
-      }
-    }
-  }, [dispatch]);
-
   const handleLogout = () => {
-    localStorage.removeItem('userData');
     dispatch(clearUser());
-    navigate('/login');
   };
 
   const menu = (
