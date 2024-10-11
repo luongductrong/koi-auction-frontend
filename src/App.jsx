@@ -4,7 +4,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from '../src/redux/store';
 import GlobalStyles from './components/GlobalStyles';
 import { Layout } from 'antd';
-import { publicRoutes } from './routes';
+import { publicRoutes, privateRoutes } from './routes';
+import PrivateRoute from './components/PrivateRoute';
 import Header from './components/Header';
 import Content from './components/Content';
 
@@ -20,9 +21,23 @@ function App() {
               <Header />
               <Content>
                 <Routes>
-                  {publicRoutes.map((route, index) => {
+                  {publicRoutes.map((route) => {
                     const Page = route.component;
-                    return <Route key={index} path={route.path} element={<Page />} />;
+                    return <Route key={route.path} path={route.path} element={<Page />} />;
+                  })}
+                  {privateRoutes.map((route) => {
+                    const Page = route.component;
+                    return (
+                      <Route
+                        key={route.path}
+                        path={route.path}
+                        element={
+                          <PrivateRoute>
+                            <Page />
+                          </PrivateRoute>
+                        }
+                      />
+                    );
                   })}
                 </Routes>
               </Content>

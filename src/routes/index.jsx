@@ -9,13 +9,10 @@ const publicRoutes = [
   { path: '/', component: Home },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
-  { path: '/account-center/*', component: AccountCenter },
   { path: '/access-denied', component: AccessDenied },
   { path: '*', component: NotFound },
 ]; // No authentication required
 
-const privateRoutes = [
-  // Example: { path: '/dashboard', component: Dashboard },
-]; // Authentication required
+const privateRoutes = [{ path: '/account-center/*', component: AccountCenter }]; // Authentication required
 
 export { publicRoutes, privateRoutes };

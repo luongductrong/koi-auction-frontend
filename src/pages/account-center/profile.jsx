@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Flex, Space, Typography, Avatar, ConfigProvider } from 'antd';
 import { Form, Input, Button, Select, DatePicker } from 'antd';
 import { UserOutlined, CheckCircleOutlined } from '@ant-design/icons';
@@ -8,7 +7,7 @@ import moment from 'moment';
 import api from '../../configs';
 import styles from './profile.module.scss';
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 const { Option } = Select;
 
 function Profile() {
@@ -41,8 +40,7 @@ function Profile() {
     if (profile) {
       form.setFieldsValue({
         fullname: profile.fullName,
-        dob: profile.dob ? moment(profile.dob) : null,
-        phone: profile.phone,
+        phone: profile.phoneNumber,
         email: profile.email,
         address: profile.address,
         province: profile.province,
@@ -71,7 +69,7 @@ function Profile() {
               <Title level={3}>{(profile && profile.fullName) || 'Đang tải...'}</Title>
               <p className={styles.pText}>
                 <CheckCircleOutlined />
-                {` Đã xác thực thông tin`}
+                {` ${profile ? (profile.role === 'Breeder' ? 'Nhà bán hàng' : 'Người mua') : 'Đang tải...'}`}
               </p>
               <Link to="change-password">Đổi mật khẩu</Link>
             </Space>
@@ -82,14 +80,14 @@ function Profile() {
               form={form} // Bind form instance to Form component
               layout="vertical"
               initialValues={{
-                fullname: profile ? profile.fullName : '',
-                phone: profile ? profile.phone : '',
-                email: profile ? profile.email : '',
-                address: profile ? profile.address : '',
-                province: profile ? profile.province : '',
-                district: profile ? profile.district : '',
-                ward: profile ? profile.ward : '',
-                createAt: profile ? moment(profile.createAt) : null, // Convert createAt to moment object
+                fullname: 'Đang tải...',
+                phone: 'Đang tải...',
+                email: 'Đang tải...',
+                address: 'Đang tải...',
+                province: 'Đang tải...',
+                district: 'Đang tải...',
+                ward: 'Đang tải...',
+                createAt: null,
               }}
               className={styles.form}
             >
