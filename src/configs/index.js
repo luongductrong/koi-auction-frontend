@@ -1,12 +1,23 @@
 import axios from 'axios';
 
 const baseURL = import.meta.env.VITE_API_URL;
+const provinceURL = import.meta.env.VITE_PROVINCE_API_URL;
+
 const api = axios.create({
   baseURL: baseURL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json, text/plain',
+  },
+});
+
+const provinceApi = axios.create({
+  baseURL: provinceURL,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
   },
 });
 
@@ -45,7 +56,7 @@ api.interceptors.response.use(
   },
 );
 
-export { requestInterceptors };
+export { requestInterceptors, provinceApi };
 export default api;
 
 // api.interceptors.response.use(
