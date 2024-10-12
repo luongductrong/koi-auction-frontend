@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Layout, Card, Button, Table } from 'antd';
 import { DollarOutlined } from '@ant-design/icons';
 import NoData from '../../components/NoData';
+import { InputModal } from '../../components/Modal';
 import api from '../../configs';
 import styles from './wallet.module.scss';
 
@@ -9,7 +10,9 @@ const { Content } = Layout;
 
 function Wallet() {
   const [walletAmount, setWalletAmount] = useState(0);
+  const [topupAmount, setTopupAmount] = useState(0);
   const [transactionHistory, setTransactionHistory] = useState([]);
+  const [topupBtn, setTopupBtn] = useState(false);
 
   useEffect(() => {
     const fetchWalletAmount = async () => {
@@ -37,6 +40,24 @@ function Wallet() {
     fetchWalletAmount();
     fetchTransactionHistory();
   }, []);
+
+  useEffect(() => {
+    const topup = async () => {
+      try {
+        const response = await api.post('/wallet/add-funds?amount=1000', {
+          amount: '1000',
+          requiresAuth: true,
+        });
+        console.log('Top-up response:', response.data);
+      } catch (error) {
+        console.error('Failed to top-up:', error);
+      }
+    };
+
+    if (topupAmount > 0) {
+      topup();
+    }
+  }, [topupAmount]);
 
   const columns = [
     {
@@ -124,7 +145,7 @@ function Wallet() {
               <DollarOutlined style={{ fontSize: '48px', color: '#e60000' }} />
               <h1>{walletAmount.toLocaleString()}</h1>
             </div>
-            <Button type="primary" className={styles.depositButton}>
+            <Button type="primary" className={styles.depositButton} onClick={() => setTopupBtn(!topupBtn)}>
               Nạp tiền
             </Button>
             <Button type="default" className={styles.withdrawButton}>
@@ -139,7 +160,6 @@ function Wallet() {
               pagination={{ pageSize: 5 }}
               rowKey="id"
               locale={locale}
-              // scroll={{ x: 100, y: 200 }}
             />
           </Card>
         </div>

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Checkbox, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../redux/userSlice';
+import { setUser, clearUser } from '../../redux/userSlice';
 import api from '../../configs';
 import styles from './index.module.scss';
 import googleIcon from '../../assets/images/google.svg';
@@ -15,6 +15,10 @@ function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(clearUser());
+  }, []);
 
   const handleLogin = async (values) => {
     setLoading(true);

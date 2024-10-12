@@ -32,20 +32,24 @@ function Header() {
     dispatch(clearUser());
   };
 
-  const menu = (
-    <AntMenu>
-      <AntMenu.Item key="1">
+  const items = [
+    {
+      key: '1',
+      label: (
         <Link to="/account-center">
           <UserOutlined /> Trung tâm tài khoản
         </Link>
-      </AntMenu.Item>
-      <AntMenu.Item key="2">
+      ),
+    },
+    {
+      key: '2',
+      label: (
         <Link to="/" onClick={handleLogout}>
           <LogoutOutlined /> Đăng xuất
         </Link>
-      </AntMenu.Item>
-    </AntMenu>
-  );
+      ),
+    },
+  ];
 
   console.log('Header render');
 
@@ -58,7 +62,7 @@ function Header() {
             <Input.Search className={styles.searchBar} placeholder="Tìm kiếm..." onSearch={onSearch} loading={false} />
             <div className={styles.btnGroup}>
               {user ? (
-                <Dropdown overlay={menu} trigger={['hover']}>
+                <Dropdown menu={{ items }} trigger={['hover']}>
                   <Button type="primary">{user.fullname}</Button>
                 </Dropdown>
               ) : (

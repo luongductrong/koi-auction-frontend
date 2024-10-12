@@ -1,7 +1,7 @@
 import { Form, Input, Checkbox } from 'antd';
 import { Link } from 'react-router-dom';
 
-export const steps = [
+const steps = [
   {
     title: 'Thông tin tài khoản',
     content: (
@@ -93,3 +93,5 @@ export const steps = [
     ),
   },
 ];
+
+export { steps };
