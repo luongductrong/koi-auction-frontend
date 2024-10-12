@@ -4,9 +4,9 @@ import { Button, Form, Input, Checkbox, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser, clearUser } from '../../redux/userSlice';
+import GoogleLogin from '../../components/GoogleLogin';
 import api from '../../configs';
 import styles from './index.module.scss';
-import googleIcon from '../../assets/images/google.svg';
 
 function Login() {
   console.log('Login render');
@@ -79,10 +79,7 @@ function Login() {
             </Button>
           </Form.Item>
         </Form>
-        <Button type="default" htmlType="button" className={styles.loginBtn}>
-          <img src={googleIcon} alt="Google icon" width="24" height="24" />
-          <p>Đăng nhập bằng Google</p>
-        </Button>
+        <GoogleLogin />
         <Link to="/forgot-password" className={styles.forgotPasswordLink}>
           Quên mật khẩu?
         </Link>
