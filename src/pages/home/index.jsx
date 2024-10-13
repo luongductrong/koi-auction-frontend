@@ -6,6 +6,8 @@ function Home({ children }) {
     <>
       <Slider />
       <Link to="/account-center">Trung tâm tài khoản</Link>
+      <br />
+      <Link to="/auction">Cuộc đấu giá</Link>
       <h2>{children}</h2>
     </>
   );

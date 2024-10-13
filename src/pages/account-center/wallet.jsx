@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Card, Button, Table } from 'antd';
 import { DollarOutlined } from '@ant-design/icons';
-import NoData from '../../components/NoData';
 import { InputModal } from '../../components/Modal';
 import api from '../../configs';
 import styles from './wallet.module.scss';
@@ -129,10 +128,6 @@ function Wallet() {
     },
   ];
 
-  const locale = {
-    emptyText: <NoData />,
-  };
-
   return (
     <Layout>
       <div className={styles.header}>
@@ -154,13 +149,7 @@ function Wallet() {
           </Card>
 
           <Card className={styles.historyCard} bordered title="Lịch sử giao dịch">
-            <Table
-              dataSource={transactionHistory}
-              columns={columns}
-              pagination={{ pageSize: 5 }}
-              rowKey="id"
-              locale={locale}
-            />
+            <Table dataSource={transactionHistory} columns={columns} pagination={{ pageSize: 5 }} rowKey="id" />
           </Card>
         </div>
       </Content>

@@ -2,6 +2,7 @@ import Home from '../pages/home';
 import Login from '../pages/login';
 import Register from '../pages/register';
 import AccountCenter from '../pages/account-center';
+import Auction from '../pages/auction';
 import AccessDenied from '../pages/access-denied';
 import NotFound from '../pages/not-found';
 
@@ -9,6 +10,7 @@ const publicRoutes = [
   { path: '/', component: Home },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
+  { path: '/auction', component: Auction },
   { path: '/access-denied', component: AccessDenied },
   { path: '*', component: NotFound },
 ]; // No authentication required

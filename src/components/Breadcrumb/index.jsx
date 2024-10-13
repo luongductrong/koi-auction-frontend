@@ -6,6 +6,7 @@ const breadcrumbNameMap = {
   '/login': 'Đăng nhập',
   '/register': 'Đăng ký',
   '/access-denied': '403',
+  '/auction': 'Các cuộc đấu giá',
   '/account-center': 'Trung tâm tài khoản',
   '/account-center/profile': 'Thông tin cá nhân',
   '/account-center/wallet-manage': 'Quản lý ví',

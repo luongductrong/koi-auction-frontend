@@ -51,6 +51,7 @@ function Profile() {
 
       form.setFieldsValue({
         fullname: profile.fullName,
+        username: profile.userName,
         phone: profile.phoneNumber,
         email: profile.email,
         address: decodeAddress.address,
@@ -147,6 +148,7 @@ function Profile() {
               layout="vertical"
               initialValues={{
                 fullname: 'Đang tải...',
+                username: 'Đang tải...',
                 phone: 'Đang tải...',
                 email: 'Đang tải...',
                 address: 'Đang tải...',
@@ -162,7 +164,24 @@ function Profile() {
                 name="fullname"
                 rules={[{ required: true, message: 'Vui lòng nhập họ tên!' }]}
               >
-                <Input />
+                <Input
+                  count={{
+                    show: true,
+                    max: 100,
+                  }}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Tên đăng nhập"
+                name="username"
+                rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}
+              >
+                <Input
+                  count={{
+                    show: true,
+                    max: 50,
+                  }}
+                />
               </Form.Item>
               <Form.Item
                 className={styles.shortInput}
@@ -170,10 +189,20 @@ function Profile() {
                 name="phone"
                 rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
               >
-                <Input />
+                <Input
+                  count={{
+                    show: true,
+                    max: 10,
+                  }}
+                />
               </Form.Item>
               <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email!' }]}>
-                <Input />
+                <Input
+                  count={{
+                    show: true,
+                    max: 100,
+                  }}
+                />
               </Form.Item>
               <Form.Item
                 label="Tỉnh/Thành phố"
@@ -228,7 +257,12 @@ function Profile() {
                   { max: 100, message: 'Địa chỉ không được vượt quá 100 ký tự!' },
                 ]}
               >
-                <Input />
+                <Input
+                  count={{
+                    show: true,
+                    max: 100,
+                  }}
+                />
               </Form.Item>
               <Form.Item className={styles.shortInput} label="Ngày tham gia" name="createAt">
                 <DatePicker format="DD/MM/YYYY" disabled />
