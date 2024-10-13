@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Card, Button, Table } from 'antd';
+import { useLocation } from 'react-router-dom';
+import { Layout, Card, Button, Table, App } from 'antd';
 import { DollarOutlined } from '@ant-design/icons';
 import { InputModal } from '../../components/Modal';
 import api from '../../configs';
@@ -8,55 +9,64 @@ import styles from './wallet.module.scss';
 const { Content } = Layout;
 
 function Wallet() {
+  const { message } = App.useApp();
   const [walletAmount, setWalletAmount] = useState(0);
-  const [topupAmount, setTopupAmount] = useState(0);
   const [transactionHistory, setTransactionHistory] = useState([]);
-  const [topupBtn, setTopupBtn] = useState(false);
+  const location = useLocation();
+
+  console.log('Wallet render');
 
   useEffect(() => {
-    const fetchWalletAmount = async () => {
+    const clearURLParams = () => {
+      const url = window.location.origin + window.location.pathname;
+      window.history.replaceState({}, document.title, url);
+    };
+    const params = new URLSearchParams(location.search);
+    const success = params.get('success');
+    const amount = params.get('amount');
+
+    if (success === 'true' && amount !== '') {
+      message.success(`Nạp tiền thành công! Số tiền: ${amount} VND`);
+      clearURLParams();
+    } else if (success === 'false') {
+      message.error('Nạp tiền thất bại! Vui lòng thử lại sau.');
+      clearURLParams();
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const response = await api.get('/wallet/get-wallet', {
-          requiresAuth: true,
-        });
-        setWalletAmount(response.data.amount);
+        const [walletResponse, transactionResponse] = await Promise.all([
+          api.get('/wallet/get-wallet', { requiresAuth: true }),
+          api.get('/wallet/transactions', { requiresAuth: true }),
+        ]);
+
+        if (walletResponse.data.amount !== walletAmount) {
+          setWalletAmount(walletResponse.data.amount);
+        }
+
+        if (JSON.stringify(transactionResponse.data) !== JSON.stringify(transactionHistory)) {
+          setTransactionHistory(transactionResponse.data);
+        }
       } catch (error) {
-        console.error('Failed to fetch wallet amount:', error);
+        console.error('Failed to fetch data:', error);
       }
     };
 
-    const fetchTransactionHistory = async () => {
-      try {
-        const response = await api.get('/wallet/transactions', {
-          requiresAuth: true,
-        });
-        setTransactionHistory(response.data);
-      } catch (error) {
-        console.error('Failed to fetch transaction history:', error);
-      }
-    };
-
-    fetchWalletAmount();
-    fetchTransactionHistory();
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    const topup = async () => {
-      try {
-        const response = await api.post('/wallet/add-funds?amount=1000', {
-          amount: '1000',
-          requiresAuth: true,
-        });
-        console.log('Top-up response:', response.data);
-      } catch (error) {
-        console.error('Failed to top-up:', error);
-      }
-    };
-
-    if (topupAmount > 0) {
-      topup();
+  const topup = async (value) => {
+    try {
+      const response = await api.post(`/wallet/add-funds?amount=${value}&callbackUrl=${window.location.href}`, null, {
+        requiresAuth: true,
+      });
+      window.location.href = response.data.message;
+    } catch (error) {
+      console.error('Failed to top-up:', error);
     }
-  }, [topupAmount]);
+  };
 
   const columns = [
     {
@@ -140,9 +150,15 @@ function Wallet() {
               <DollarOutlined style={{ fontSize: '48px', color: '#e60000' }} />
               <h1>{walletAmount.toLocaleString()}</h1>
             </div>
-            <Button type="primary" className={styles.depositButton} onClick={() => setTopupBtn(!topupBtn)}>
-              Nạp tiền
-            </Button>
+            <InputModal
+              inputType="number"
+              buttonTitle="Nạp tiền"
+              label="Nạp tiền"
+              placeholder="Nhập số tiền muốn nạp..."
+              message="Vui lòng nhập số tiền!"
+              btnClassName={styles.depositButton}
+              onOk={(value) => topup(value)}
+            />
             <Button type="default" className={styles.withdrawButton}>
               Gửi yêu cầu rút tiền
             </Button>
