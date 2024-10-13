@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 const breadcrumbNameMap = {
   '/login': 'Đăng nhập',
   '/register': 'Đăng ký',
+  '/forgot-password': 'Quên mật khẩu',
   '/access-denied': '403',
   '/auction': 'Các cuộc đấu giá',
   '/account-center': 'Trung tâm tài khoản',

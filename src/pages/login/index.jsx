@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Form, Input, Checkbox, message } from 'antd';
+import { Button, Form, Input, Checkbox, App } from 'antd';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser, clearUser } from '../../redux/userSlice';
@@ -11,6 +11,7 @@ import styles from './index.module.scss';
 function Login() {
   console.log('Login render');
 
+  const { message } = App.useApp();
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const dispatch = useDispatch();

@@ -8,6 +8,8 @@ function Home({ children }) {
       <Link to="/account-center">Trung tâm tài khoản</Link>
       <br />
       <Link to="/auction">Cuộc đấu giá</Link>
+      <br />
+      <Link to="/forgot-password">Quên mật khẩu?</Link>
       <h2>{children}</h2>
     </>
   );

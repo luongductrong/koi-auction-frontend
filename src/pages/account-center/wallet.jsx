@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Layout, Card, Button, Table, App } from 'antd';
 import { DollarOutlined } from '@ant-design/icons';
 import { InputModal } from '../../components/Modal';
@@ -13,6 +13,7 @@ function Wallet() {
   const [walletAmount, setWalletAmount] = useState(0);
   const [transactionHistory, setTransactionHistory] = useState([]);
   const location = useLocation();
+  const navigate = useNavigate();
 
   console.log('Wallet render');
 
@@ -38,7 +39,13 @@ function Wallet() {
     const fetchData = async () => {
       try {
         const [walletResponse, transactionResponse] = await Promise.all([
-          api.get('/wallet/get-wallet', { requiresAuth: true }),
+          api.get('/wallet/get-wallet', {
+            requiresAuth: true,
+            onUnauthorizedCallback: () => {
+              message.error('Phiên đăng nhập hết hạn!');
+              navigate('/login');
+            },
+          }),
           api.get('/wallet/transactions', { requiresAuth: true }),
         ]);
 
