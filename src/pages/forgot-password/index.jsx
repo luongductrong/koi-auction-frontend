@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { App, Form, Input, Button, Flex, ConfigProvider } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import api from '../../configs';
 import styles from './index.module.scss';
+import clsx from 'clsx';
 
 function ForgotPassword() {
   const { message } = App.useApp();
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [loading1, setLoading1] = useState(false);
   const [loading2, setLoading2] = useState(false);
@@ -15,23 +18,20 @@ function ForgotPassword() {
 
   const next = async () => {
     try {
-      await form.validateFields();
-      setCurrentStep(currentStep + 1);
-      if (countdown === 0) {
-        setCountdown(60);
-      }
+      await form.validateFields(['email', 'password', 'confirmPassword']);
+      handleSentOTP();
     } catch (error) {
       console.log('Validation failed:', error);
     }
   };
 
   const prev = () => {
-    setCurrentStep(currentStep - 1);
+    setCurrentStep(0);
   };
 
   const onFinish = (values) => {
     console.log('Form values:', values);
-    message.success('Thành công!');
+    handleResetPassword(values);
   };
 
   useEffect(() => {
@@ -47,13 +47,67 @@ function ForgotPassword() {
   const handleSentOTP = async () => {
     try {
       setLoading1(true);
-      // Call API
-      message.success('Mã OTP đã được gửi đến email của bạn!');
-      next();
+      const email = form.getFieldValue('email');
+      form.setFieldsValue({ otp: '' });
+      console.log('Email:', email);
+      setCountdown(60);
+      const response = await api.post(`/forgot-password/verifyMail/${email}`);
+      if (response?.status === 200) {
+        message.success('Mã OTP đã được gửi đến email của bạn!');
+        setCurrentStep(1);
+      }
     } catch (error) {
-      message.error('Error:', error.response ? error.response.data : error.message);
+      console.error('Error:', error);
+      if (error.response?.status === 404) {
+        message.error({
+          content: 'Email không tồn tại. Vui lòng kiểm tra lại.',
+          duration: 3,
+        });
+      } else {
+        message.error({
+          content: 'Có lỗi xảy ra! Vui lòng thử lại sau.',
+          duration: 3,
+        });
+      }
     } finally {
       setLoading1(false);
+    }
+  };
+
+  const handleResetPassword = async (values) => {
+    try {
+      setLoading2(true);
+      const response = await api.post(`/forgot-password/verifyAndChangePassword/${values.otp}/${values.email}`, {
+        password: values.password,
+        repeatPassword: values.confirmPassword,
+      });
+      if (response?.status === 200) {
+        message.success('Đặt lại mật khẩu thành công!');
+        navigate('/login');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      if (
+        error.response?.status === 404 &&
+        error.response?.data?.message === `Invalid OTP for email: ${values.email}`
+      ) {
+        message.error({
+          content: 'Mã OTP không hợp lệ. Vui lòng kiểm tra lại.',
+          duration: 3,
+        });
+      } else if (error.response?.status === 417) {
+        message.error({
+          content: 'OTP đã hết hạn. Vui lòng thử lại',
+          duration: 3,
+        });
+      } else {
+        message.error({
+          content: 'Có lỗi xảy ra! Vui lòng thử lại sau.',
+          duration: 3,
+        });
+      }
+    } finally {
+      setLoading2(false);
     }
   };
 
@@ -65,6 +119,7 @@ function ForgotPassword() {
             label="Email"
             name="email"
             rules={[{ required: true, type: 'email', message: 'Vui lòng nhập email hợp lệ!' }]}
+            className={clsx({ [styles.displayNone]: currentStep !== 0 })}
           >
             <Input placeholder="Nhập email khôi phục..." />
           </Form.Item>
@@ -72,6 +127,7 @@ function ForgotPassword() {
             label="Mật khẩu mới"
             name="password"
             rules={[{ required: true, message: 'Vui lòng nhập mật khẩu mới!' }]}
+            className={clsx({ [styles.displayNone]: currentStep !== 0 })}
           >
             <Input.Password placeholder="Mật khẩu mới" />
           </Form.Item>
@@ -79,6 +135,7 @@ function ForgotPassword() {
             label="Xác nhận mật khẩu"
             name="confirmPassword"
             dependencies={['password']}
+            className={clsx({ [styles.displayNone]: currentStep !== 0 })}
             rules={[
               { required: true, message: 'Vui lòng xác nhận mật khẩu!' },
               ({ getFieldValue }) => ({
@@ -101,6 +158,7 @@ function ForgotPassword() {
         <Form.Item
           label="Mã OTP"
           name="otp"
+          className={clsx({ [styles.displayNone]: currentStep === 0 })}
           rules={[
             { required: true, message: 'Vui lòng nhập mã OTP!' },
             { pattern: /^[0-9]{6}$/, message: 'OTP phải bao gồm 6 chữ số!' },
@@ -124,22 +182,21 @@ function ForgotPassword() {
         <Flex wrap={true} className={styles.form}>
           <p className={styles.title}>Đặt lại mật khẩu</p>
           <Form form={form} onFinish={onFinish} layout="vertical">
-            {steps[currentStep].content}
+            {steps[0].content}
+            {steps[1].content}
             <Flex justify="space-between" className={styles.btnGroup}>
-              {currentStep > 0 && (
-                <>
-                  <Button style={{ marginRight: 8 }} onClick={() => prev()}>
-                    Quay lại
-                  </Button>
-                  <Button type="primary" loading={loading2} htmlType="submit">
-                    {loading2 ? 'Đặt mật khẩu mới...' : 'Đặt mật khẩu'}
-                  </Button>
-                </>
-              )}
               {currentStep === 0 && (
                 <Button type="primary" loading={loading1} onClick={() => next()}>
                   {loading1 ? 'Tiếp tục...' : 'Tiếp tục'}
                 </Button>
+              )}
+              {currentStep > 0 && (
+                <>
+                  {loading2 || <Button onClick={() => prev()}>Quay lại</Button>}
+                  <Button type="primary" loading={loading2} htmlType="submit">
+                    {loading2 ? 'Đặt mật khẩu mới...' : 'Đặt mật khẩu'}
+                  </Button>
+                </>
               )}
             </Flex>
             <ConfigProvider
@@ -157,7 +214,7 @@ function ForgotPassword() {
                   <Button type="link">Quay lại đăng nhập</Button>
                 </Link>
                 {currentStep > 0 && (
-                  <Button type="link" disabled={countdown > 0}>{`Gửi lại ${
+                  <Button type="link" onClick={() => handleSentOTP()} disabled={countdown > 0}>{`Gửi lại ${
                     countdown > 0 ? `(${countdown})` : 'OTP'
                   }`}</Button>
                 )}
