@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Input, DatePicker, Checkbox, Button, Card, Row, Col, Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Layout, Pagination, Input, DatePicker, Checkbox, Button, Card, Row, Col, Empty, Avatar, Select } from 'antd';
+import { UserOutlined, AppstoreOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import Cover from '../../components/AuctionCover';
 import api from '../../configs';
 import styles from './index.module.scss';
@@ -12,25 +12,33 @@ function Auction() {
   const [stateFilter, setStateFilter] = useState([]);
   const [methodFilter, setMethodFilter] = useState([]);
   const [auctions, setAuctions] = useState([{ auctionId: 0, startTime: '', status: 'Đang tải...' }]);
+  const [pagination, setPagination] = useState({ currentPage: 1, totalPage: 0, totalItem: 0 });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchAuctions = async () => {
-      setLoading(true);
-      try {
-        const response = await api.get('/auction/guest/get-all?page=1&size=6');
-        setAuctions(response.data.content);
-        console.log('Auctions:', response.data.content);
-      } catch (error) {
-        console.error('Failed to fetch auctions:', error);
-        setAuctions([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchAuctions();
   }, []);
+
+  const fetchAuctions = async ({ page = 0, size = 6 } = {}) => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/auction/guest/get-all?page=${page}&size=${size}`);
+      setAuctions(response.data.content);
+      setPagination({
+        currentPage: response.data.pageable.pageNumber,
+        totalPage: response.data.totalPages,
+        totalItem: response.data.totalElements,
+      });
+      console.log('Page', response.data.pageable.pageNumber);
+      // setAuctions([]);
+      console.log('Auctions:', response.data.content);
+    } catch (error) {
+      console.error('Failed to fetch auctions:', error);
+      setAuctions([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleToggleState = (str) => {
     const newArray = [...stateFilter];
@@ -76,7 +84,7 @@ function Auction() {
 
   return (
     <Layout>
-      <Row gutter={16}>
+      <Row gutter={16} style={{ background: 'transparent' }}>
         <Col span={6}>
           <div className={styles.sider}>
             <h3 className={styles.siderTitle}>Tìm kiếm</h3>
@@ -126,7 +134,24 @@ function Auction() {
           </div>
         </Col>
 
-        <Col span={18}>
+        <Col span={18} style={{ background: 'transparent' }}>
+          {auctions?.length !== 0 && (
+            <Row justify="space-between" align="middle" gutter={8} style={{ marginBottom: '16px' }}>
+              <Col>
+                <Select defaultValue="Cũ → Mới" style={{ width: 120 }}>
+                  <Option value="oldToNew">Cũ → Mới</Option>
+                  <Option value="newToOld">Mới → Cũ</Option>
+                </Select>
+              </Col>
+              <Col>
+                <Button style={{ padding: '4px 8px' }}>
+                  <UnorderedListOutlined onClick={() => alert('List')} />
+                  {` `}
+                  <AppstoreOutlined onClick={() => alert('Grid')} style={{ color: 'rgba(0,0,0,0.2)' }} />
+                </Button>
+              </Col>
+            </Row>
+          )}
           <Row gutter={[16, 16]}>
             {auctions.map((auction) => (
               <Col span={8} key={auction.auctionId}>
@@ -142,18 +167,44 @@ function Auction() {
                   ]}
                 >
                   <Meta
-                    title={'Cuộc đấu giá'}
+                    title={`Cuộc đấu giá #${auction.auctionId}`}
                     description={
                       <>
-                        <p>Giá khởi điểm: {auction.startPrice}</p>
-                        <p>Trạng thái: {auction.status === 'Pending' ? 'Sắp diễn ra' : auction.status}</p>
+                        <p>Giá khởi điểm: {auction?.startPrice?.toLocaleString()}</p>
+                        <p>
+                          Trạng thái:{' '}
+                          {auction.status === 'Scheduled'
+                            ? 'Sắp diễn ra'
+                            : auction.status === 'Ongoing'
+                            ? 'Đang diễn ra'
+                            : auction.status === 'Closed'
+                            ? 'Đã kết thúc'
+                            : 'Không xác định'}
+                        </p>
                       </>
                     }
                   />
                 </Card>
               </Col>
             ))}
+            {auctions?.length === 0 && (
+              <Col span={24}>
+                <Empty description="Không có cuộc đấu giá nào" style={{ paddingTop: '20vh' }} />
+              </Col>
+            )}
           </Row>
+          {auctions?.length !== 0 && (
+            <Row justify="end" align="middle" gutter={8} style={{ marginTop: '16px' }}>
+              <Col>
+                <Pagination
+                  defaultCurrent={pagination.currentPage}
+                  pageSize={6}
+                  total={pagination.totalItem}
+                  onChange={(page) => fetchAuctions({ page: page - 1 })}
+                />
+              </Col>
+            </Row>
+          )}
         </Col>
       </Row>
     </Layout>

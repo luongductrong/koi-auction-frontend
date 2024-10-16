@@ -4,13 +4,11 @@ import moment from 'moment';
 
 function Cover({ status, startTime, imageSrc }) {
   const time = startTime ? moment(startTime).format('DD/MM/YYYY HH:mm:ss') : 'Đang tải...';
-  //   const time = startTime ? moment.utc(startTime).local().format('DD/MM/YYYY HH:mm:ss') : null;
 
   return (
     <div
       style={{
         width: '100%',
-        // minHeight: '300px',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -22,7 +20,10 @@ function Cover({ status, startTime, imageSrc }) {
           width: '100%',
           height: '100%',
           objectFit: 'cover',
+          transition: 'transform 0.3s ease-in-out',
         }}
+        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
       />
       <Flex
         style={{
