@@ -10,6 +10,8 @@ function Home({ children }) {
       <Link to="/auction">Cuộc đấu giá</Link>
       <br />
       <Link to="/forgot-password">Quên mật khẩu?</Link>
+      <br />
+      <Link to="/auction/details">Chi tiết đấu giá</Link>
       <h2>{children}</h2>
     </>
   );
