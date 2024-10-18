@@ -3,7 +3,6 @@ import { Layout, Input, Button, ConfigProvider, Dropdown, Menu as AntMenu } from
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useRef, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { clearUser } from '../../redux/userSlice';
 import clsx from 'clsx';
 import styles from './index.module.scss';
 import SubHeader from '../SubHeader';
@@ -28,10 +27,6 @@ function Header() {
     }
   }, []);
 
-  const handleLogout = () => {
-    dispatch(clearUser());
-  };
-
   const items = [
     {
       key: '1',
@@ -44,7 +39,7 @@ function Header() {
     {
       key: '2',
       label: (
-        <Link to="/" onClick={handleLogout}>
+        <Link to="/login">
           <LogoutOutlined /> Đăng xuất
         </Link>
       ),

@@ -44,7 +44,7 @@ function Profile() {
       let decodeAddress = null;
 
       try {
-        decodeAddress = JSON.parse(profile.address);
+        decodeAddress = JSON.parse(profile.address ? profile.address : '{}');
       } catch (error) {
         decodeAddress = { address: profile.address };
       }
