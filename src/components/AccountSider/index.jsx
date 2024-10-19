@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Button, Space, ConfigProvider } from 'antd';
-import { UserOutlined, CreditCardOutlined, ScheduleOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Layout, Menu, ConfigProvider, Button } from 'antd';
+import {
+  UserOutlined,
+  CreditCardOutlined,
+  ScheduleOutlined,
+  ShoppingCartOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+} from '@ant-design/icons';
 import { Link, useLocation } from 'react-router-dom';
+import styles from './index.module.scss';
 
 const { Sider: AntSider } = Layout;
-
-const btnStyles = { minWidth: '80%', display: 'inline-flex', justifyContent: 'flex-start' };
 
 function AccountSider() {
   console.log('Account Sider render');
 
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState(location.pathname);
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
     console.log(location.pathname);
@@ -22,60 +29,59 @@ function AccountSider() {
     setCurrentPath(location.pathname);
   }, [location.pathname]);
 
-  const getButtonVariant = (link) => {
-    return currentPath.includes(link) ? 'filled' : 'outlined';
-  };
-
   return (
     <ConfigProvider
       theme={{
         token: {
           borderRadius: 5,
         },
-        components: {
-          Layout: {
-            siderBg: 'transparent',
-          },
-        },
       }}
     >
-      <AntSider width={'28%'}>
-        <Space direction="vertical" size={24} style={{ width: '100%' }}>
-          <Link to="profile">
-            <Button variant={getButtonVariant('profile')} color="primary" size="large" style={btnStyles}>
-              <UserOutlined />
-              <span>Thông tin cá nhân</span>
-            </Button>
-          </Link>
-          <Link to="wallet-manage">
-            <Button variant={getButtonVariant('wallet-manage')} color="primary" size="large" style={btnStyles}>
-              <CreditCardOutlined />
-              <span>Quản lý ví</span>
-            </Button>
-          </Link>
-          <Link to="schedule-manage">
-            <Button variant={getButtonVariant('schedule-manage')} color="primary" size="large" style={btnStyles}>
-              <ScheduleOutlined />
-              <span>Quản lý lịch</span>
-            </Button>
-          </Link>
-          <Link to="order-manage">
-            <Button variant={getButtonVariant('order-manage')} color="primary" size="large" style={btnStyles}>
-              <ShoppingCartOutlined />
-              <span>Quản lý đơn hàng</span>
-            </Button>
-          </Link>
-          <Link to="auction-manage">
-            <Button variant={getButtonVariant('auction-manage')} color="primary" size="large" style={btnStyles}>
-              <span>Quản lý cuộc đấu giá</span>
-            </Button>
-          </Link>
-          <Link to="koi-manage">
-            <Button variant={getButtonVariant('koi-manage')} color="primary" size="large" style={btnStyles}>
-              <span>Quản lý cá Koi</span>
-            </Button>
-          </Link>
-        </Space>
+      <AntSider
+        width={'240'}
+        theme="light"
+        collapsible
+        collapsed={collapsed}
+        trigger={null}
+        collapsedWidth={100}
+        className={styles.sider}
+      >
+        <ConfigProvider
+          theme={{
+            token: {
+              colorText: 'rgb(212, 22, 60)',
+              fontSize: 16,
+            },
+          }}
+        >
+          <Menu mode="vertical" selectedKeys={[currentPath]} className={styles.menu}>
+            <Menu.Item key="/account-center/profile" icon={<UserOutlined />} className={styles.menuItem}>
+              <Link to="profile">Thông tin cá nhân</Link>
+            </Menu.Item>
+            <Menu.Item key="/account-center/wallet-manage" icon={<CreditCardOutlined />} className={styles.menuItem}>
+              <Link to="wallet-manage">Quản lý ví</Link>
+            </Menu.Item>
+            <Menu.Item key="/account-center/schedule-manage" icon={<ScheduleOutlined />} className={styles.menuItem}>
+              <Link to="schedule-manage">Quản lý lịch</Link>
+            </Menu.Item>
+            <Menu.Item key="/account-center/order-manage" icon={<ShoppingCartOutlined />} className={styles.menuItem}>
+              <Link to="order-manage">Quản lý đơn hàng</Link>
+            </Menu.Item>
+            <Menu.Item key="/account-center/auction-manage" icon={<UserOutlined />} className={styles.menuItem}>
+              <Link to="auction-manage">Quản lý cuộc đấu giá</Link>
+            </Menu.Item>
+            <Menu.Item key="/account-center/koi-manage" icon={<UserOutlined />} className={styles.menuItem}>
+              <Link to="koi-manage">Quản lý cá Koi</Link>
+            </Menu.Item>
+          </Menu>
+        </ConfigProvider>
+        <Button
+          type="default"
+          onClick={() => setCollapsed(!collapsed)}
+          block
+          className={`${styles.menuItem} ${styles.trigger}`}
+          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        />
       </AntSider>
     </ConfigProvider>
   );

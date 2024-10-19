@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { Layout } from 'antd';
+import { ConfigProvider, Layout } from 'antd';
 import AntSider from '../../components/AccountSider';
 import NotFound from '../not-found';
 import Profile from './profile';
@@ -25,19 +25,29 @@ function AccountCenter() {
   console.log('Account Center render');
 
   return (
-    <Layout>
-      <AntSider />
-      <AntContent className={styles.content}>
-        <Routes>
-          <Route index element={<Profile />} />
-          {routes.map((route, index) => {
-            const Page = route.component;
-            return <Route key={index} path={route.path} element={<Page />} />;
-          })}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </AntContent>
-    </Layout>
+    <ConfigProvider
+      theme={{
+        components: {
+          Layout: {
+            bodyBg: 'rgba(255, 255, 255, 0)',
+          },
+        },
+      }}
+    >
+      <Layout>
+        <AntSider />
+        <AntContent className={styles.content}>
+          <Routes>
+            <Route index element={<Profile />} />
+            {routes.map((route, index) => {
+              const Page = route.component;
+              return <Route key={index} path={route.path} element={<Page />} />;
+            })}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AntContent>
+      </Layout>
+    </ConfigProvider>
   );
 }
 

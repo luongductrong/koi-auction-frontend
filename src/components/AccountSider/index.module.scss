@@ -1,0 +1,24 @@
+.sider {
+  height: auto;
+  background-color: transparent;
+  margin-right: 2rem;
+}
+
+.menu {
+  width: 100%;
+  border-inline-end: none !important;
+  background-color: transparent;
+}
+
+.menuItem {
+  margin-bottom: 24px !important;
+  font-weight: 400;
+  background-color: #fff;
+  border: 1.5px solid var(--primary-color);
+  //   box-shadow: 0 2px 0 rgba(255, 5, 5, 0.1);
+}
+
+.trigger {
+  color: var(--primary-color);
+  border: none;
+}
