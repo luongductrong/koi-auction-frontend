@@ -33,7 +33,7 @@ function AccountSider() {
     <ConfigProvider
       theme={{
         token: {
-          borderRadius: 5,
+          borderRadius: '5px',
         },
       }}
     >
@@ -73,15 +73,13 @@ function AccountSider() {
             <Menu.Item key="/account-center/koi-manage" icon={<UserOutlined />} className={styles.menuItem}>
               <Link to="koi-manage">Quản lý cá Koi</Link>
             </Menu.Item>
+            <Menu.Item icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />} className={`${styles.trigger}`}>
+              <Link to="#" onClick={() => setCollapsed(!collapsed)}>
+                {collapsed ? 'Mở rộng' : ''}
+              </Link>
+            </Menu.Item>
           </Menu>
         </ConfigProvider>
-        <Button
-          type="default"
-          onClick={() => setCollapsed(!collapsed)}
-          block
-          className={`${styles.menuItem} ${styles.trigger}`}
-          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        />
       </AntSider>
     </ConfigProvider>
   );

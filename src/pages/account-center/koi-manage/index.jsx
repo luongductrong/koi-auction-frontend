@@ -1,7 +1,6 @@
-// KoiManage.jsx
 import React, { useState } from 'react';
-import { Table, Button } from 'antd';
-import KoiForm from '../../components/KoiForm';
+import { Table, Button, Image } from 'antd';
+import KoiForm from '../../../components/KoiForm';
 
 const KoiManage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -12,6 +11,7 @@ const KoiManage = () => {
       type: 'Loại 1',
       origin: 'Nhật Bản',
       status: 'Đang nuôi',
+      image: 'https://example.com/koi1.jpg', // Đường dẫn ảnh
     },
     {
       key: '2',
@@ -19,6 +19,7 @@ const KoiManage = () => {
       type: 'Loại 2',
       origin: 'Việt Nam',
       status: 'Bán',
+      image: 'https://example.com/koi2.jpg', // Đường dẫn ảnh
     },
   ]);
 
@@ -39,19 +40,22 @@ const KoiManage = () => {
 
   const columns = [
     {
+      title: 'Hình ảnh',
+      dataIndex: 'image',
+      key: 'image',
+      render: (image) => <Image width={80} src={image} alt="Koi image" />, // Hiển thị ảnh
+    },
+    {
       title: 'Tên cá',
       dataIndex: 'name',
       key: 'name',
-    },
-    {
-      title: 'Loại cá',
-      dataIndex: 'type',
-      key: 'type',
-    },
-    {
-      title: 'Nguồn gốc',
-      dataIndex: 'origin',
-      key: 'origin',
+      render: (text, record) => (
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <span style={{ fontWeight: 'bold' }}>{text}</span>
+          <span>Loại: {record.type}</span>
+          <span>Nguồn gốc: {record.origin}</span>
+        </div>
+      ),
     },
     {
       title: 'Trạng thái',
@@ -77,8 +81,7 @@ const KoiManage = () => {
       <Button type="primary" onClick={showModal} style={{ marginBottom: 16 }}>
         Thêm cá Koi mới
       </Button>
-      <Table columns={columns} dataSource={koiData} />
-
+      <Table columns={columns} dataSource={koiData} pagination={false} rowClassName="koi-row" />
       <KoiForm visible={isModalVisible} onCreate={handleCreate} onCancel={handleCancel} />
     </div>
   );

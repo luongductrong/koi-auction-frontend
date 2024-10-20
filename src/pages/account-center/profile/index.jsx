@@ -4,7 +4,7 @@ import { Form, Input, Button, Select, DatePicker } from 'antd';
 import { UserOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import moment from 'moment';
-import api, { provinceApi } from '../../configs';
+import api, { provinceApi } from '../../../configs';
 import styles from './profile.module.scss';
 
 const { Title } = Typography;

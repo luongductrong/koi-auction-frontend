@@ -5,20 +5,20 @@
 }
 
 .menu {
-  width: 100%;
   border-inline-end: none !important;
   background-color: transparent;
 }
 
 .menuItem {
-  margin-bottom: 24px !important;
-  font-weight: 400;
+  margin: 0 0 18px !important;
+  font-weight: 450;
+  border: 2px solid var(--primary-color);
   background-color: #fff;
-  border: 1.5px solid var(--primary-color);
   //   box-shadow: 0 2px 0 rgba(255, 5, 5, 0.1);
 }
 
 .trigger {
-  color: var(--primary-color);
+  text-align: center;
+  background-color: #fff;
   border: none;
 }

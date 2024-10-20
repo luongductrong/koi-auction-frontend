@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Layout, Card, Button, Table, App } from 'antd';
 import { DollarOutlined } from '@ant-design/icons';
-import { InputModal } from '../../components/Modal';
-import api from '../../configs';
+import { InputModal } from '../../../components/Modal';
+import api from '../../../configs';
 import styles from './wallet.module.scss';
 
 const { Content } = Layout;
