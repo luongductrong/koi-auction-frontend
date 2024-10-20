@@ -1,49 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button, Image } from 'antd';
+import api from '../../../configs';
 import KoiForm from '../../../components/KoiForm';
+import styles from './koi.module.scss';
+import defaultImage from '../../../assets/images/400x400.svg';
 
 const KoiManage = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [koiData, setKoiData] = useState([
-    {
-      key: '1',
-      name: 'Cá Koi 1',
-      type: 'Loại 1',
-      origin: 'Nhật Bản',
-      status: 'Đang nuôi',
-      image: 'https://example.com/koi1.jpg', // Đường dẫn ảnh
-    },
-    {
-      key: '2',
-      name: 'Cá Koi 2',
-      type: 'Loại 2',
-      origin: 'Việt Nam',
-      status: 'Bán',
-      image: 'https://example.com/koi2.jpg', // Đường dẫn ảnh
-    },
-  ]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [koiData, setKoiData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const showModal = () => {
-    setIsModalVisible(true);
+  console.log('Koi Manage render');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await api.get('/koi-fish/get-koi-active');
+        setKoiData(response.data);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const showDrawer = () => {
+    setIsDrawerOpen(true);
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCreate = (newData) => {
-    const newKey = (koiData.length + 1).toString();
-    const updatedKoiData = [...koiData, { key: newKey, ...newData }];
-    setKoiData(updatedKoiData);
-    setIsModalVisible(false);
+    setIsDrawerOpen(false);
   };
 
   const columns = [
     {
       title: 'Hình ảnh',
-      dataIndex: 'image',
+      dataIndex: 'headerImageUrl',
       key: 'image',
-      render: (image) => <Image width={80} src={image} alt="Koi image" />, // Hiển thị ảnh
+      render: (image) => <Image width={80} src={image ? image : defaultImage} alt="Koi image" />,
     },
     {
       title: 'Tên cá',
@@ -52,8 +50,8 @@ const KoiManage = () => {
       render: (text, record) => (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{ fontWeight: 'bold' }}>{text}</span>
-          <span>Loại: {record.type}</span>
-          <span>Nguồn gốc: {record.origin}</span>
+          <span>Loại: {record.koiTypeID}</span>
+          <span>Nguồn gốc: {record.countryID}</span>
         </div>
       ),
     },
@@ -61,28 +59,32 @@ const KoiManage = () => {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
+      render: (status) =>
+        status === 'Active' ? 'Có sẵn' : status === 'Sold' ? 'Đã bán' : status === 'For-sale' ? 'Đang bán' : status,
+    },
+    {
+      title: 'Mô tả',
+      dataIndex: 'description',
+      key: 'description',
     },
     {
       title: 'Hành động',
       key: 'action',
       render: (text, record) => (
         <div>
-          <Button type="link">Chỉnh sửa</Button>
-          <Button type="link" danger>
-            Xóa
-          </Button>
+          <Button type="link">Chi tiết</Button>
         </div>
       ),
     },
   ];
 
   return (
-    <div>
-      <Button type="primary" onClick={showModal} style={{ marginBottom: 16 }}>
+    <div className={styles.koiContainer}>
+      <Button type="primary" onClick={showDrawer} style={{ marginBottom: 16 }} className={styles.addBtn}>
         Thêm cá Koi mới
       </Button>
-      <Table columns={columns} dataSource={koiData} pagination={false} rowClassName="koi-row" />
-      <KoiForm visible={isModalVisible} onCreate={handleCreate} onCancel={handleCancel} />
+      <Table columns={columns} dataSource={koiData} pagination={true} rowClassName="koi-row" loading={loading} />
+      <KoiForm open={isDrawerOpen} onCancel={handleCancel} />
     </div>
   );
 };

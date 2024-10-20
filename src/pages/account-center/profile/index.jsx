@@ -119,7 +119,7 @@ function Profile() {
   };
 
   return (
-    <div style={{ padding: '4%' }}>
+    <div className={styles.profileContainer}>
       <ConfigProvider
         theme={{
           components: {
