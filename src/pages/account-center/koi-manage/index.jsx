@@ -8,15 +8,18 @@ import defaultImage from '../../../assets/images/400x400.svg';
 const KoiManage = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [koiData, setKoiData] = useState([]);
+  const [koiId, setKoiId] = useState(null);
+  const [drawerMode, setDrawerMode] = useState('create');
   const [loading, setLoading] = useState(false);
 
   console.log('Koi Manage render');
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('Fetching data...');
       setLoading(true);
       try {
-        const response = await api.get('/koi-fish/get-koi-active');
+        const response = await api.get('/koi-fish/koi-active');
         setKoiData(response.data);
       } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -34,6 +37,15 @@ const KoiManage = () => {
 
   const handleCancel = () => {
     setIsDrawerOpen(false);
+    setKoiId(null);
+    setDrawerMode('create');
+  };
+
+  const handleView = (value) => {
+    setIsDrawerOpen(true);
+    console.log('Viewing koi:', value);
+    setKoiId(value);
+    setDrawerMode('update');
   };
 
   const columns = [
@@ -72,7 +84,9 @@ const KoiManage = () => {
       key: 'action',
       render: (text, record) => (
         <div>
-          <Button type="link">Chi tiết</Button>
+          <Button type="link" onClick={() => handleView(record?.id)}>
+            Chi tiết
+          </Button>
         </div>
       ),
     },
@@ -84,7 +98,7 @@ const KoiManage = () => {
         Thêm cá Koi mới
       </Button>
       <Table columns={columns} dataSource={koiData} pagination={true} rowClassName="koi-row" loading={loading} />
-      <KoiForm open={isDrawerOpen} onCancel={handleCancel} />
+      <KoiForm open={isDrawerOpen} onCancel={handleCancel} koiId={koiId} mode={drawerMode} />
     </div>
   );
 };
