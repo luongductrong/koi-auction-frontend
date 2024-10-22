@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Image } from 'antd';
+import { Table, Button, Image, App } from 'antd';
 import api from '../../../configs';
 import KoiForm from '../../../components/KoiForm';
 import styles from './koi.module.scss';
 import defaultImage from '../../../assets/images/400x400.svg';
 
 const KoiManage = () => {
+  const { message } = App.useApp();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [koiData, setKoiData] = useState([]);
   const [koiId, setKoiId] = useState(null);
@@ -21,8 +22,10 @@ const KoiManage = () => {
       try {
         const response = await api.get('/koi-fish/koi-active');
         setKoiData(response.data);
+        console.log('Koi data:', response.data);
       } catch (error) {
         console.error('Failed to fetch data:', error);
+        message.error('Lỗi khi tải dữ liệu. Vui lòng thử lại!');
       } finally {
         setLoading(false);
       }
@@ -62,8 +65,8 @@ const KoiManage = () => {
       render: (text, record) => (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{ fontWeight: 'bold' }}>{text}</span>
-          <span>Loại: {record.koiTypeID}</span>
-          <span>Nguồn gốc: {record.countryID}</span>
+          <span>Loại: {record?.koiTypeID || 'Không xác định'}</span>
+          <span>Nguồn gốc: {record?.countryID || 'Không xác định'}</span>
         </div>
       ),
     },
@@ -97,7 +100,13 @@ const KoiManage = () => {
       <Button type="primary" onClick={showDrawer} style={{ marginBottom: 16 }} className={styles.addBtn}>
         Thêm cá Koi mới
       </Button>
-      <Table columns={columns} dataSource={koiData} pagination={true} rowClassName="koi-row" loading={loading} />
+      <Table
+        columns={columns}
+        dataSource={Array.isArray(koiData) ? koiData.map((item) => ({ ...item, key: item.id })) : []}
+        pagination={koiData?.length > 10 || false}
+        rowClassName="koi-row"
+        loading={loading}
+      />
       <KoiForm open={isDrawerOpen} onCancel={handleCancel} koiId={koiId} mode={drawerMode} />
     </div>
   );

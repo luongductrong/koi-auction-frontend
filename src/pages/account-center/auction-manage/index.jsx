@@ -139,7 +139,7 @@ const AuctionManage = () => {
       <Table
         columns={columns}
         dataSource={auctionData}
-        pagination={auctionData?.length > 10}
+        pagination={auctionData?.length > 10 || false}
         rowClassName="auction-row"
         loading={loading}
       />
