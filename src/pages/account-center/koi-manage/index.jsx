@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Image, App } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import api from '../../../configs';
 import KoiForm from '../../../components/KoiForm';
 import styles from './koi.module.scss';
 import defaultImage from '../../../assets/images/400x400.svg';
 
 const KoiManage = () => {
+  const navigate = useNavigate();
   const { message } = App.useApp();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [koiData, setKoiData] = useState([]);
@@ -20,7 +22,14 @@ const KoiManage = () => {
       console.log('Fetching data...');
       setLoading(true);
       try {
-        const response = await api.get('/koi-fish/koi-active');
+        const response = await api.get('/koi-fish', {
+          requiresAuth: true,
+          timeout: 15000,
+          onUnauthorizedCallback: () => {
+            message.error('Phiên đăng nhập hết hạn!');
+            navigate('/login');
+          },
+        });
         setKoiData(response.data);
         console.log('Koi data:', response.data);
       } catch (error) {

@@ -307,13 +307,21 @@ function Auction() {
                 )}
               </Row>
               {auctions?.length !== 0 && (
-                <Row justify="end" align="middle" gutter={8} style={{ marginTop: '16px' }}>
+                <Row
+                  justify={auctions.length % 3 === 0 ? 'end' : 'center'}
+                  align="middle"
+                  gutter={8}
+                  style={{ marginTop: '16px' }}
+                >
                   <Col>
                     <Pagination
                       defaultCurrent={page + 1}
                       pageSize={size}
                       total={pagination.totalItem}
                       onChange={(page) => setPage(page - 1)}
+                      showSizeChanger
+                      pageSizeOptions={['6', '12', '24', '48']}
+                      onShowSizeChange={(current, size) => setSize(size)}
                     />
                   </Col>
                 </Row>

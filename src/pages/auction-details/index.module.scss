@@ -1,0 +1,24 @@
+.mediaFrame {
+  position: relative;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.playBtn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  padding: 20px;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  &:hover {
+    background-color: #ffffff5c !important;
+  }
+}

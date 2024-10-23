@@ -12,7 +12,7 @@ function GlobalStyles({ children }) {
         token: {
           // Seed Token
           colorPrimary: 'rgb(212, 22, 60)',
-          borderRadius: 2,
+          borderRadius: 4,
           // Alias Token
           fontFamily: "'Montserrat', sans-serif",
           // colorBgContainer: '#f6ffed',
