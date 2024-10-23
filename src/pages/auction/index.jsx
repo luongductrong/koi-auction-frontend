@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import {
   Layout,
   Pagination,
@@ -274,9 +274,11 @@ function Auction() {
                       loading={loading}
                       cover={<Cover imageSrc="https://placehold.co/600x400" startTime={auction.startTime} />}
                       actions={[
-                        <Button color="primary" variant="filled" style={{ width: '80%' }}>
-                          Chi Tiết
-                        </Button>,
+                        <Link to={`/auction/details?id=${auction.auctionId}`}>
+                          <Button color="primary" variant="filled" style={{ width: '80%' }}>
+                            Chi Tiết
+                          </Button>
+                        </Link>,
                       ]}
                     >
                       <Meta

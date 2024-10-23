@@ -14,7 +14,7 @@ const api = axios.create({
 
 const provinceApi = axios.create({
   baseURL: provinceURL,
-  timeout: 10000,
+  timeout: 15000,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',

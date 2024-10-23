@@ -24,7 +24,6 @@ const KoiManage = () => {
       try {
         const response = await api.get('/koi-fish', {
           requiresAuth: true,
-          timeout: 15000,
           onUnauthorizedCallback: () => {
             message.error('Phiên đăng nhập hết hạn!');
             navigate('/login');

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Layout, Card, Button, Table, App } from 'antd';
+import { Layout, Card, Button, Table, App, Spin } from 'antd';
 import { DollarOutlined } from '@ant-design/icons';
 import { InputModal } from '../../../components/Modal';
 import api from '../../../configs';
@@ -12,6 +12,7 @@ function Wallet() {
   const { message } = App.useApp();
   const [walletAmount, setWalletAmount] = useState(0);
   const [transactionHistory, setTransactionHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,6 +39,7 @@ function Wallet() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const [walletResponse, transactionResponse] = await Promise.all([
           api.get('/wallet/get-wallet', {
             requiresAuth: true,
@@ -58,6 +60,8 @@ function Wallet() {
         }
       } catch (error) {
         console.error('Failed to fetch data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -151,30 +155,34 @@ function Wallet() {
         <h5>Ví của tôi</h5>
       </div>
       <Content className={styles.walletContent}>
-        <div className={styles.walletContainer}>
-          <Card className={styles.balanceCard} bordered>
-            <div className={styles.balanceInfo}>
-              <DollarOutlined style={{ fontSize: '48px', color: '#e60000' }} />
-              <h1>{walletAmount.toLocaleString()}</h1>
-            </div>
-            <InputModal
-              inputType="number"
-              buttonTitle="Nạp tiền"
-              label="Nạp tiền"
-              placeholder="Nhập số tiền muốn nạp..."
-              message="Vui lòng nhập số tiền!"
-              btnClassName={styles.depositButton}
-              onOk={(value) => topup(value)}
-            />
-            <Button type="default" className={styles.withdrawButton}>
-              Gửi yêu cầu rút tiền
-            </Button>
-          </Card>
+        {loading ? (
+          <Spin size="large" className={styles.loading} tip="Đang tải"></Spin>
+        ) : (
+          <div className={styles.walletContainer}>
+            <Card className={styles.balanceCard} bordered>
+              <div className={styles.balanceInfo}>
+                <DollarOutlined style={{ fontSize: '48px', color: '#e60000' }} />
+                <h1>{walletAmount.toLocaleString()}</h1>
+              </div>
+              <InputModal
+                inputType="number"
+                buttonTitle="Nạp tiền"
+                label="Nạp tiền"
+                placeholder="Nhập số tiền muốn nạp..."
+                message="Vui lòng nhập số tiền!"
+                btnClassName={styles.depositButton}
+                onOk={(value) => topup(value)}
+              />
+              <Button type="default" className={styles.withdrawButton}>
+                Gửi yêu cầu rút tiền
+              </Button>
+            </Card>
 
-          <Card className={styles.historyCard} bordered title="Lịch sử giao dịch">
-            <Table dataSource={transactionHistory} columns={columns} pagination={{ pageSize: 5 }} rowKey="id" />
-          </Card>
-        </div>
+            <Card className={styles.historyCard} bordered title="Lịch sử giao dịch">
+              <Table dataSource={transactionHistory} columns={columns} pagination={{ pageSize: 5 }} rowKey="id" />
+            </Card>
+          </div>
+        )}
       </Content>
     </Layout>
   );
