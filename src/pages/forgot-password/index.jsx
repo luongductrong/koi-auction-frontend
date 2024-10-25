@@ -77,11 +77,15 @@ function ForgotPassword() {
   const handleResetPassword = async (values) => {
     try {
       setLoading2(true);
-      const response = await api.post(`/forgot-password/verifyAndChangePassword/${values.otp}/${values.email}`, {
-        password: values.password,
-        repeatPassword: values.confirmPassword,
+      const response = await api.post('/forgot-password/verifyAndChangePassword', {
+        otp: values.otp,
+        email: values.email,
+        changePassword: {
+          password: values.password,
+          repeatPassword: values.confirmPassword,
+        },
       });
-      if (response?.status === 200) {
+      if (response) {
         message.success('Đặt lại mật khẩu thành công!');
         navigate('/login');
       }
