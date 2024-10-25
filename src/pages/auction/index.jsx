@@ -76,11 +76,11 @@ function Auction() {
 
         params.append('page', page);
         params.append('size', size);
-        params.append('sort', sort);
+        params.append('desc', sort);
 
         const url = `/auction/filter?${params.toString()}`;
         console.log('URL:', url);
-        window.history.pushState({}, '', url.replace('/filter', ''));
+        window.history.pushState({}, '', url.replace('/filter', '').replace(/(^|&)desc(=|&|$)/, '$1sort$2'));
 
         const response = await api.get(url);
         setAuctions(response.data.auctions);
@@ -89,6 +89,7 @@ function Auction() {
           totalPage: response.data.totalPages,
           totalItem: response.data.totalElements,
         });
+
         console.log('Res:', response.data);
         console.log('Page', response.data.currentPage);
         console.log('Auctions:', response.data.auctions);
@@ -134,6 +135,7 @@ function Auction() {
         setStateFilter(newArray);
       }
     }
+    setPage(0);
   };
 
   const handleToggleMethod = (str) => {
@@ -159,6 +161,7 @@ function Auction() {
         setMethodFilter(newArray);
       }
     }
+    setPage(0);
   };
 
   const handleToggleAllState = () => {
@@ -166,6 +169,7 @@ function Auction() {
     if (JSON.stringify(stateFilter) !== JSON.stringify(allStates)) {
       setStateFilter(allStates);
     }
+    setPage(0);
   };
 
   const handleToggleAllMethod = () => {
@@ -173,6 +177,7 @@ function Auction() {
     if (JSON.stringify(methodFilter) !== JSON.stringify(allMethods)) {
       setMethodFilter(allMethods);
     }
+    setPage(0);
   };
 
   return (

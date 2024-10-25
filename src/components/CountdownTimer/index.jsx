@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 
 const { Text } = Typography;
 
-const CountdownTimer = ({ endTime }) => {
+const CountdownTimer = ({ endTime, status }) => {
   const [timeLeft, setTimeLeft] = useState({});
 
   const isValidTime = dayjs(endTime).isValid();
@@ -36,35 +36,40 @@ const CountdownTimer = ({ endTime }) => {
   }, [deadline, isTimeEnded]);
 
   return (
-    <div className={styles.timerContainer}>
-      {isValidTime ? (
-        isTimeEnded ? (
-          <Text type="danger">Đã kết thúc</Text>
-        ) : (
-          <>
-            {timeLeft.days === 0 && (
+    <div className={styles.timer}>
+      <Text className={styles.timerTitle} strong={false}>
+        Thời gian trả giá còn lại:
+      </Text>
+      <div className={styles.timerContainer}>
+        {isValidTime ? (
+          isTimeEnded ? (
+            <Text type="danger">Đã kết thúc</Text>
+          ) : (
+            <>
+              {timeLeft.days > 0 && (
+                <div className={styles.timerBox}>
+                  <span className={styles.number}>{timeLeft.days}</span>
+                  <span className={styles.label}>NGÀY</span>
+                </div>
+              )}
               <div className={styles.timerBox}>
-                <span className={styles.number}>{timeLeft.days}</span>
-                <span className={styles.label}>NGÀY</span>
+                <span className={styles.number}>{timeLeft.hours}</span>
+                <span className={styles.label}>GIỜ</span>
               </div>
-            )}
-            <div className={styles.timerBox}>
-              <span className={styles.number}>{timeLeft.hours}</span>
-              <span className={styles.label}>GIỜ</span>
-            </div>
-            <div className={styles.timerBox}>
-              <span className={styles.number}>{timeLeft.minutes}</span>
-              <span className={styles.label}>PHÚT</span>
-            </div>
-            <div className={styles.timerBox}>
-              <span className={styles.number}>{timeLeft.seconds}</span>
-              <span className={styles.label}>GIÂY</span>
-            </div>
-          </>
-        )
-      ) : (
-        <Text type="warning">Không xác định</Text>
-      )}
+              <div className={styles.timerBox}>
+                <span className={styles.number}>{timeLeft.minutes}</span>
+                <span className={styles.label}>PHÚT</span>
+              </div>
+              <div className={styles.timerBox}>
+                <span className={styles.number}>{timeLeft.seconds}</span>
+                <span className={styles.label}>GIÂY</span>
+              </div>
+            </>
+          )
+        ) : (
+          <Text type="warning">Không xác định</Text>
+        )}
+      </div>
     </div>
   );
 };

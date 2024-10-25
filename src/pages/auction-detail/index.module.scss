@@ -53,3 +53,67 @@
 .activeThumbnail {
   border: 2px solid var(--primary-color);
 }
+
+.auctionDetails {
+  padding: 10px 40px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  margin-top: 15px;
+}
+
+.detailsBox {
+  // background-color: rgba(0, 0, 0, 0.02);
+  border: #ddd solid 1px;
+  padding: 40px;
+}
+
+.auctionTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #696969;
+  font-family: Montserrat;
+  line-height: 28px;
+  margin-bottom: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.keyTitle {
+  display: inline-block;
+  width: 50%;
+  text-align: left;
+  font-weight: 500;
+  font-size: 14px;
+  color: #696969;
+  margin-bottom: 14px;
+}
+
+.value {
+  display: inline-block;
+  width: 50%;
+  font-size: 14px;
+  color: var(--primary-color);
+  text-align: right;
+  font-weight: bold;
+}
+
+.startPriceTitle {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.startPrice {
+  font-size: 18px;
+}
+
+.koiTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #696969;
+  font-family: Montserrat;
+  line-height: 28px;
+  margin: 15px;
+  width: 100%;
+  text-align: center;
+}

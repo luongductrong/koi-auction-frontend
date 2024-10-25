@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import AuctionVideoPlayer from '../../components/AuctionVideoPlayer';
 import CountdownTimer from '../../components/CountdownTimer';
 import api from '../../configs';
+import moment from 'moment';
 import fallbackImage from '../../assets/images/100x100.svg';
 import poster from '../../assets/images/play-button.svg';
 import image400x500 from '../../assets/images/400x500.svg';
@@ -25,15 +26,6 @@ const AuctionPage = () => {
   const [koiMedias, setKoiMedias] = useState([]);
   const [loading, setLoading] = useState(true);
   // const auctionId = 1;
-
-  const koiMedias1 = [
-    { src: video2, alt: 'Koi 2', description: 'Koi Type 7', mediaType: 'Video' },
-    { src: image400x500, alt: 'Koi 3', description: 'Koi Type 3', mediaType: 'Image Detail' },
-    { src: image400x500, alt: 'Koi 4', description: 'Koi Type 4', mediaType: 'Image Detail' },
-    { src: video, alt: 'Koi 6', description: 'Koi Type 6', mediaType: 'Video' },
-    { src: 'https://placehold.co/400x300', alt: 'Koi 7', description: 'Koi Type 7', mediaType: 'Image Detail' },
-    { src: 'https://placehold.co/400x700', alt: 'Koi 8', description: 'Koi Type 8', mediaType: 'Image Detail' },
-  ];
 
   useEffect(() => {
     const fetchAuctionDetails = async (auctionId) => {
@@ -164,36 +156,85 @@ const AuctionPage = () => {
             ) : (
               <div>Lỗi hiển thị đồng hồ</div>
             )}
-            <div style={{ padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
-              <h1>Thông tin đấu giá Cá Koi</h1>
-              <p>
-                <strong>Mã đấu giá:</strong> {auctionDetails?.id}
-              </p>
-              <p>
-                <strong>Người gây giống:</strong> {auctionDetails?.breederFullName}
-              </p>
-              <p>
-                <strong>Loại đấu giá:</strong> {auctionDetails?.auctionMethod}
-              </p>
-              <p>
-                <strong>Giá khởi điểm:</strong> {auctionDetails?.startingPrice?.toLocaleString()} đ
-              </p>
-              <p>
-                <strong>Giá mua ngay:</strong>{' '}
-                {auctionDetails?.buyoutPrice ? auctionDetails?.buyoutPrice?.toLocaleString() : 'Không có'} đ
-              </p>
-              <p>
-                <strong>Giá cuối cùng:</strong>{' '}
-                {auctionDetails?.finalPrice ? auctionDetails?.finalPrice?.toLocaleString() : 'Chưa có'} đ
-              </p>
-              <p>
-                <strong>Phí đấu giá:</strong> {auctionDetails?.auctionFee?.toLocaleString()} đ
-              </p>
-              <p>
-                <strong>Trạng thái:</strong> {auctionDetails?.status}
-              </p>
+            <div className={styles.auctionDetails}>
+              <h1 className={styles.auctionTitle}>Thông tin cuộc đấu giá</h1>
 
-              <h2>Thông tin Cá Koi</h2>
+              <div className={styles.detailsBox}>
+                <strong className={`${styles.keyTitle} ${styles.startPriceTitle}`}>Giá khởi điểm:</strong>
+                <p className={`${styles.value} ${styles.startPrice}`}>
+                  {auctionDetails?.startingPrice?.toLocaleString()} <span style={{ fontSize: '14px' }}>VNĐ</span>
+                </p>
+
+                <strong className={styles.keyTitle}>Mã số cuộc đấu giá:</strong>
+                <p className={styles.value}>{auctionDetails?.id}</p>
+
+                <strong className={styles.keyTitle}>Người bán:</strong>
+                <p className={styles.value}>{auctionDetails?.breederFullName}</p>
+
+                {/* <strong className={styles.keyTitle}>Người gây giống:</strong>
+                <p className={styles.value}>{auctionDetails?.breederFullName}</p>
+
+                <strong className={styles.keyTitle}>Người gây giống:</strong>
+                <p className={styles.value}>{auctionDetails?.breederFullName}</p> */}
+
+                <strong className={styles.keyTitle}>Phương thức đấu giá:</strong>
+                <p className={styles.value}>
+                  {auctionDetails?.auctionMethod === 'Ascending'
+                    ? 'Trả giá lên'
+                    : auctionDetails?.auctionMethod === 'Descending'
+                    ? 'Đặt giá xuống'
+                    : auctionDetails?.auctionMethod === 'Fixed-price'
+                    ? 'Giá cố định'
+                    : auctionDetails?.auctionMethod === 'First-come'
+                    ? 'Trả giá một lần'
+                    : 'Không xác định'}
+                </p>
+
+                <strong className={styles.keyTitle}>Thời gian bắt đầu:</strong>
+                <p className={styles.value}>
+                  {auctionDetails?.startTime
+                    ? moment(auctionDetails.startTime).format('DD/MM/YYYY, HH:mm:ss')
+                    : 'Không xác định'}
+                </p>
+
+                <strong className={styles.keyTitle}>Thời gian kết thúc:</strong>
+                <p className={styles.value}>
+                  {auctionDetails?.endTime
+                    ? moment(auctionDetails.endTime).format('DD/MM/YYYY, HH:mm:ss')
+                    : 'Không xác định'}
+                </p>
+
+                <strong className={styles.keyTitle}>Tiền đặt trước:</strong>
+                <p className={styles.value}>{auctionDetails?.bidderDeposit?.toLocaleString()} VNĐ</p>
+
+                <strong className={styles.keyTitle}>Bước giá:</strong>
+                <p className={styles.value}>{auctionDetails?.bidStep?.toLocaleString()} VNĐ</p>
+
+                <strong className={styles.keyTitle}>Giá mua ngay:</strong>
+                <p className={styles.value}>
+                  {auctionDetails?.buyoutPrice && auctionDetails?.buyoutPrice > 0
+                    ? `${auctionDetails?.buyoutPrice?.toLocaleString()} VNĐ`
+                    : 'Không có'}
+                </p>
+
+                <strong className={styles.keyTitle}>Giá cuối cùng:</strong>
+                <p className={styles.value}>
+                  {auctionDetails?.finalPrice ? `${auctionDetails?.finalPrice?.toLocaleString()} VNĐ` : 'Chưa có'}
+                </p>
+
+                <strong className={styles.keyTitle}>Trạng thái:</strong>
+                <p className={styles.value}>
+                  {auctionDetails?.status === 'Ongoing'
+                    ? 'Đang diễn ra'
+                    : auctionDetails?.status === 'Scheduled'
+                    ? 'Sắp diễn ra'
+                    : auctionDetails?.status === 'Closed' || auctionDetails?.status === 'Finished'
+                    ? 'Đã kết thúc'
+                    : 'Không xác định'}
+                </p>
+              </div>
+
+              <h2 className={styles.koiTitle}>Thông tin Cá Koi</h2>
               <Collapse accordion>
                 {auctionDetails?.koiData.map((koi, index) => (
                   <Panel header={`${koi.koiName} (${koi.koiType})`} key={index}>
