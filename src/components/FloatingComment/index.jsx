@@ -67,7 +67,7 @@ function FloatingMessage({ commentList, onSubmit }) {
       title="Bình luận"
       trigger="click"
       placement="topRight"
-      overlayStyle={{ minWidth: 500, maxWidth: '50vw' }}
+      overlayStyle={{ minWidth: 500, maxWidth: '50vw', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}
     >
       <FloatButton
         className={styles.floatingButton}

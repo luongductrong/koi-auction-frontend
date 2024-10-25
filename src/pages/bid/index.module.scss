@@ -1,0 +1,72 @@
+.mediaFrame {
+  position: relative;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+// .detailsBox {
+//   // background-color: rgba(0, 0, 0, 0.02);
+//   border: #ddd solid 1px;
+//   padding: 40px;
+// }
+
+.auctionTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: #696969;
+  font-family: Montserrat;
+  line-height: 28px;
+  margin-bottom: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.keyTitle {
+  display: inline-block;
+  width: 50%;
+  text-align: left;
+  font-weight: 500;
+  font-size: 14px;
+  color: #696969;
+  margin-bottom: 14px;
+}
+
+.value {
+  display: inline-block;
+  width: 50%;
+  font-size: 14px;
+  color: var(--primary-color);
+  text-align: right;
+  font-weight: bold;
+}
+
+.bidHistory {
+  margin-top: 16px;
+}
+
+.currentPriceBox {
+  border: rgba(105, 105, 105, 0.2) solid 1px;
+  border-bottom: #696969 dotted 2px;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  .currentPriceTitle {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #696969;
+  }
+  .currentPriceValue {
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    color: var(--primary-color);
+  }
+}
