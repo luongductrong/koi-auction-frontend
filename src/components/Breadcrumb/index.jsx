@@ -8,14 +8,14 @@ const breadcrumbNameMap = {
   '/forgot-password': 'Quên mật khẩu',
   '/access-denied': '403',
   '/auction': 'Cuộc đấu giá',
-  '/auction/details': 'Chi tiết cuộc đấu giá',
+  '/auction/detail': 'Chi tiết cuộc đấu giá',
   '/account-center': 'Trung tâm tài khoản',
   '/account-center/profile': 'Thông tin cá nhân',
-  '/account-center/wallet-manage': 'Quản lý ví',
-  '/account-center/schedule-manage': 'Quản lý lịch',
-  '/account-center/order-manage': 'Quản lý đơn hàng',
-  '/account-center/auction-manage': 'Quản lý cuộc đấu giá',
-  '/account-center/koi-manage': 'Quản lý cá Koi',
+  '/account-center/wallet': 'Quản lý ví',
+  '/account-center/schedule': 'Quản lý lịch',
+  '/account-center/order': 'Quản lý đơn hàng',
+  '/account-center/auction': 'Quản lý cuộc đấu giá',
+  '/account-center/koi': 'Quản lý cá Koi',
 };
 
 function Breadcrumb() {

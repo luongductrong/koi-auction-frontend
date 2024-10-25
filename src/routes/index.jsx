@@ -4,7 +4,7 @@ import Register from '../pages/register';
 import ForgotPassword from '../pages/forgot-password';
 import AccountCenter from '../pages/account-center';
 import Auction from '../pages/auction';
-import AuctionDetails from '../pages/auction-details';
+import AuctionDetail from '../pages/auction-detail';
 import AccessDenied from '../pages/access-denied';
 import NotFound from '../pages/not-found';
 
@@ -14,7 +14,7 @@ const publicRoutes = [
   { path: '/register', component: Register },
   { path: '/forgot-password', component: ForgotPassword },
   { path: '/auction', component: Auction },
-  { path: '/auction/details', component: AuctionDetails },
+  { path: '/auction/detail', component: AuctionDetail },
   { path: '/access-denied', component: AccessDenied },
   { path: '*', component: NotFound },
 ]; // No authentication required

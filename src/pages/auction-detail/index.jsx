@@ -101,7 +101,7 @@ const AuctionPage = () => {
         <Empty description="Không có dữ liệu" className={styles.empty} />
       ) : (
         <Row gutter={16}>
-          <Col span={10}>
+          <Col span={12}>
             <Carousel ref={carouselRef} afterChange={handleCarouselChange} dots autoplay draggable>
               {koiMedias.map((media, index) => (
                 <div key={index} className={styles.mediaFrame}>
@@ -154,7 +154,7 @@ const AuctionPage = () => {
               )}
             </Modal>
           </Col>
-          <Col span={14}>
+          <Col span={12}>
             {auctionDetails?.startTime && auctionDetails?.endTime ? (
               new Date(auctionDetails.startTime) > new Date() ? (
                 <CountdownTimer endTime={auctionDetails.startTime} title="Bắt đầu trả giá sau" />

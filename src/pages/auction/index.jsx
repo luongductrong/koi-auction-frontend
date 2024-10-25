@@ -274,7 +274,7 @@ function Auction() {
                       loading={loading}
                       cover={<Cover imageSrc="https://placehold.co/600x400" startTime={auction.startTime} />}
                       actions={[
-                        <Link to={`/auction/details?id=${auction.auctionId}`}>
+                        <Link to={`/auction/detail?id=${auction.auctionId}`}>
                           <Button color="primary" variant="filled" style={{ width: '80%' }}>
                             Chi Tiết
                           </Button>

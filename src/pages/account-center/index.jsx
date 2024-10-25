@@ -14,11 +14,11 @@ const { Content: AntContent } = Layout;
 
 const routes = [
   { path: 'profile', component: Profile },
-  { path: 'wallet-manage', component: Wallet },
-  { path: 'schedule-manage', component: Schedule },
-  { path: 'order-manage', component: Order },
-  { path: 'auction-manage', component: AuctionManage },
-  { path: 'koi-manage', component: KoiManage },
+  { path: 'wallet', component: Wallet },
+  { path: 'schedule', component: Schedule },
+  { path: 'order', component: Order },
+  { path: 'auction', component: AuctionManage },
+  { path: 'koi', component: KoiManage },
 ];
 
 function AccountCenter() {

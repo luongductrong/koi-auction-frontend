@@ -58,20 +58,20 @@ function AccountSider() {
             <Menu.Item key="/account-center/profile" icon={<UserOutlined />} className={styles.menuItem}>
               <Link to="profile">Thông tin cá nhân</Link>
             </Menu.Item>
-            <Menu.Item key="/account-center/wallet-manage" icon={<CreditCardOutlined />} className={styles.menuItem}>
-              <Link to="wallet-manage">Quản lý ví</Link>
+            <Menu.Item key="/account-center/wallet" icon={<CreditCardOutlined />} className={styles.menuItem}>
+              <Link to="wallet">Quản lý ví</Link>
             </Menu.Item>
-            <Menu.Item key="/account-center/schedule-manage" icon={<ScheduleOutlined />} className={styles.menuItem}>
-              <Link to="schedule-manage">Quản lý lịch</Link>
+            <Menu.Item key="/account-center/schedule" icon={<ScheduleOutlined />} className={styles.menuItem}>
+              <Link to="schedule">Quản lý lịch</Link>
             </Menu.Item>
-            <Menu.Item key="/account-center/order-manage" icon={<ShoppingCartOutlined />} className={styles.menuItem}>
-              <Link to="order-manage">Quản lý đơn hàng</Link>
+            <Menu.Item key="/account-center/order" icon={<ShoppingCartOutlined />} className={styles.menuItem}>
+              <Link to="order">Quản lý đơn hàng</Link>
             </Menu.Item>
-            <Menu.Item key="/account-center/auction-manage" icon={<UserOutlined />} className={styles.menuItem}>
-              <Link to="auction-manage">Quản lý cuộc đấu giá</Link>
+            <Menu.Item key="/account-center/auction" icon={<UserOutlined />} className={styles.menuItem}>
+              <Link to="auction">Quản lý cuộc đấu giá</Link>
             </Menu.Item>
-            <Menu.Item key="/account-center/koi-manage" icon={<UserOutlined />} className={styles.menuItem}>
-              <Link to="koi-manage">Quản lý cá Koi</Link>
+            <Menu.Item key="/account-center/koi" icon={<UserOutlined />} className={styles.menuItem}>
+              <Link to="koi">Quản lý cá Koi</Link>
             </Menu.Item>
             <Menu.Item icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />} className={`${styles.trigger}`}>
               <Link to="#" onClick={() => setCollapsed(!collapsed)}>
