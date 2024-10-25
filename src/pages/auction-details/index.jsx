@@ -1,9 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Row, Col, Carousel, Image, Button, Modal, App, Collapse, Card, Spin, Empty } from 'antd';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { Row, Col, Carousel, Image, Button, Modal, App, Collapse, Card, Spin, Empty, Flex } from 'antd';
 import { PlayCircleFilled } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AuctionVideoPlayer from '../../components/AuctionVideoPlayer';
+import CountdownTimer from '../../components/CountdownTimer';
 import api from '../../configs';
+import fallbackImage from '../../assets/images/100x100.svg';
+import poster from '../../assets/images/play-button.svg';
 import image400x500 from '../../assets/images/400x500.svg';
 import video from '../../assets/videos/7408770596160638254.mp4';
 import video2 from '../../assets/videos/7378681139986304272.mp4';
@@ -73,7 +76,9 @@ const AuctionPage = () => {
   }, [location.search]);
 
   const handleCarouselChange = (index) => {
-    setCurrentIndex(index);
+    if (currentIndex !== index) {
+      setCurrentIndex(index);
+    }
   };
 
   const openVideoModal = (videoSrc) => {
@@ -97,7 +102,7 @@ const AuctionPage = () => {
       ) : (
         <Row gutter={16}>
           <Col span={10}>
-            <Carousel ref={carouselRef} afterChange={handleCarouselChange} dots fade arrows>
+            <Carousel ref={carouselRef} afterChange={handleCarouselChange} dots autoplay draggable>
               {koiMedias.map((media, index) => (
                 <div key={index} className={styles.mediaFrame}>
                   {media.mediaType === 'Image Detail' || media.mediaType === 'Header Image' ? (
@@ -107,13 +112,32 @@ const AuctionPage = () => {
                       <Button
                         icon={<PlayCircleFilled style={{ fontSize: '60px', color: '#0000005c' }} />}
                         className={styles.playBtn}
-                        onClick={() => openVideoModal(video)} // Hiển thị modal với video được chọn
+                        onClick={() => openVideoModal(video)}
                       />
                     </div>
                   )}
                 </div>
               ))}
             </Carousel>
+            <Row className={styles.thumbnailGroup} gutter={[8, 8]}>
+              {koiMedias.map((media, index) => (
+                <Col span={4} key={index}>
+                  <Image
+                    src={
+                      media?.mediaType === 'Image Detail' || media?.mediaType === 'Header Image' ? media.url : poster
+                    }
+                    alt={media.mediaType}
+                    fallback={fallbackImage}
+                    preview={false}
+                    className={`${styles.thumbnail} ${currentIndex === index ? styles.activeThumbnail : ''}`}
+                    onClick={() => {
+                      setCurrentIndex(index);
+                      carouselRef.current.goTo(index);
+                    }}
+                  />
+                </Col>
+              ))}
+            </Row>
 
             {/* Modal for Video */}
             <Modal
@@ -131,6 +155,15 @@ const AuctionPage = () => {
             </Modal>
           </Col>
           <Col span={14}>
+            {auctionDetails?.startTime && auctionDetails?.endTime ? (
+              new Date(auctionDetails.startTime) > new Date() ? (
+                <CountdownTimer endTime={auctionDetails.startTime} title="Bắt đầu trả giá sau" />
+              ) : (
+                <CountdownTimer endTime={auctionDetails.endTime} title="Thời gian trả giá còn lại" />
+              )
+            ) : (
+              <div>Lỗi hiển thị đồng hồ</div>
+            )}
             <div style={{ padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
               <h1>Thông tin đấu giá Cá Koi</h1>
               <p>
