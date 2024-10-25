@@ -1,0 +1,25 @@
+.commentList {
+  max-height: 50vh;
+  overflow-y: auto; /* Kích hoạt thanh cuộn dọc */
+
+  /* Thanh cuộn cho Firefox */
+  scrollbar-width: thin; /* Độ rộng của thanh cuộn: thin, auto, hoặc none */
+  scrollbar-color: var(--primary-color) #f1f1f1; /* Màu sắc cho thanh cuộn và khu vực thanh cuộn */
+}
+
+/* Thanh cuộn chính cho Chrome/Safari */
+.commentList::-webkit-scrollbar {
+  width: 6px; /* Độ rộng của thanh cuộn */
+  height: 6px; /* Chiều cao của thanh cuộn ngang */
+}
+
+/* Cái thanh cuộn */
+.commentList::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color); /* Màu sắc của cái thanh cuộn */
+  border-radius: 10px; /* Độ bo góc */
+}
+
+/* Khu vực thanh cuộn */
+.commentList::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Màu nền của khu vực thanh cuộn */
+}

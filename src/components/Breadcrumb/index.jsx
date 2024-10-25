@@ -9,6 +9,7 @@ const breadcrumbNameMap = {
   '/access-denied': '403',
   '/auction': 'Cuộc đấu giá',
   '/auction/detail': 'Chi tiết cuộc đấu giá',
+  '/auction/bid': 'Đấu giá',
   '/account-center': 'Trung tâm tài khoản',
   '/account-center/profile': 'Thông tin cá nhân',
   '/account-center/wallet': 'Quản lý ví',
