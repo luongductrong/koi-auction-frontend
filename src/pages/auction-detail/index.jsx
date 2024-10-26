@@ -261,7 +261,11 @@ const AuctionPage = () => {
                   </Panel>
                 ))}
               </Collapse>
-              <Button type="primary" className={styles.bidBtn} onClick={() => navigate('/auction/bid')}>
+              <Button
+                type="primary"
+                className={styles.bidBtn}
+                onClick={() => navigate(`/auction/bid?id=${auctionDetails?.id}`)}
+              >
                 Tham gia đấu giá
               </Button>
             </div>

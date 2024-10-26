@@ -50,6 +50,31 @@
   margin-top: 16px;
 }
 
+.list {
+  max-height: 50vh;
+  overflow: auto;
+  padding-right: 20px;
+  scrollbar-width: thin; /* Độ rộng của thanh cuộn: thin, auto, hoặc none */
+  scrollbar-color: #00000025 #f1f1f1; /* Màu sắc cho thanh cuộn và khu vực thanh cuộn */
+}
+
+/* Thanh cuộn chính cho Chrome/Safari */
+.list::-webkit-scrollbar {
+  width: 6px; /* Độ rộng của thanh cuộn */
+  height: 6px; /* Chiều cao của thanh cuộn ngang */
+}
+
+/* Cái thanh cuộn */
+.list::-webkit-scrollbar-thumb {
+  background-color: #00000025; /* Màu sắc của cái thanh cuộn */
+  border-radius: 10px; /* Độ bo góc */
+}
+
+/* Khu vực thanh cuộn */
+.list::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Màu nền của khu vực thanh cuộn */
+}
+
 .currentPriceBox {
   border: rgba(105, 105, 105, 0.2) solid 1px;
   border-bottom: #696969 dotted 2px;

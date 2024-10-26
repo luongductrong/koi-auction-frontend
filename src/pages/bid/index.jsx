@@ -14,75 +14,34 @@ import {
   Flex,
   Statistic,
   ConfigProvider,
+  Empty,
+  App,
 } from 'antd';
+import { RedoOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
+import WebSocketService from '../../services/WebSocketService';
 import FloatingComment from '../../components/FloatingComment';
 import api from '../../configs';
 import moment from 'moment';
 import 'moment/locale/vi';
 import styles from './index.module.scss';
-
-const commentListSample = [
-  {
-    author: 'Nguyễn Văn A',
-    content: 'Bài viết rất hay! Cảm ơn bạn đã chia sẻ.',
-  },
-  {
-    author: 'Trần Thị B',
-    content: 'Mình rất thích nội dung này! Có thể chia sẻ thêm thông tin không?',
-  },
-  {
-    author: 'Lê Văn C',
-    content: 'Rất hữu ích! Hy vọng có thể học hỏi thêm từ bạn.',
-  },
-  {
-    author: 'Phạm Thị D',
-    content: 'Có một số điểm cần cải thiện, nhưng nhìn chung là tốt.',
-  },
-  {
-    author: 'Nguyễn Văn E',
-    content: 'Cảm ơn bạn, mình sẽ thử áp dụng!',
-  },
-  {
-    author: 'Trần Văn F',
-    content: 'Bài viết này đã giúp mình rất nhiều, cảm ơn!',
-  },
-  {
-    author: 'Nguyễn Văn A',
-    content: 'Bài viết rất hay! Cảm ơn bạn đã chia sẻ.',
-  },
-  {
-    author: 'Trần Thị B',
-    content: 'Mình rất thích nội dung này! Có thể chia sẻ thêm thông tin không?',
-  },
-  {
-    author: 'Lê Văn C',
-    content: 'Rất hữu ích! Hy vọng có thể học hỏi thêm từ bạn.',
-  },
-  {
-    author: 'Phạm Thị D',
-    content: 'Có một số điểm cần cải thiện, nhưng nhìn chung là tốt.',
-  },
-  {
-    author: 'Nguyễn Văn E',
-    content: 'Cảm ơn bạn, mình sẽ thử áp dụng!',
-  },
-  {
-    author: 'Trần Văn F',
-    content: 'Bài viết này đã giúp mình rất nhiều, cảm ơn!',
-  },
-];
+import { commentListSample } from './temp';
+import { Stomp } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
 const { Panel } = Collapse;
 const { Countdown } = Statistic;
 
 function BidPage() {
+  const { message } = App.useApp();
   const navigate = useNavigate();
   const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const [auctionId, setAuctionId] = useState(params.get('id'));
   const [bidAmount, setBidAmount] = useState(0);
   const [auctionDetails, setAuctionDetails] = useState(null);
   const [koiMedias, setKoiMedias] = useState([]);
-  const [currentPrice, setCurrentPrice] = useState(1000000); // Example starting price
+  const [currentPrice, setCurrentPrice] = useState(0);
   const [bidHistory, setBidHistory] = useState([]);
   const [commentList, setCommentList] = useState(commentListSample);
   const [loading, setLoading] = useState(true);
@@ -93,6 +52,44 @@ function BidPage() {
   useEffect(() => {
     moment.locale('vi');
   }, []);
+
+  useEffect(() => {
+    const displayBidUpdate = (bidUpdate) => {
+      console.log('New bid:', bidUpdate);
+      setCurrentPrice(bidUpdate.amount);
+      setBidHistory((prev) => [
+        ...prev,
+        {
+          bidder: bidUpdate.bidderId,
+          bidderName: bidUpdate.fullName,
+          amount: bidUpdate.amount,
+          time: new Date(bidUpdate.bidTime).toLocaleString(),
+        },
+      ]);
+    };
+
+    if (auctionId) {
+      WebSocketService.connect(auctionId, displayBidUpdate, (notification) => {
+        console.log('New notification:', notification);
+      });
+    }
+    return () => {
+      WebSocketService.disconnect();
+    };
+  }, [auctionId]);
+
+  // useEffect(() => {
+  //   function connectWebSocket(auctionId) {
+  //     const socket = new SockJS('http://localhost:8080/ws'); // URL endpoint của WebSocket
+  //     const stompClient = Stomp.over(() => socket);
+
+  //     stompClient.connect({}, function (frame) {
+  //       console.log('Connected to WebSocket: ' + frame);
+  //     });
+  //   }
+
+  //   connectWebSocket(auctionId);
+  // }, []);
 
   useEffect(() => {
     const fetchAuctionDetails = async (auctionId) => {
@@ -124,40 +121,60 @@ function BidPage() {
         setLoading(false);
       }
     };
-
-    const params = new URLSearchParams(location.search);
-    const auctionId = params.get('id');
     if (auctionId) {
       fetchAuctionDetails(auctionId);
     } else {
       navigate('404');
     }
-  }, [location.search]);
+  }, [location.search, auctionId]);
 
-  //   useEffect(() => {
-  //     // Fetch bid history and comments here
-  //     const fetchAuctionData = async () => {
-  //       setLoading(true);
-  //       try {
-  //         const bidResponse = await api.get('/auction/bid-history'); // Example endpoint
-  //         setBidHistory(bidResponse.data);
+  useEffect(() => {
+    // Fetch bid history and comments here
+    const fetchAuctionData = async () => {
+      setLoading(true);
+      try {
+        const bidResponse = await api.get(`/bid/get-all?auctionId=${auctionId}`, {
+          requiresAuth: true,
+          onUnauthorizedCallback: () => {
+            navigate('/login');
+          },
+        });
+        const bidData = bidResponse.data;
+        bidData.sort((a, b) => new Date(b.bidTime) - new Date(a.bidTime));
+        setBidHistory(bidData);
+        setCurrentPrice(bidData[0]?.amount ? bidData[0].amount : auctionDetails?.startingPrice);
+        // const commentResponse = await api.get('/auction/comments'); // Example endpoint
+        // setCommentList(commentResponse.data);
+      } catch (error) {
+        console.error('Failed to load auction data', error);
+        message.error('Đã xảy ra lỗi khi tải lịch sử trả giá!');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //         const commentResponse = await api.get('/auction/comments'); // Example endpoint
-  //         setCommentList(commentResponse.data);
-  //       } catch (error) {
-  //         console.error('Failed to load auction data', error);
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
+    fetchAuctionData();
+  }, []);
 
-  //     fetchAuctionData();
-  //   }, []);
-
-  const placeBid = () => {
+  const placeBid = async () => {
     if (bidAmount > currentPrice) {
-      setCurrentPrice(bidAmount);
-      setBidHistory((prev) => [...prev, { bidder: 'Bạn', amount: bidAmount, time: new Date() }]);
+      try {
+        const response = await api.post(
+          'bid/place',
+          { auctionId: auctionId, amount: bidAmount },
+          { requiresAuth: true },
+        );
+        if (response) {
+          message.success('Trả giá thành công!');
+          setCurrentPrice(response?.data?.amount);
+          // setAuctionId(response?.data?.id?.auctionID ? response.data.id.auctionID : auctionId);
+        }
+      } catch (error) {
+        console.error('Failed to place bid:', error);
+        message.error('Trả giá thất bại!');
+      }
+      // setCurrentPrice(bidAmount);
+      // setBidHistory((prev) => [...prev, { bidderName: 'Bạn', amount: bidAmount, time: new Date() }]);
       setBidAmount(0); // Reset bid input
     }
   };
@@ -240,7 +257,7 @@ function BidPage() {
                         },
                       }}
                     >
-                      <Countdown value={auctionDetails.endTime} format="DD ngày HH:mm:ss" />
+                      <Countdown value={auctionDetails.endTime} format="D ngày HH:mm:ss" />
                     </ConfigProvider>
                   )}
                 </div>
@@ -249,14 +266,16 @@ function BidPage() {
                 <Flex vertical className={styles.currentPriceBox}>
                   <strong className={styles.currentPriceTitle}>Mức giá hiện tại</strong>
                   <p className={styles.currentPriceValue}>
-                    {currentPrice.toLocaleString()} <span style={{ fontSize: '14px' }}>VNĐ</span>
+                    {currentPrice?.toLocaleString()} <span style={{ fontSize: '14px' }}>VNĐ</span>
                   </p>
                 </Flex>
                 <InputNumber
-                  min={currentPrice + 500000}
+                  // min={currentPrice + auctionDetails?.bidStep}
                   value={bidAmount}
                   step={auctionDetails?.bidStep}
                   onChange={handleBidInputChange}
+                  formatter={(value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+                  parser={(value) => value.replace(/\./g, '')}
                   addonBefore="VNĐ"
                   style={{ width: '100%', marginTop: '10px' }}
                 />
@@ -264,31 +283,42 @@ function BidPage() {
                   type="primary"
                   onClick={placeBid}
                   style={{ width: '100%', marginTop: '10px' }}
-                  disabled={bidAmount <= currentPrice}
+                  disabled={bidAmount < currentPrice}
                 >
                   Đặt giá
                 </Button>
               </Flex>
             </Card>
-            <Collapse className={styles.bidHistory} accordion defaultActiveKey={['1']}>
-              <Panel header="Lịch sử trả giá" key="1">
-                <List
-                  itemLayout="horizontal"
-                  dataSource={bidHistory}
-                  renderItem={(item) => (
-                    <List.Item>
-                      <List.Item.Meta
-                        title={<span>{item.bidder}</span>}
-                        description={`Giá: ${item.amount.toLocaleString()} VNĐ`}
-                      />
-                      <Tooltip title={moment(item.time).format('DD/MM/YYYY HH:mm:ss')}>
-                        <span>{moment(item.time).locale('vi').fromNow()}</span>
-                      </Tooltip>
-                    </List.Item>
-                  )}
-                />
-              </Panel>
-            </Collapse>
+            <Collapse
+              className={styles.bidHistory}
+              items={[
+                {
+                  key: '1',
+                  label: 'Lịch sử trả giá',
+                  children: (
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={bidHistory}
+                      className={styles.list}
+                      renderItem={(item) => (
+                        <List.Item>
+                          <List.Item.Meta
+                            title={<span>{item.fullName}</span>}
+                            description={`Giá: ${item.amount.toLocaleString()} VNĐ`}
+                          />
+                          <Tooltip title={moment(item.bidTime).format('DD/MM/YYYY HH:mm:ss')}>
+                            <span>{moment(item.bidTime).locale('vi').fromNow()}</span>
+                          </Tooltip>
+                        </List.Item>
+                      )}
+                    />
+                  ),
+                },
+              ]}
+              accordion
+              defaultActiveKey={['1']}
+            />
+            {/* end of Collapse /--------------------------------------------------/ */}
           </Col>
         </Row>
       )}
