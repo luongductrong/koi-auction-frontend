@@ -16,9 +16,9 @@ function Menu() {
       className: styles.subMenu,
       style: { backgroundColor: '#D4163C' },
       children: [
-        { key: 'schedule', label: <Link to="/">Cuộc đấu giá sắp diễn ra</Link> },
-        { key: 'current', label: <Link to="/">Cuộc đấu giá đang diễn ra</Link> },
-        { key: 'past', label: <Link to="/">Cuộc đấu giá đã kết thúc</Link> },
+        { key: 'schedule', label: <Link to="/auction?status=scheduled">Cuộc đấu giá sắp diễn ra</Link> },
+        { key: 'current', label: <Link to="/auction?status=ongoing">Cuộc đấu giá đang diễn ra</Link> },
+        { key: 'past', label: <Link to="/auction?status=closed">Cuộc đấu giá đã kết thúc</Link> },
       ],
       type: 'submenu',
     },
