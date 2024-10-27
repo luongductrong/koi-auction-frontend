@@ -1,35 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Row,
-  Col,
-  Button,
-  InputNumber,
-  List,
-  Tooltip,
-  Card,
-  Collapse,
-  Spin,
-  Carousel,
-  Image,
-  Flex,
-  Statistic,
-  ConfigProvider,
-  Empty,
-  App,
-} from 'antd';
-import { RedoOutlined } from '@ant-design/icons';
+import { Row, Col, Button, InputNumber, List, Tooltip, Card, Collapse } from 'antd';
+import { Spin, Carousel, Image, Flex, Statistic, ConfigProvider, Empty, App } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import WebSocketService from '../../services/WebSocketService';
 import FloatingComment from '../../components/FloatingComment';
 import api from '../../configs';
 import moment from 'moment';
 import 'moment/locale/vi';
+import { fromNow } from '../../utils/momentCustom';
 import styles from './index.module.scss';
 import { commentListSample } from './temp';
-import { Stomp } from '@stomp/stompjs';
-import SockJS from 'sockjs-client';
 
-const { Panel } = Collapse;
 const { Countdown } = Statistic;
 
 function BidPage() {
@@ -47,28 +28,24 @@ function BidPage() {
   const [loading, setLoading] = useState(true);
 
   console.log('BidPage render');
-  console.log(moment.locale());
 
   useEffect(() => {
-    moment.locale('vi');
-  }, []);
-
-  useEffect(() => {
+    // Connect to WebSocket
     const displayBidUpdate = (bidUpdate) => {
       console.log('New bid:', bidUpdate);
       setCurrentPrice(bidUpdate.amount);
       setBidHistory((prev) => [
-        ...prev,
         {
-          bidder: bidUpdate.bidderId,
-          bidderName: bidUpdate.fullName,
+          bidderId: bidUpdate.bidderId,
+          fullName: bidUpdate.fullName,
           amount: bidUpdate.amount,
-          time: new Date(bidUpdate.bidTime).toLocaleString(),
+          bidTime: bidUpdate.bidTime,
         },
+        ...prev,
       ]);
     };
 
-    if (auctionId) {
+    if (auctionId && auctionDetails && auctionDetails?.status === 'Ongoing') {
       WebSocketService.connect(auctionId, displayBidUpdate, (notification) => {
         console.log('New notification:', notification);
       });
@@ -76,87 +53,97 @@ function BidPage() {
     return () => {
       WebSocketService.disconnect();
     };
-  }, [auctionId]);
-
-  // useEffect(() => {
-  //   function connectWebSocket(auctionId) {
-  //     const socket = new SockJS('http://localhost:8080/ws'); // URL endpoint của WebSocket
-  //     const stompClient = Stomp.over(() => socket);
-
-  //     stompClient.connect({}, function (frame) {
-  //       console.log('Connected to WebSocket: ' + frame);
-  //     });
-  //   }
-
-  //   connectWebSocket(auctionId);
-  // }, []);
+  }, [auctionId, auctionDetails?.status]);
 
   useEffect(() => {
-    const fetchAuctionDetails = async (auctionId) => {
+    const fetchAuctionData = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
-        const response = await api.get(`/auction/${auctionId}`);
-        setAuctionDetails(response?.data ? response.data : null);
-        setKoiMedias(
-          response?.data?.koiData
-            ? response.data.koiData.flatMap((koi) =>
-                koi.koiMedia.map((media) => ({
-                  ...media,
-                  koiID: koi.id,
-                  koiName: koi.koiName,
-                })),
-              )
-            : [],
-        );
-        console.log(response?.data?.koiData?.flatMap((koi) => koi.koiMedia));
-      } catch (error) {
-        console.error('Failed to fetch auction details:', error);
-        if (error.response && error.response.status === 404) {
-          message.error('Không tìm thấy đấu giá này!');
-          navigate('404');
+        const [auctionDetailsResponse, bidHistoryResponse] = await Promise.allSettled([
+          api.get(`/auction/${auctionId}`),
+          api.get(`/bid/get-all?auctionId=${auctionId}`, {
+            requiresAuth: true,
+            onUnauthorizedCallback: () => {
+              message.warning('Vui lòng đăng nhập để xem lịch sử đấu giá!');
+            },
+          }),
+        ]);
+
+        // Fetch auction details
+        if (auctionDetailsResponse.status === 'fulfilled') {
+          const auctionDetailsData = auctionDetailsResponse.value.data;
+          setAuctionDetails(auctionDetailsData || null);
+          setKoiMedias(
+            auctionDetailsData?.koiData
+              ? auctionDetailsData.koiData.flatMap((koi) =>
+                  koi.koiMedia.map((media) => ({
+                    ...media,
+                    koiID: koi.id,
+                    koiName: koi.koiName,
+                  })),
+                )
+              : [],
+          );
         } else {
-          message.error('Đã xảy ra lỗi khi tải dữ liệu!');
+          console.error('Failed to fetch auction details:', auctionDetailsResponse.reason);
+          if (auctionDetailsResponse.reason.response?.status === 404) {
+            message.error('Không tìm thấy đấu giá này!');
+            navigate('404');
+          } else {
+            message.error('Đã xảy ra lỗi khi tải dữ liệu cuộc đấu giá!');
+          }
         }
+
+        // Fetch bid history
+        if (bidHistoryResponse.status === 'fulfilled') {
+          const bidData = bidHistoryResponse?.value?.data;
+          if (bidData) {
+            bidData.sort((a, b) => new Date(b.bidTime) - new Date(a.bidTime));
+            setBidHistory(bidData);
+          } else {
+            setBidHistory([]);
+          }
+          setCurrentPrice(bidData?.length > 0 ? bidData[0].amount : auctionDetailsResponse?.value?.data?.startingPrice);
+          console.log(
+            'Bid history Curent Price:',
+            bidData?.length > 0 ? bidData[0].amount : auctionDetailsResponse?.value?.data?.startingPrice,
+          );
+        } else {
+          console.error('Failed to load auction data', bidHistoryResponse.reason);
+        }
+      } catch (error) {
+        console.error('An error occurred while fetching auction data:', error);
       } finally {
         setLoading(false);
       }
     };
+
     if (auctionId) {
-      fetchAuctionDetails(auctionId);
+      fetchAuctionData();
     } else {
       navigate('404');
     }
   }, [location.search, auctionId]);
 
-  useEffect(() => {
-    // Fetch bid history and comments here
-    const fetchAuctionData = async () => {
-      setLoading(true);
-      try {
-        const bidResponse = await api.get(`/bid/get-all?auctionId=${auctionId}`, {
-          requiresAuth: true,
-          onUnauthorizedCallback: () => {
-            message.warning('Vui lòng đăng nhập để xem lịch sử đấu giá!');
-          },
-        });
-        const bidData = bidResponse.data;
-        bidData.sort((a, b) => new Date(b.bidTime) - new Date(a.bidTime));
-        setBidHistory(bidData);
-        setCurrentPrice(bidData[0]?.amount ? bidData[0].amount : auctionDetails?.startingPrice);
-        // const commentResponse = await api.get('/auction/comments'); // Example endpoint
-        // setCommentList(commentResponse.data);
-      } catch (error) {
-        console.error('Failed to load auction data', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAuctionData();
-  }, []);
-
   const placeBid = async () => {
-    if (bidAmount > currentPrice) {
+    console.log(
+      'Placing bid:',
+      bidAmount,
+      // auctionDetails,
+      currentPrice,
+      auctionDetails?.buyoutPrice,
+      auctionDetails?.startingPrice,
+    );
+    console.log(
+      'Bid:',
+      auctionDetails && auctionDetails.buyoutPrice < bidAmount,
+      auctionDetails && auctionDetails.startingPrice <= bidAmount && bidAmount >= currentPrice,
+    );
+    if (auctionDetails && auctionDetails.buyoutPrice < bidAmount) {
+      message.error('Mức giá của bạn vượt quá giá mua ngay!');
+      return;
+    }
+    if (auctionDetails && auctionDetails.startingPrice <= bidAmount && bidAmount >= currentPrice) {
       try {
         const response = await api.post(
           'bid/place',
@@ -166,15 +153,14 @@ function BidPage() {
         if (response) {
           message.success('Trả giá thành công!');
           setCurrentPrice(response?.data?.amount);
-          // setAuctionId(response?.data?.id?.auctionID ? response.data.id.auctionID : auctionId);
         }
       } catch (error) {
         console.error('Failed to place bid:', error);
         message.error('Trả giá thất bại!');
       }
-      // setCurrentPrice(bidAmount);
-      // setBidHistory((prev) => [...prev, { bidderName: 'Bạn', amount: bidAmount, time: new Date() }]);
       setBidAmount(0); // Reset bid input
+    } else {
+      message.error('Đã xảy ra lỗi!');
     }
   };
 
@@ -186,13 +172,17 @@ function BidPage() {
     setCommentList((prev) => [...prev, { author: 'Bạn', content: values.comment, time: new Date() }]);
   };
 
+  const closeAcution = () => {
+    setAuctionDetails((auctionDetails) => ({ ...auctionDetails, status: 'Closed', endTime: new Date() }));
+  };
+
   return (
     <div className={styles.BidPage}>
       {loading ? (
         <Spin spinning={loading} tip="Đang tải dữ liệu..." fullscreen>
           <div></div>
         </Spin>
-      ) : auctionDetails === null ? (
+      ) : auctionDetails === null && !loading ? (
         <Empty description="Không có dữ liệu" className={styles.empty} />
       ) : (
         <Row gutter={16}>
@@ -219,16 +209,16 @@ function BidPage() {
               <div className={styles.detailsBox}>
                 <strong className={`${styles.keyTitle} ${styles.startPriceTitle}`}>Giá khởi điểm:</strong>
                 <p className={`${styles.value} ${styles.startPrice}`}>
-                  {auctionDetails?.startingPrice?.toLocaleString()} <span style={{ fontSize: '14px' }}>VNĐ</span>
+                  {auctionDetails?.startingPrice?.toLocaleString()} <span style={{ fontSize: '14px' }}>VND</span>
                 </p>
 
                 <strong className={styles.keyTitle}>Bước giá:</strong>
-                <p className={styles.value}>{auctionDetails?.bidStep?.toLocaleString()} VNĐ</p>
+                <p className={styles.value}>{auctionDetails?.bidStep?.toLocaleString()} VND</p>
 
                 <strong className={styles.keyTitle}>Giá mua ngay:</strong>
                 <p className={styles.value}>
                   {auctionDetails?.buyoutPrice && auctionDetails?.buyoutPrice > 0
-                    ? `${auctionDetails?.buyoutPrice?.toLocaleString()} VNĐ`
+                    ? `${auctionDetails?.buyoutPrice?.toLocaleString()} VND`
                     : 'Không có'}
                 </p>
 
@@ -256,36 +246,61 @@ function BidPage() {
                         },
                       }}
                     >
-                      <Countdown value={auctionDetails.endTime} format="D ngày HH:mm:ss" />
+                      <Countdown
+                        value={auctionDetails.endTime || 0}
+                        format={auctionDetails?.status === 'Ongoing' ? 'H giờ mm phút ss giây' : 'Đã kết thúc'}
+                      />
                     </ConfigProvider>
                   )}
                 </div>
               </div>
               <Flex vertical>
                 <Flex vertical className={styles.currentPriceBox}>
-                  <strong className={styles.currentPriceTitle}>Mức giá hiện tại</strong>
+                  <strong className={styles.currentPriceTitle}>
+                    {auctionDetails?.status === 'Scheduled'
+                      ? 'Giá khởi điểm'
+                      : auctionDetails?.status === 'Ongoing'
+                      ? 'Mức giá hiện tại'
+                      : 'Mức giá cuối cùng'}
+                  </strong>
                   <p className={styles.currentPriceValue}>
-                    {currentPrice?.toLocaleString()} <span style={{ fontSize: '14px' }}>VNĐ</span>
+                    {currentPrice && auctionDetails?.status === 'Ongoing' && bidHistory?.length > 0
+                      ? currentPrice.toLocaleString()
+                      : auctionDetails?.startingPrice &&
+                        auctionDetails?.status !== 'Closed' &&
+                        auctionDetails?.status !== 'Finished'
+                      ? auctionDetails.startingPrice.toLocaleString()
+                      : auctionDetails?.finalPrice &&
+                        (auctionDetails?.status === 'Closed' || auctionDetails?.status === 'Finished')
+                      ? auctionDetails.finalPrice.toLocaleString()
+                      : 0}{' '}
+                    <span style={{ fontSize: '14px' }}>VND</span>
                   </p>
                 </Flex>
-                <InputNumber
-                  // min={currentPrice + auctionDetails?.bidStep}
-                  value={bidAmount}
-                  step={auctionDetails?.bidStep}
-                  onChange={handleBidInputChange}
-                  formatter={(value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
-                  parser={(value) => value.replace(/\./g, '')}
-                  addonBefore="VNĐ"
-                  style={{ width: '100%', marginTop: '10px' }}
-                />
-                <Button
-                  type="primary"
-                  onClick={placeBid}
-                  style={{ width: '100%', marginTop: '10px' }}
-                  disabled={bidAmount < currentPrice}
-                >
-                  Đặt giá
-                </Button>
+                {auctionDetails?.status === 'Ongoing' && (
+                  <InputNumber
+                    // min={currentPrice + auctionDetails?.bidStep}
+                    value={bidAmount}
+                    step={auctionDetails?.bidStep}
+                    onChange={handleBidInputChange}
+                    formatter={(value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+                    parser={(value) => value.replace(/\./g, '')}
+                    addonBefore="VND"
+                    style={{ width: '100%', marginTop: '10px' }}
+                  />
+                )}
+                {auctionDetails?.status === 'Ongoing' && (
+                  <Button
+                    type="primary"
+                    onClick={placeBid}
+                    style={{ width: '100%', marginTop: '10px' }}
+                    disabled={
+                      (bidHistory?.length > 0 && bidAmount <= currentPrice) || bidAmount < auctionDetails?.startingPrice
+                    }
+                  >
+                    Đặt giá
+                  </Button>
+                )}
               </Flex>
             </Card>
             <Collapse
@@ -303,10 +318,10 @@ function BidPage() {
                         <List.Item>
                           <List.Item.Meta
                             title={<span>{item.fullName}</span>}
-                            description={`Giá: ${item.amount.toLocaleString()} VNĐ`}
+                            description={`Giá: ${item.amount.toLocaleString()} VND`}
                           />
                           <Tooltip title={moment(item.bidTime).format('DD/MM/YYYY HH:mm:ss')}>
-                            <span>{moment(item.bidTime).locale('vi').fromNow()}</span>
+                            <span>{fromNow(item.bidTime)}</span>
                           </Tooltip>
                         </List.Item>
                       )}

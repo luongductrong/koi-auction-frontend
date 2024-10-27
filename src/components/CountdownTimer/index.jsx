@@ -37,9 +37,11 @@ const CountdownTimer = ({ endTime, status, title }) => {
 
   return (
     <div className={styles.timer}>
-      <Text className={styles.timerTitle} strong={false}>
-        {title}
-      </Text>
+      {status !== 'Closed' && status !== 'Finished' && (
+        <Text className={styles.timerTitle} strong={false}>
+          {title}
+        </Text>
+      )}
       <div className={styles.timerContainer}>
         {isValidTime ? (
           isTimeEnded || status === 'Closed' || status === 'Finished' ? (

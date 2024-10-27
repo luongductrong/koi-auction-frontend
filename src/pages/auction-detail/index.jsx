@@ -207,12 +207,6 @@ const AuctionPage = () => {
                 <strong className={styles.keyTitle}>Người bán:</strong>
                 <p className={styles.value}>{auctionDetails?.breederFullName}</p>
 
-                {/* <strong className={styles.keyTitle}>Người gây giống:</strong>
-                <p className={styles.value}>{auctionDetails?.breederFullName}</p>
-
-                <strong className={styles.keyTitle}>Người gây giống:</strong>
-                <p className={styles.value}>{auctionDetails?.breederFullName}</p> */}
-
                 <strong className={styles.keyTitle}>Phương thức đấu giá:</strong>
                 <p className={styles.value}>
                   {auctionDetails?.auctionMethod === 'Ascending'
@@ -253,11 +247,6 @@ const AuctionPage = () => {
                     : 'Không có'}
                 </p>
 
-                <strong className={styles.keyTitle}>Giá cuối cùng:</strong>
-                <p className={styles.value}>
-                  {auctionDetails?.finalPrice ? `${auctionDetails?.finalPrice?.toLocaleString()} VNĐ` : 'Chưa có'}
-                </p>
-
                 <strong className={styles.keyTitle}>Trạng thái:</strong>
                 <p className={styles.value}>
                   {auctionDetails?.status === 'Ongoing'
@@ -282,7 +271,10 @@ const AuctionPage = () => {
                         <strong>Nguồn gốc:</strong> {koiOrigin(koi.country)}
                       </p>
                       <p>
-                        <strong>Cân nặng:</strong> {koi.weight ? `${koi.weight} kg` : 'Không xác định'}
+                        <strong>Cân nặng:</strong> {koi.weight ? `~ ${koi.weight} kg` : 'Không xác định'}
+                      </p>
+                      <p>
+                        <strong>Chiều dài:</strong> {koi.length ? `~ ${koi.length} cm` : 'Không xác định'}
                       </p>
                       <p>
                         <strong>Giới tính:</strong>{' '}
@@ -293,9 +285,6 @@ const AuctionPage = () => {
                         {koi.birthday || koi.birthday !== 'undefined'
                           ? new Date(koi.birthday).toLocaleDateString()
                           : 'Không xác định'}
-                      </p>
-                      <p>
-                        <strong>Chiều dài:</strong> {koi.length} cm
                       </p>
                       <p>
                         <strong>Mô tả:</strong> {koi.description}
