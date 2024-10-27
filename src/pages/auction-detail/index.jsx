@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { Row, Col, Carousel, Image, Button, Modal, App, Collapse, Card, Spin, Empty, Flex } from 'antd';
+import { Row, Col, Carousel, Image, Button, Modal, App, Collapse, Card, Spin, Empty, Flex, Typography } from 'antd';
 import { PlayCircleFilled } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import AuctionVideoPlayer from '../../components/AuctionVideoPlayer';
 import CountdownTimer from '../../components/CountdownTimer';
+import RegisterAuctionModal from '../../components/AuctionRegisterModal';
 import api from '../../configs';
 import moment from 'moment';
+import { koiOrigin } from '../../utils/koi-i8';
 import fallbackImage from '../../assets/images/100x100.svg';
 import poster from '../../assets/images/play-button.svg';
 import image400x500 from '../../assets/images/400x500.svg';
@@ -16,14 +19,16 @@ import styles from './index.module.scss';
 const AuctionPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const carouselRef = useRef(null);
   const { message } = App.useApp();
-  const { Panel } = Collapse;
+  const user = useSelector((state) => state.user.user);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRegisteredModalOpen, setIsRegisteredModalOpen] = useState(false);
   const [currentVideoSrc, setCurrentVideoSrc] = useState(null);
-  const carouselRef = useRef(null);
   const [auctionDetails, setAuctionDetails] = useState(null);
   const [koiMedias, setKoiMedias] = useState([]);
+  const [isRegistered, setIsRegistered] = useState(false);
   const [loading, setLoading] = useState(true);
   // const auctionId = 1;
 
@@ -31,28 +36,47 @@ const AuctionPage = () => {
     const fetchAuctionDetails = async (auctionId) => {
       try {
         setLoading(true);
-        const response = await api.get(`/auction/${auctionId}`);
-        setAuctionDetails(response?.data ? response.data : null);
-        setKoiMedias(
-          response?.data?.koiData
-            ? response.data.koiData.flatMap((koi) =>
-                koi.koiMedia.map((media) => ({
-                  ...media,
-                  koiID: koi.id,
-                  koiName: koi.koiName,
-                })),
-              )
-            : [],
-        );
-        console.log(response?.data?.koiData?.flatMap((koi) => koi.koiMedia));
-      } catch (error) {
-        console.error('Failed to fetch auction details:', error);
-        if (error.response && error.response.status === 404) {
-          message.error('Không tìm thấy đấu giá này!');
-          navigate('/auction/details/404');
+
+        // Sử dụng Promise.allSettled để gọi 2 API cùng lúc và xử lý độc lập
+        const [auctionResponse, registerResponse] = await Promise.allSettled([
+          api.get(`/auction/${auctionId}`),
+          api.get(`auction/user/check-participant-for-auction?auctionId=${auctionId}`, {
+            requiresAuth: true,
+          }),
+        ]);
+
+        // Xử lý dữ liệu từ auctionResponse
+        if (auctionResponse.status === 'fulfilled') {
+          setAuctionDetails(auctionResponse.value?.data || null);
+          setKoiMedias(
+            auctionResponse.value?.data?.koiData
+              ? auctionResponse.value.data.koiData.flatMap((koi) =>
+                  koi.koiMedia.map((media) => ({
+                    ...media,
+                    koiID: koi.id,
+                    koiName: koi.koiName,
+                  })),
+                )
+              : [],
+          );
         } else {
-          message.error('Đã xảy ra lỗi khi tải dữ liệu!');
+          console.error('Failed to fetch auction details:', auctionResponse.reason);
+          if (auctionResponse.reason.response && auctionResponse.reason.response.status === 404) {
+            message.error('Không tìm thấy đấu giá này!');
+            navigate('/auction/details/404');
+          } else {
+            message.error('Đã xảy ra lỗi khi tải dữ liệu!');
+          }
         }
+        // Xử lý dữ liệu từ registerResponse
+        if (registerResponse.status === 'fulfilled') {
+          setIsRegistered(registerResponse.value?.data || false);
+        } else {
+          console.error('Failed to fetch another API:', registerResponse.reason);
+        }
+      } catch (error) {
+        console.error('Unexpected error:', error);
+        message.error('Lỗi không xác định!');
       } finally {
         setLoading(false);
       }
@@ -81,6 +105,10 @@ const AuctionPage = () => {
   const closeVideoModal = () => {
     setIsModalOpen(false);
     setCurrentVideoSrc(null); // Reset video source khi đóng modal
+  };
+
+  const closeRegisteredModal = () => {
+    setIsRegisteredModalOpen(false);
   };
 
   return (
@@ -149,9 +177,17 @@ const AuctionPage = () => {
           <Col span={12}>
             {auctionDetails?.startTime && auctionDetails?.endTime ? (
               new Date(auctionDetails.startTime) > new Date() ? (
-                <CountdownTimer endTime={auctionDetails.startTime} title="Bắt đầu trả giá sau" />
+                <CountdownTimer
+                  endTime={auctionDetails.startTime}
+                  title="Bắt đầu trả giá sau"
+                  status={auctionDetails.status}
+                />
               ) : (
-                <CountdownTimer endTime={auctionDetails.endTime} title="Thời gian trả giá còn lại" />
+                <CountdownTimer
+                  endTime={auctionDetails.endTime}
+                  title="Thời gian trả giá còn lại"
+                  status={auctionDetails.status}
+                />
               )
             ) : (
               <div>Lỗi hiển thị đồng hồ</div>
@@ -235,21 +271,28 @@ const AuctionPage = () => {
               </div>
 
               <h2 className={styles.koiTitle}>Thông tin Cá Koi</h2>
-              <Collapse accordion>
-                {auctionDetails?.koiData.map((koi, index) => (
-                  <Panel header={`${koi.koiName} (${koi.koiType})`} key={index}>
+              <Collapse
+                accordion
+                items={auctionDetails?.koiData.map((koi, index) => ({
+                  key: index,
+                  label: `${koi.koiName} (${koi.koiType})`,
+                  children: (
                     <Card bordered={false}>
                       <p>
-                        <strong>Quốc gia:</strong> {koi.country}
+                        <strong>Nguồn gốc:</strong> {koiOrigin(koi.country)}
                       </p>
                       <p>
-                        <strong>Cân nặng:</strong> {koi.weight} kg
+                        <strong>Cân nặng:</strong> {koi.weight ? `${koi.weight} kg` : 'Không xác định'}
                       </p>
                       <p>
-                        <strong>Giới tính:</strong> {koi.sex}
+                        <strong>Giới tính:</strong>{' '}
+                        {koi.sex == 'Male' ? 'Đực' : koi.sex == 'Female' ? 'Cái' : 'Không xác định'}
                       </p>
                       <p>
-                        <strong>Ngày sinh:</strong> {new Date(koi.birthday).toLocaleDateString()}
+                        <strong>Ngày sinh:</strong>{' '}
+                        {koi.birthday || koi.birthday !== 'undefined'
+                          ? new Date(koi.birthday).toLocaleDateString()
+                          : 'Không xác định'}
                       </p>
                       <p>
                         <strong>Chiều dài:</strong> {koi.length} cm
@@ -258,20 +301,62 @@ const AuctionPage = () => {
                         <strong>Mô tả:</strong> {koi.description}
                       </p>
                     </Card>
-                  </Panel>
-                ))}
-              </Collapse>
-              <Button
-                type="primary"
-                className={styles.bidBtn}
-                onClick={() => navigate(`/auction/bid?id=${auctionDetails?.id}`)}
-              >
-                Tham gia đấu giá
-              </Button>
+                  ),
+                }))}
+              />
+              <Flex className={styles.registerGroup} justify="center" vertical>
+                {isRegistered && auctionDetails?.status === 'Scheduled' && (
+                  <Button
+                    color="primary"
+                    variant="filled"
+                    className={styles.registerBtn}
+                    onClick={() => message.info('Vui lòng chờ đến khi cuộc đấu giá bắt đầu')}
+                  >
+                    Đã đăng kí tham gia
+                  </Button>
+                )}
+                {(auctionDetails?.status === 'Closed' || auctionDetails?.status === 'Finished') && (
+                  <Button
+                    type="primary"
+                    onClick={() => navigate(`/auction/bid?id=${auctionDetails?.id}`)}
+                    className={styles.registerBtn}
+                  >
+                    Xem kết quả đấu giá
+                  </Button>
+                )}
+                {isRegistered && auctionDetails?.status === 'Ongoing' && (
+                  <Button
+                    type="primary"
+                    onClick={() => navigate(`/auction/bid?id=${auctionDetails?.id}`)}
+                    className={styles.registerBtn}
+                  >
+                    Tham gia đấu giá
+                  </Button>
+                )}
+                {!isRegistered && (auctionDetails?.status === 'Ongoing' || auctionDetails?.status === 'Scheduled') && (
+                  <Button
+                    type="primary"
+                    className={styles.registerBtn}
+                    onClick={() => {
+                      if (!user) return message.info('Vui lòng đăng nhập để tham gia đấu giá.');
+                      setIsRegisteredModalOpen(true);
+                    }}
+                  >
+                    Đăng kí tham gia đấu giá
+                  </Button>
+                )}
+              </Flex>
             </div>
           </Col>
         </Row>
       )}
+      <RegisterAuctionModal
+        open={isRegisteredModalOpen}
+        onClose={closeRegisteredModal}
+        auctionId={auctionDetails?.id}
+        depositAmount={auctionDetails?.bidderDeposit}
+        setIsRegisted={setIsRegistered}
+      />
     </div>
   );
 };

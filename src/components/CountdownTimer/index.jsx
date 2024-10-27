@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 
 const { Text } = Typography;
 
-const CountdownTimer = ({ endTime, status }) => {
+const CountdownTimer = ({ endTime, status, title }) => {
   const [timeLeft, setTimeLeft] = useState({});
 
   const isValidTime = dayjs(endTime).isValid();
@@ -38,11 +38,11 @@ const CountdownTimer = ({ endTime, status }) => {
   return (
     <div className={styles.timer}>
       <Text className={styles.timerTitle} strong={false}>
-        Thời gian trả giá còn lại:
+        {title}
       </Text>
       <div className={styles.timerContainer}>
         {isValidTime ? (
-          isTimeEnded ? (
+          isTimeEnded || status === 'Closed' || status === 'Finished' ? (
             <Text type="danger">Đã kết thúc</Text>
           ) : (
             <>

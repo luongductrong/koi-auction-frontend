@@ -136,7 +136,7 @@ function BidPage() {
         const bidResponse = await api.get(`/bid/get-all?auctionId=${auctionId}`, {
           requiresAuth: true,
           onUnauthorizedCallback: () => {
-            navigate('/login');
+            message.warning('Vui lòng đăng nhập để xem lịch sử đấu giá!');
           },
         });
         const bidData = bidResponse.data;
@@ -147,7 +147,6 @@ function BidPage() {
         // setCommentList(commentResponse.data);
       } catch (error) {
         console.error('Failed to load auction data', error);
-        message.error('Đã xảy ra lỗi khi tải lịch sử trả giá!');
       } finally {
         setLoading(false);
       }
