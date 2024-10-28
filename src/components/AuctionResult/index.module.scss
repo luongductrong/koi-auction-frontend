@@ -1,0 +1,35 @@
+/* AuctionResultCard.module.css */
+.cardContainer {
+  margin-top: 16px;
+  border: 2px solid var(--primary-color); /* Viền đỏ nổi bật */
+  padding: 16px;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.animation {
+  animation: wave-border 1.5s linear infinite; /* Tạo hiệu ứng sóng */
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--primary-color); /* Màu đỏ cho title */
+  margin-bottom: 8px;
+}
+
+.cardBtn {
+  margin-top: 16px;
+}
+
+@keyframes wave-border {
+  0%,
+  100% {
+    border-color: var(--primary-color);
+    transform: scale(1);
+  }
+  50% {
+    border-color: transparent;
+    transform: scale(0.98);
+  }
+}

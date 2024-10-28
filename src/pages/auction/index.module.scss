@@ -1,0 +1,33 @@
+.sider {
+  background: #fff !important;
+  padding: 20px;
+  //   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.siderTitle {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.searchBar {
+  margin-bottom: 16px;
+}
+
+.filterBtn {
+  margin-top: 16px;
+}
+
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox {
+  line-height: 2rem;
+  font-weight: 400;
+}
+
+.spin {
+  width: 100%;
+  margin-top: 20%;
+}

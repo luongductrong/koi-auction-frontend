@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './polyfills';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import store, { persistor } from '../src/redux/store';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import GlobalStyles from './components/GlobalStyles';
+import { Layout, App as AntApp } from 'antd';
+import { publicRoutes, privateRoutes } from './routes';
+import PrivateRoute from './components/PrivateRoute';
+import Header from './components/Header';
+import Content from './components/Content';
+
+const { Footer } = Layout;
+const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <GoogleOAuthProvider clientId={clientId}>
+          <GlobalStyles>
+            <BrowserRouter>
+              <AntApp>
+                <Layout style={{ minHeight: '100vh' }}>
+                  <Header />
+                  <Content>
+                    <Routes>
+                      {publicRoutes.map((route) => {
+                        const Page = route.component;
+                        return <Route key={route.path} path={route.path} element={<Page />} />;
+                      })}
+                      {privateRoutes.map((route) => {
+                        const Page = route.component;
+                        return (
+                          <Route
+                            key={route.path}
+                            path={route.path}
+                            element={
+                              <PrivateRoute>
+                                <Page />
+                              </PrivateRoute>
+                            }
+                          />
+                        );
+                      })}
+                    </Routes>
+                  </Content>
+                  <Footer style={{ textAlign: 'center' }}>This is Footer</Footer>
+                </Layout>
+              </AntApp>
+            </BrowserRouter>
+          </GlobalStyles>
+        </GoogleOAuthProvider>
+      </PersistGate>
+    </Provider>
+  );
 }
 
-export default App
+export default App;

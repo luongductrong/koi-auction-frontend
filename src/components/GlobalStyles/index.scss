@@ -1,17 +1,25 @@
-// @import 'normalize.css';
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-// :root {
-// }
+:root {
+  --primary-color: rgb(212, 22, 60);
+  --br-primary-color: rgb(26, 28, 38);
+  --container-width: 80vw;
+}
 
-// * {
-//   margin: 0;
-//   padding: 0;
-//   box-sizing: border-box;
-// }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-// html {
-// }
+html {
+  font-weight: 500;
+  overflow-y: scroll;
+}
 
-// body {
-//   color: red;
-// }
+.ant-otp-input {
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+}

@@ -1,0 +1,37 @@
+.timerContainer {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 0;
+  background-color: #f9f9f9;
+  margin-top: 15px;
+}
+
+.timerTitle {
+  font-size: 16px;
+  font-weight: 400;
+  color: #696969;
+  font-family: Montserrat;
+  line-height: 28px;
+  margin-bottom: 15px;
+}
+
+.timerBox {
+  display: flex;
+  min-width: 50px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.number {
+  font-size: 28px;
+  font-weight: 600;
+  color: #212529;
+}
+
+.label {
+  font-size: 14px;
+  color: #696969;
+  text-transform: uppercase;
+}
