@@ -3,6 +3,7 @@ import { Row, Col, Button, InputNumber, List, Tooltip, Card, Collapse } from 'an
 import { Spin, Carousel, Image, Flex, Statistic, ConfigProvider, Empty, App } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import WebSocketService from '../../services/WebSocketService';
+import AuctionResult from '../../components/AuctionResult';
 import FloatingComment from '../../components/FloatingComment';
 import api from '../../configs';
 import moment from 'moment';
@@ -24,6 +25,7 @@ function BidPage() {
   const [koiMedias, setKoiMedias] = useState([]);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [bidHistory, setBidHistory] = useState([]);
+  const [winnerId, setWinnerId] = useState(null);
   const [commentList, setCommentList] = useState(commentListSample);
   const [loading, setLoading] = useState(true);
 
@@ -48,6 +50,8 @@ function BidPage() {
     if (auctionId && auctionDetails && auctionDetails?.status === 'Ongoing') {
       WebSocketService.connect(auctionId, displayBidUpdate, (notification) => {
         console.log('New notification:', notification);
+        message.info('Đấu giá đã kết thúc!');
+        closeAcution(null);
       });
     }
     return () => {
@@ -172,8 +176,14 @@ function BidPage() {
     setCommentList((prev) => [...prev, { author: 'Bạn', content: values.comment, time: new Date() }]);
   };
 
-  const closeAcution = () => {
-    setAuctionDetails((auctionDetails) => ({ ...auctionDetails, status: 'Closed', endTime: new Date() }));
+  const closeAcution = (winnerId) => {
+    setAuctionDetails((auctionDetails) => ({
+      ...auctionDetails,
+      status: 'Closed',
+      endTime: new Date(),
+      winnerID: winnerId,
+      finalPrice: currentPrice,
+    }));
   };
 
   return (
@@ -303,6 +313,18 @@ function BidPage() {
                 )}
               </Flex>
             </Card>
+            {(auctionDetails?.status === 'Finished' || auctionDetails?.status === 'Closed') && (
+              <AuctionResult
+                auctionId={auctionId}
+                winnerId={winnerId || auctionDetails?.winnerID}
+                amount={
+                  auctionDetails?.finalPrice && auctionDetails?.bidderDeposit
+                    ? auctionDetails?.finalPrice - auctionDetails?.bidderDeposit
+                    : null
+                }
+                dealine={auctionDetails?.endTime}
+              />
+            )}
             <Collapse
               className={styles.bidHistory}
               items={[

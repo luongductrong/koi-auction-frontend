@@ -42,6 +42,7 @@ const AuctionPage = () => {
           api.get(`/auction/${auctionId}`),
           api.get(`auction/user/check-participant-for-auction?auctionId=${auctionId}`, {
             requiresAuth: true,
+            onUnauthorizedCallback: () => message.warning('Bạn chưa đăng nhập!'),
           }),
         ]);
 
