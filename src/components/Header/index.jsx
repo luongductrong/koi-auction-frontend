@@ -75,17 +75,21 @@ function Header() {
                 </Dropdown>
               ) : (
                 <>
-                  <Button type="primary" ghost>
-                    <Link to="/login">Đăng nhập</Link>
-                  </Button>
-                  <Button
-                    type="primary"
-                    style={{
-                      marginLeft: '10px',
-                    }}
-                  >
-                    <Link to="/register">Đăng ký</Link>
-                  </Button>
+                  <Link to="/login" className={styles.btn}>
+                    <Button type="primary" ghost>
+                      Đăng nhập
+                    </Button>
+                  </Link>
+                  <Link to="/register" className={styles.btn}>
+                    <Button
+                      type="primary"
+                      style={{
+                        marginLeft: '10px',
+                      }}
+                    >
+                      Đăng ký
+                    </Button>
+                  </Link>
                 </>
               )}
             </div>

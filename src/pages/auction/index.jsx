@@ -10,7 +10,6 @@ function Auction() {
 
   useEffect(() => {
     setKey((prev) => prev + 1);
-    window.scrollTo(0, 0);
   }, [location.search]);
   return <AuctionPage key={key} />;
 }
