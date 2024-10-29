@@ -10,8 +10,8 @@ import { publicRoutes, privateRoutes } from './routes';
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/Header';
 import Content from './components/Content';
+import Footer from './components/Footer';
 
-const { Footer } = Layout;
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 function App() {
@@ -46,7 +46,7 @@ function App() {
                       })}
                     </Routes>
                   </Content>
-                  <Footer style={{ textAlign: 'center' }}>This is Footer</Footer>
+                  <Footer />
                 </Layout>
               </AntApp>
             </BrowserRouter>
