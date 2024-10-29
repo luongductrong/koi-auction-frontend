@@ -7,6 +7,7 @@ import AuctionVideoPlayer from '../../components/AuctionVideoPlayer';
 import CountdownTimer from '../../components/CountdownTimer';
 import RegisterAuctionModal from '../../components/AuctionRegisterModal';
 import api from '../../configs';
+import useAuth from '../../hook/useAuth';
 import moment from 'moment';
 import { koiOrigin } from '../../utils/koi-i8';
 import fallbackImage from '../../assets/images/100x100.svg';
@@ -15,10 +16,12 @@ import image400x500 from '../../assets/images/400x500.svg';
 import video from '../../assets/videos/7408770596160638254.mp4';
 import video2 from '../../assets/videos/7378681139986304272.mp4';
 import styles from './index.module.scss';
+import warning from 'antd/es/_util/warning';
 
-const AuctionPage = () => {
+function AuctionPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { onUnauthorized } = useAuth();
   const carouselRef = useRef(null);
   const { message } = App.useApp();
   const user = useSelector((state) => state.user.user);
@@ -31,6 +34,7 @@ const AuctionPage = () => {
   const [isRegistered, setIsRegistered] = useState(false);
   const [loading, setLoading] = useState(true);
   // const auctionId = 1;
+  // console.log('Login ', isLogin);
 
   useEffect(() => {
     const fetchAuctionDetails = async (auctionId) => {
@@ -40,10 +44,17 @@ const AuctionPage = () => {
         // Sử dụng Promise.allSettled để gọi 2 API cùng lúc và xử lý độc lập
         const [auctionResponse, registerResponse] = await Promise.allSettled([
           api.get(`/auction/${auctionId}`),
-          api.get(`auction/user/check-participant-for-auction?auctionId=${auctionId}`, {
-            requiresAuth: true,
-            onUnauthorizedCallback: () => message.warning('Bạn chưa đăng nhập!'),
-          }),
+          user
+            ? api.get(`auction/user/check-participant-for-auction?auctionId=${auctionId}`, {
+                requiresAuth: true,
+                onUnauthorizedCallback: () =>
+                  onUnauthorized({
+                    messageText: 'Phiên đăng nhập đã hết hạn',
+                    warning: true,
+                    clear: true,
+                  }),
+              })
+            : Promise.resolve({ status: 'not_fetched', value: null }),
         ]);
 
         // Xử lý dữ liệu từ auctionResponse
@@ -349,6 +360,6 @@ const AuctionPage = () => {
       />
     </div>
   );
-};
+}
 
 export default AuctionPage;

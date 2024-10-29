@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Layout, Input, Button, ConfigProvider, Dropdown } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ const { Header: AntHeader } = Layout;
 
 function Header() {
   const user = useSelector((state) => state.user.user);
+  const fullUrl = useLocation().pathname + useLocation().search + useLocation().hash; // Get full URL
 
   const onSearch = (value) => console.log(value);
 
@@ -52,7 +53,7 @@ function Header() {
     {
       key: '2',
       label: (
-        <Link to="/login">
+        <Link to="login">
           <LogoutOutlined /> Đăng xuất
         </Link>
       ),
@@ -75,7 +76,7 @@ function Header() {
                 </Dropdown>
               ) : (
                 <>
-                  <Link to="/login" className={styles.btn}>
+                  <Link to={`/login?redirect=${fullUrl}`} className={styles.btn}>
                     <Button type="primary" ghost>
                       Đăng nhập
                     </Button>

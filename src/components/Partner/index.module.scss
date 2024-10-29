@@ -1,0 +1,54 @@
+.container {
+  margin: 60px 0;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 60px !important;
+  animation: scaleEffect 1s infinite alternate;
+  .before,
+  .after {
+    position: relative;
+    width: 40px; /* Độ dài đường kẻ */
+    height: 2px;
+    background-color: var(--primary-color);
+    margin: 0 20px; /* Khoảng cách giữa đường kẻ và tiêu đề */
+  }
+
+  .before::before,
+  .after::after {
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background-color: var(--primary-color);
+    transform: rotate(45deg);
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .before::before {
+    right: -7px; /* Căn hình thoi gần đường kẻ bên trái */
+  }
+
+  .after::after {
+    left: -7px; /* Căn hình thoi gần đường kẻ bên phải */
+  }
+}
+
+.carousel {
+  padding-bottom: 50px;
+}
+
+@keyframes scaleEffect {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}

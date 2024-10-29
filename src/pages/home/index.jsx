@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Flex, Typography, Spin } from 'antd';
 import Introduction from '../../components/Introduction';
 import AuctionHome from '../../components/AuctionHome';
+import Partner from '../../components/Partner';
 import api from '../../configs';
 import styles from './index.module.scss';
 
@@ -50,16 +51,7 @@ function Home({ children }) {
       <Introduction />
       <AuctionHome auctions={scheduledAuctions} type="scheduled" loading={loading1} />
       <AuctionHome auctions={ongoingAuctions} type="ongoing" loading={loading2} />
-      <Link to="/account-center">Trung tâm tài khoản</Link>
-      <br />
-      <Link to="/auction">Cuộc đấu giá</Link>
-      <br />
-      <Link to="/forgot-password">Quên mật khẩu?</Link>
-      <br />
-      <Link to="/auction/details">Chi tiết đấu giá</Link>
-      <br />
-
-      <h2>{children}</h2>
+      <Partner />
     </>
   );
 }

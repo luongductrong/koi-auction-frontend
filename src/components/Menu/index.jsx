@@ -1,9 +1,12 @@
 import { Menu as AntMenu, ConfigProvider } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './index.module.scss';
 import { UnorderedListOutlined } from '@ant-design/icons';
 
 function Menu() {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   const menuItems = [
     {
       key: 'sub1',
@@ -22,21 +25,30 @@ function Menu() {
       ],
       type: 'submenu',
     },
-    { key: 'home', label: <Link to="/">Trang chủ</Link> },
-    { key: 'about', label: <Link to="/about">Về chúng tôi</Link> },
-    { key: 'contact', label: <Link to="/contact">Liên hệ</Link> },
-    { key: 'blog', label: <Link to="/blog">Blog</Link> },
+    { key: '/', label: <Link to="/">Trang chủ</Link> },
+    { key: '/about', label: <Link to="/about">Về chúng tôi</Link> },
+    { key: '/contact', label: <Link to="/contact">Liên hệ</Link> },
+    { key: '/blog', label: <Link to="/blog">Blog</Link> },
   ];
 
   return (
     <ConfigProvider
       theme={{
+        token: {
+          fontSize: '16px',
+        },
         components: {
           Menu: {},
         },
       }}
     >
-      <AntMenu mode="horizontal" className={styles.menu} items={menuItems} theme="light" defaultSelectedKeys="home" />
+      <AntMenu
+        mode="horizontal"
+        className={styles.menu}
+        items={menuItems}
+        theme="light"
+        defaultSelectedKeys={currentPath}
+      />
     </ConfigProvider>
   );
 }

@@ -31,6 +31,11 @@ function AuctionList({ auctions, type = 'scheduled' }) {
         {type === 'scheduled' ? 'Cuộc đấu giá sắp diễn ra' : 'Cuộc đấu giá đang diễn ra'}
         <span className={styles.after}></span>
       </Title>
+      {(!auctions || auctions.length === 0) && (
+        <Text type="secondary" className={styles.empty}>
+          {type === 'scheduled' ? 'Không có cuộc đấu giá sắp diễn ra' : 'Không có cuộc đấu giá đang diễn ra'}
+        </Text>
+      )}
       <Row gutter={[24, 16]} className={styles.auctionGrid} justify="center">
         {auctions.map((auction, index) => (
           <Col span={6} key={index}>
