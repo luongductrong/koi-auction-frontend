@@ -14,7 +14,7 @@ function Menu() {
         </p>
       ),
       className: styles.subMenu,
-      style: { backgroundColor: '#D4163C' },
+      style: { backgroundColor: 'rgb(180, 23, 18)' },
       children: [
         { key: 'schedule', label: <Link to="/auction?status=scheduled">Cuộc đấu giá sắp diễn ra</Link> },
         { key: 'current', label: <Link to="/auction?status=ongoing">Cuộc đấu giá đang diễn ra</Link> },

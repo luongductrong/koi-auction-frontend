@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Flex, Typography, Spin } from 'antd';
-import Slider from '../../components/Slider';
+import Introduction from '../../components/Introduction';
 import AuctionHome from '../../components/AuctionHome';
 import api from '../../configs';
 import styles from './index.module.scss';
@@ -47,7 +47,7 @@ function Home({ children }) {
 
   return (
     <>
-      <Slider />
+      <Introduction />
       <AuctionHome auctions={scheduledAuctions} type="scheduled" loading={loading1} />
       <AuctionHome auctions={ongoingAuctions} type="ongoing" loading={loading2} />
       <Link to="/account-center">Trung tâm tài khoản</Link>
@@ -58,22 +58,6 @@ function Home({ children }) {
       <br />
       <Link to="/auction/details">Chi tiết đấu giá</Link>
       <br />
-      <Link
-        href="#auction"
-        onClick={(e) => {
-          e.preventDefault();
-          const element = document.getElementById('auction');
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.scrollY - 120;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
-          });
-        }}
-      >
-        Khám phá
-      </Link>
 
       <h2>{children}</h2>
     </>

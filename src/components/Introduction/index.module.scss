@@ -1,0 +1,64 @@
+.customLayout {
+  height: 80vh;
+  width: 100vw;
+  transform: translateX(var(--container-transform));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../../assets/images/banner.png'), url('../../assets/images/bannerbg.png');
+  background-size: 500px 100%, cover;
+  background-position: left, center;
+  background-repeat: no-repeat, no-repeat;
+  &::after {
+    content: '';
+    position: absolute;
+    width: 26%;
+    height: 90%;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background-color: var(--primary-color);
+    border-radius: 40% 0 0 40%;
+    z-index: -1;
+  }
+
+  .container {
+    width: var(--container-width);
+    .welcome {
+      font-size: 20px;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+    .title {
+      margin: 10px 0;
+      font-size: 36px;
+    }
+    .intro {
+      font-size: 16px;
+    }
+    .exploreBtn {
+      margin-top: 20px;
+      font-size: 16px;
+      padding: 20px;
+    }
+  }
+}
+.carousel {
+  width: 100%;
+  transform: translateX(12%);
+  overflow: hidden;
+  .slide {
+    position: relative;
+    width: 100%;
+    padding-bottom: calc(11 / 19 * 100%); /* Tạo khung có tỷ lệ 19:11 */
+    overflow: hidden;
+    .img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Đảm bảo ảnh giữ tỷ lệ và che phủ toàn bộ khung */
+    }
+  }
+}
