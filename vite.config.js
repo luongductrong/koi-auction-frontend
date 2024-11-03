@@ -8,4 +8,9 @@ export default defineConfig({
     host: '0.0.0.0',
     historyApiFallback: true,
   },
+  resolve: {
+    alias: {
+      hook: '/src/hook',
+    },
+  },
 });

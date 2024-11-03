@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Layout, Input, Button, ConfigProvider, Dropdown } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { useNetworkStatus } from 'hook';
 import { useSelector } from 'react-redux';
 import styles from './index.module.scss';
 import Logo from '../Logo';
@@ -12,6 +13,7 @@ const { Header: AntHeader } = Layout;
 function Header() {
   const user = useSelector((state) => state.user.user);
   const fullUrl = useLocation().pathname + useLocation().search + useLocation().hash; // Get full URL
+  const isOnline = useNetworkStatus();
 
   const onSearch = (value) => console.log(value);
 
@@ -65,6 +67,11 @@ function Header() {
   return (
     <ConfigProvider>
       <AntHeader className={styles.header}>
+        {isOnline || (
+          <div className={styles.statusHeader}>
+            <p className={styles.offline}>Không có kết nối mạng</p>
+          </div>
+        )}
         <div className={styles.container}>
           <div className={styles.topHeader}>
             <Logo />

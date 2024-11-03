@@ -6,13 +6,28 @@
   width: 100%;
   background-color: #fff;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   height: auto;
   padding: 0;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
-  // border-radius: 0 0 50px 50px;
+}
+
+.statusHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  background-color: #eceff1;
+  padding: 8px 0;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+
+  .offline {
+    color: var(--primary-color);
+    line-height: 1rem;
+  }
 }
 
 .container {
