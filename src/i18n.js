@@ -4,12 +4,14 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import enTranslation from './locales/en/translation.json';
 import viTranslation from './locales/vi/translation.json';
 import jaTranslation from './locales/ja/translation.json';
+import zhTranslation from './locales/zh/translation.json';
+import thTranslation from './locales/th/translation.json';
 
 i18n
-  // .use(LanguageDetector)
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    lng: 'ja',
+    // lng: 'ja',
     fallbackLng: 'en',
     debug: true,
 
@@ -26,6 +28,12 @@ i18n
       },
       ja: {
         translation: jaTranslation,
+      },
+      zh: {
+        translation: zhTranslation,
+      },
+      th: {
+        translation: thTranslation,
       },
     },
   });

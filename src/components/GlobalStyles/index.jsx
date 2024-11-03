@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { ConfigProvider, theme } from 'antd';
 import viVN from 'antd/es/locale/vi_VN';
 import enUS from 'antd/es/locale/en_US';
+import jaJP from 'antd/es/locale/ja_JP';
+import zhCN from 'antd/es/locale/zh_CN';
+import thTH from 'antd/es/locale/th_TH';
 import './index.scss';
 
 function GlobalStyles({ children }) {
@@ -10,7 +13,17 @@ function GlobalStyles({ children }) {
 
   useEffect(() => {
     const storedLocale = localStorage.getItem('i18nextLng') || 'en-US';
-    setLocale(storedLocale === 'vi-VN' || storedLocale === 'vi' ? viVN : enUS);
+    setLocale(
+      storedLocale === 'vi-VN' || storedLocale === 'vi'
+        ? viVN
+        : storedLocale === 'th-TH' || storedLocale === 'th'
+        ? thTH
+        : storedLocale === 'ja-JP' || storedLocale === 'ja'
+        ? jaJP
+        : storedLocale === 'zh-CN' || storedLocale === 'zh'
+        ? zhCN
+        : enUS,
+    );
   }, []);
 
   return (

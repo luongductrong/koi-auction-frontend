@@ -1,16 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout, Flex, Space } from 'antd';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
 import styles from './index.module.scss';
 
 const { Footer: AntFooter } = Layout;
+const langStyle = { color: 'red', textShadow: '2px 2px 4px #333333' };
 
 function Footer() {
   const { t } = useTranslation();
+  let lang = localStorage.getItem('i18nextLng');
+  if (lang === 'vi') {
+    lang = 'vi-VN';
+  } else if (lang === 'en') {
+    lang = 'en-US';
+  } else if (lang === 'ja') {
+    lang = 'ja-JP';
+  } else if (lang === 'zh') {
+    lang = 'zh-CN';
+  } else if (lang === 'th') {
+    lang = 'th-TH';
+  }
+  const [language, setLanguage] = useState(lang);
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
+    setLanguage(lng);
   };
 
   return (
@@ -19,13 +34,36 @@ function Footer() {
         <div className={styles.container}>
           <Flex className={styles.settingGroup} justify="center">
             <Space size="large">
-              <p style={{ color: 'red' }} onClick={() => changeLanguage('vi-VN')}>
+              <p
+                style={language === 'vi-VN' ? langStyle : { cursor: 'pointer' }}
+                onClick={() => changeLanguage('vi-VN')}
+              >
                 Tiếng Việt
               </p>
-              <p onClick={() => changeLanguage('en-US')}>English</p>
-              <p onClick={() => changeLanguage('ja-JP')}>日本語</p>
-              <p onClick={() => changeLanguage('zh-CN')}>中文</p>
-              <p onClick={() => changeLanguage('ko-KR')}>한국어</p>
+              <p
+                style={language === 'en-US' ? langStyle : { cursor: 'pointer' }}
+                onClick={() => changeLanguage('en-US')}
+              >
+                English
+              </p>
+              <p
+                style={language === 'ja-JP' ? langStyle : { cursor: 'pointer' }}
+                onClick={() => changeLanguage('ja-JP')}
+              >
+                日本語
+              </p>
+              <p
+                style={language === 'zh-CN' ? langStyle : { cursor: 'pointer' }}
+                onClick={() => changeLanguage('zh-CN')}
+              >
+                中文
+              </p>
+              <p
+                style={language === 'th-TH' ? langStyle : { cursor: 'pointer' }}
+                onClick={() => changeLanguage('th-TH')}
+              >
+                ภาษาไทย
+              </p>
             </Space>
           </Flex>
 
