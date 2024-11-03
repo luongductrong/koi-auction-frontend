@@ -11,7 +11,7 @@ function GlobalStyles({ children }) {
         algorithm: theme.defaultAlgorithm,
         token: {
           // Seed Token
-          colorPrimary: 'rgb(212, 22, 60)',
+          colorPrimary: 'rgb(180, 23, 18)',
           borderRadius: 4,
           // Alias Token
           fontFamily: "'Montserrat', sans-serif",

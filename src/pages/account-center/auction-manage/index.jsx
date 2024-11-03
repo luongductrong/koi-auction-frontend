@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, App } from 'antd';
+import { Table, Button, App, Pagination } from 'antd';
 import api from '../../../configs';
+import useAuth from '../../../hook/useAuth';
 import AuctionForm from '../../../components/AuctionForm';
 import styles from './auction.module.scss';
 
 const AuctionManage = () => {
   const { message } = App.useApp();
+  const { onUnauthorized } = useAuth();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [auctionData, setAuctionData] = useState([]);
+  const [pagination, setPagination] = useState({ currentPage: 0, totalPage: 0, totalItem: 0 });
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
   const [auctionId, setAuctionId] = useState(null);
   const [drawerMode, setDrawerMode] = useState('create');
   const [loading, setLoading] = useState(false);
@@ -16,16 +21,36 @@ const AuctionManage = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await api.get('/auction/filter?page=0&size=10&desc=DESC');
+        const response = await api.get(`/auction/breeder?page=${page}&size=${size}&desc=DESC`, {
+          requiresAuth: true,
+          onUnauthorizedCallback: () =>
+            onUnauthorized({
+              error: true,
+              messageText: 'Phiên đăng nhập đã hết hạn!',
+              clear: true,
+              navigation: true,
+            }),
+        });
         if (response?.data?.auctions) {
-          setAuctionData(response.data.auctions);
           console.log('Auction:', response.data.auctions);
+          setAuctionData(response.data.auctions);
+          setPagination({
+            currentPage: response.data.currentPage,
+            totalPage: response.data.totalPages,
+            totalItem: response.data.totalElements,
+          });
         } else {
           throw new Error("Can't get auction data");
         }
       } catch (error) {
-        console.error('Failed to fetch data:', error);
-        message.error('Lỗi khi tải dữ liệu. Vui lòng thử lại!');
+        if (error.response?.status === 404) {
+          setAuctionData([]);
+          console.log('404 fetch auction data');
+          message.info('Không có cuộc đấu giá nào!');
+        } else {
+          console.error('Failed to fetch data:', error);
+          message.error('Lỗi khi tải dữ liệu. Vui lòng thử lại!');
+        }
       } finally {
         setLoading(false);
       }
@@ -45,6 +70,8 @@ const AuctionManage = () => {
   };
 
   const handleView = (value) => {
+    console.log('View auctionId', value);
+
     setIsDrawerOpen(true);
     setAuctionId(value);
     setDrawerMode('update');
@@ -123,7 +150,7 @@ const AuctionManage = () => {
       key: 'action',
       render: (text, record) => (
         <div>
-          <Button type="link" onClick={() => handleView(record?.id)}>
+          <Button type="link" onClick={() => handleView(record?.auctionId)}>
             Chi tiết
           </Button>
         </div>
@@ -143,6 +170,19 @@ const AuctionManage = () => {
         rowClassName="auction-row"
         loading={loading}
       />
+      {pagination.totalItem > 1 && (
+        <div className={styles.pagination}>
+          <Pagination
+            defaultCurrent={page + 1}
+            pageSize={size}
+            total={pagination.totalItem}
+            onChange={(page) => setPage(page - 1)}
+            showSizeChanger
+            pageSizeOptions={['6', '12', '24', '48']}
+            onShowSizeChange={(current, size) => setSize(size)}
+          />
+        </div>
+      )}
       <AuctionForm open={isDrawerOpen} onCancel={handleCancel} auctionId={auctionId} mode={drawerMode} />
     </div>
   );

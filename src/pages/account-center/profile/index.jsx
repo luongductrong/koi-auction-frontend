@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { Flex, Space, Typography, Avatar, ConfigProvider } from 'antd';
 import { Form, Input, Button, Select, DatePicker } from 'antd';
 import { UserOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import useAuth from '../../../hook/useAuth';
 import moment from 'moment';
 import api, { provinceApi } from '../../../configs';
 import styles from './profile.module.scss';
@@ -11,8 +12,8 @@ const { Title } = Typography;
 const { Option } = Select;
 
 function Profile() {
+  const { onUnauthorized } = useAuth();
   console.log('Profile render');
-  const navigate = useNavigate();
 
   const [profile, setProfile] = useState(null);
   const [form] = Form.useForm();
@@ -26,7 +27,12 @@ function Profile() {
         const response = await api.get('/user/get-profile', {
           requiresAuth: true,
           onUnauthorizedCallback: () => {
-            navigate('/login');
+            onUnauthorized({
+              navigation: true,
+              clear: true,
+              error: true,
+              messageText: 'Phiên đăng nhập đã hết hạn!',
+            });
           },
         });
         setProfile(response.data);

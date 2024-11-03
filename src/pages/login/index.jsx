@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Checkbox, App } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser, clearUser } from '../../redux/userSlice';
 import GoogleLogin from '../../components/GoogleLogin';
@@ -12,6 +12,7 @@ function Login() {
   console.log('Login render');
 
   const { message } = App.useApp();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const dispatch = useDispatch();
@@ -34,7 +35,12 @@ function Login() {
         console.log('Login Response:', response.data);
 
         dispatch(setUser(response.data));
-        navigate('/');
+        const redirect = new URLSearchParams(location.search).get('redirect');
+        if (redirect) {
+          navigate(redirect);
+        } else {
+          navigate('/');
+        }
       } else {
         message.error('Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.');
         console.error('Login Error:', response.data);

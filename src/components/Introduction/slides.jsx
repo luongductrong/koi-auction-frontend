@@ -5,7 +5,7 @@ import slide2 from '../../assets/images/slide2.jpg';
 const slides = [
   {
     slideId: '1',
-    url: slide1,
+    url: slide2,
     alt: 'Koi Auction System',
   },
   {
@@ -15,7 +15,7 @@ const slides = [
   },
   {
     slideId: '3',
-    url: slide1,
+    url: slide2,
     alt: 'Koi Auction System',
   },
   {

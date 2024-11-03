@@ -1,0 +1,119 @@
+.auctionList {
+  margin: 60px 0;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-bottom: 60px !important;
+  animation: scaleEffect 1s infinite alternate;
+}
+
+.before,
+.after {
+  position: relative;
+  width: 40px; /* Độ dài đường kẻ */
+  height: 2px;
+  background-color: var(--primary-color);
+  margin: 0 20px; /* Khoảng cách giữa đường kẻ và tiêu đề */
+}
+
+.before::before,
+.after::after {
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background-color: var(--primary-color);
+  transform: rotate(45deg);
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.before::before {
+  right: -7px; /* Căn hình thoi gần đường kẻ bên trái */
+}
+
+.after::after {
+  left: -7px; /* Căn hình thoi gần đường kẻ bên phải */
+}
+
+.empty {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.auctionCard {
+  border: none;
+  width: 100%;
+  border-radius: 0 32px 0 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  transition: transform 0.4s ease-in-out, filter 0.4s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+    filter: brightness(1.05);
+  }
+}
+
+.cover {
+  width: 100%;
+  margin-top: 16px;
+  overflow: hidden;
+
+  .time {
+    margin: 6px !important;
+  }
+
+  .image {
+    width: 100%;
+    padding: 0 12px;
+    aspect-ratio: 3/2;
+    object-fit: cover;
+    border-radius: 0 32px 0 32px;
+  }
+}
+
+.auctionId {
+  margin-top: -16px;
+}
+
+.btnGroup {
+  margin-top: 10px;
+}
+
+.viewAll {
+  margin-top: 32px;
+  width: 100%;
+  text-align: end;
+}
+
+.viewAllButton {
+  font-size: 16px;
+  width: 160px;
+  height: 40px;
+  border-radius: 32px 0 32px 0;
+  background-color: white;
+  color: var(--primary-color);
+  transition: background-color 0.4s ease, color 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
+
+  &:hover {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@keyframes scaleEffect {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
