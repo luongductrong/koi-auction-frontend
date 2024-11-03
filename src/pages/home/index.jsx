@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Flex, Typography, Spin } from 'antd';
 import Introduction from '../../components/Introduction';
 import AuctionHome from '../../components/AuctionHome';
 import Partner from '../../components/Partner';
 import api from '../../configs';
-import styles from './index.module.scss';
 
-const { Text, Title } = Typography;
-
-function Home({ children }) {
+function Home() {
   const [scheduledAuctions, setScheduledAuctions] = useState([]);
   const [ongoingAuctions, setOngoingAuctions] = useState([]);
   const [loading1, setLoading1] = useState(true);

@@ -13,6 +13,52 @@
       "login": "Login",
       "register": "Register",
       "offline_status": "No network connection"
+    },
+    "menu": {
+      "auctions": " Auctions",
+      "home": "Home",
+      "about": "About Us",
+      "contact": "Contact",
+      "blog": "Blog",
+      "scheduled_auction": "Scheduled Auction",
+      "ongoing_auction": "Ongoing Auction",
+      "closed_auction": "Closed Auction"
+    },
+    "intro": {
+      "welcome": "Welcome to KOIAUCTION",
+      "title": "Online auction platform for Koi fish enthusiasts",
+      "description": "KOIAUCTION was established with the goal of providing a convenient and trustworthy online auction space for the Koi fish community. Whether you are new to the hobby or a seasoned collector, we aim to create an easy, secure, and friendly experience, allowing everyone to connect and interact through exciting auction sessions.",
+      "explore": "Explore Now"
+    },
+    "home_auction": {
+      "scheduled": "Scheduled Auctions",
+      "ongoing": "Ongoing Auctions",
+      "no_scheduled": "No scheduled auctions available",
+      "no_ongoing": "No ongoing auctions available",
+      "auction_time": "Start Time",
+      "time_left": "Time Left",
+      "auction_number": "Auction No. ",
+      "starting_price": "Starting Price: ",
+      "view_details": "View Details",
+      "link_copied": "Link copied successfully!",
+      "copy_error": "Could not copy: ",
+      "view_all": "View All"
+    },
+    "partner": {
+      "title": "Featured Customers & Partners"
+    },
+    "footer": {
+      "contact": {
+        "email": "Email: support@example.com",
+        "phone": "Phone: +84 123 456 789"
+      },
+      "legal": {
+        "privacy_policy": "Privacy Policy",
+        "terms_of_service": "Terms of Service",
+        "refund_policy": "Refund Policy"
+      },
+      "copyright": "© 2024 Software Development Project SWP391",
+      "powered_by": "Powered by Ant Design"
     }
   }
 }

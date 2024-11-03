@@ -13,6 +13,52 @@
       "login": "Đăng nhập",
       "register": "Đăng ký",
       "offline_status": "Không có kết nối mạng"
+    },
+    "menu": {
+      "auctions": " Cuộc đấu giá",
+      "home": "Trang chủ",
+      "about": "Về chúng tôi",
+      "contact": "Liên hệ",
+      "blog": "Blog",
+      "scheduled_auction": "Cuộc đấu giá sắp diễn ra",
+      "ongoing_auction": "Cuộc đấu giá đang diễn ra",
+      "closed_auction": "Cuộc đấu giá đã kết thúc"
+    },
+    "intro": {
+      "welcome": "Chào mừng bạn đến với KOIAUCTION",
+      "title": "Nền tảng đấu giá trực tuyến dành cho người yêu thích cá Koi",
+      "description": "KOIAUCTION ra đời với mục tiêu mang đến một không gian đấu giá trực tuyến tiện lợi và tin cậy cho cộng đồng yêu thích cá Koi. Dù là người mới tìm hiểu hay đã là người sưu tầm lâu năm, chúng tôi mong muốn tạo ra một trải nghiệm dễ dàng, bảo mật và thân thiện, để mọi người có thể kết nối và giao lưu thông qua những phiên đấu giá đầy hứng khởi.",
+      "explore": "Khám Phá Ngay"
+    },
+    "home_auction": {
+      "scheduled": "Cuộc đấu giá sắp diễn ra",
+      "ongoing": "Cuộc đấu giá đang diễn ra",
+      "no_scheduled": "Không có cuộc đấu giá sắp diễn ra",
+      "no_ongoing": "Không có cuộc đấu giá đang diễn ra",
+      "auction_time": "Thời gian đấu giá",
+      "time_left": "Thời gian còn lại",
+      "auction_number": "Đấu giá số",
+      "starting_price": "Giá khởi điểm: ",
+      "view_details": "Xem chi tiết",
+      "link_copied": "Liên kết đã được sao chép!",
+      "copy_error": "Không thể sao chép: ",
+      "view_all": "Xem tất cả"
+    },
+    "partner": {
+      "title": "Khách hàng & đối tác tiêu biểu"
+    },
+    "footer": {
+      "contact": {
+        "email": "Email: support@example.com",
+        "phone": "Điện thoại: +84 123 456 789"
+      },
+      "legal": {
+        "privacy_policy": "Chính sách bảo mật",
+        "terms_of_service": "Điều khoản dịch vụ",
+        "refund_policy": "Chính sách hoàn tiền"
+      },
+      "copyright": "© 2024 Dự án phát triển phần mềm SWP391",
+      "powered_by": "Powered by Ant Design"
     }
   }
 }

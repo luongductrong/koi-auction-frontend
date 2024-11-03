@@ -1,10 +1,12 @@
 import { Menu as AntMenu, ConfigProvider } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
-import styles from './index.module.scss';
 import { UnorderedListOutlined } from '@ant-design/icons';
+import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import styles from './index.module.scss';
 
 function Menu() {
   const location = useLocation();
+  const { t } = useTranslation();
   const currentPath = location.pathname;
 
   const menuItems = [
@@ -13,22 +15,22 @@ function Menu() {
       label: (
         <p className={styles.subMenuTitle}>
           <UnorderedListOutlined />
-          {` Cuộc đấu giá`}
+          {t('component.menu.auctions')}
         </p>
       ),
       className: styles.subMenu,
       style: { backgroundColor: 'var(--primary-color)' },
       children: [
-        { key: 'schedule', label: <Link to="/auction?status=scheduled">Cuộc đấu giá sắp diễn ra</Link> },
-        { key: 'current', label: <Link to="/auction?status=ongoing">Cuộc đấu giá đang diễn ra</Link> },
-        { key: 'past', label: <Link to="/auction?status=closed">Cuộc đấu giá đã kết thúc</Link> },
+        { key: 'schedule', label: <Link to="/auction?status=scheduled">{t('component.menu.scheduled_auction')}</Link> },
+        { key: 'current', label: <Link to="/auction?status=ongoing">{t('component.menu.ongoing_auction')}</Link> },
+        { key: 'past', label: <Link to="/auction?status=closed">{t('component.menu.closed_auction')}</Link> },
       ],
       type: 'submenu',
     },
-    { key: '/', label: <Link to="/">Trang chủ</Link> },
-    { key: '/about', label: <Link to="/about">Về chúng tôi</Link> },
-    { key: '/contact', label: <Link to="/contact">Liên hệ</Link> },
-    { key: '/blog', label: <Link to="/blog">Blog</Link> },
+    { key: '/', label: <Link to="/">{t('component.menu.home')}</Link> },
+    { key: '/about', label: <Link to="/about">{t('component.menu.about')}</Link> },
+    { key: '/contact', label: <Link to="/contact">{t('component.menu.contact')}</Link> },
+    { key: '/blog', label: <Link to="/blog">{t('component.menu.blog')}</Link> },
   ];
 
   return (

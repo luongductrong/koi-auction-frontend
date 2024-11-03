@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Card, Button, Typography, Space, Statistic, App, Image } from 'antd';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ShareAltOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import fallback from '../../assets/images/auction-image-df.jpg';
@@ -11,16 +12,17 @@ const { Countdown } = Statistic;
 
 function AuctionList({ auctions, type = 'scheduled' }) {
   const { message } = App.useApp();
+  const { t } = useTranslation();
   const handleShare = (id) => {
     const link = `${window.location.origin}/auction/detail?id=${id}`;
 
     navigator.clipboard
       .writeText(link)
       .then(() => {
-        message.success('Liên kết đã được sao chép!');
+        message.success(t('component.home_auction.link_copied'));
       })
       .catch((err) => {
-        message.error('Không thể sao chép: ' + err);
+        message.error(t('component.home_auction.copy_error') + err);
       });
   };
 
@@ -28,12 +30,12 @@ function AuctionList({ auctions, type = 'scheduled' }) {
     <div className={styles.auctionList} id={type === 'scheduled' ? 'auction' : ''}>
       <Title level={3} className={styles.header}>
         <span className={styles.before}></span>
-        {type === 'scheduled' ? 'Cuộc đấu giá sắp diễn ra' : 'Cuộc đấu giá đang diễn ra'}
+        {type === 'scheduled' ? t('component.home_auction.scheduled') : t('component.home_auction.ongoing')}
         <span className={styles.after}></span>
       </Title>
       {(!auctions || auctions.length === 0) && (
         <Text type="secondary" className={styles.empty}>
-          {type === 'scheduled' ? 'Không có cuộc đấu giá sắp diễn ra' : 'Không có cuộc đấu giá đang diễn ra'}
+          {type === 'scheduled' ? t('component.home_auction.no_scheduled') : t('component.home_auction.no_ongoing')}
         </Text>
       )}
       <Row gutter={[24, 16]} className={styles.auctionGrid} justify="center">
@@ -45,7 +47,9 @@ function AuctionList({ auctions, type = 'scheduled' }) {
               cover={
                 <div className={styles.cover}>
                   <Text type="secondary" strong>
-                    {type === 'scheduled' ? 'Thời gian đấu giá' : 'Thời gian còn lại'}
+                    {type === 'scheduled'
+                      ? t('component.home_auction.auction_time')
+                      : t('component.home_auction.time_left')}
                   </Text>
                   <Title level={5} className={styles.time}>
                     {type === 'scheduled' ? (
@@ -64,15 +68,18 @@ function AuctionList({ auctions, type = 'scheduled' }) {
                 </div>
               }
             >
-              <Title level={5} className={styles.auctionId}>{`Đấu giá số ${auction.auctionId}`}</Title>
+              <Title level={5} className={styles.auctionId}>
+                {`${t('component.home_auction.auction_number')}${auction.auctionId}`}
+              </Title>
               <Text type="secondary">
-                Giá khởi điểm: <Text strong>{auction.startPrice?.toLocaleString()}</Text> VND
+                {t('component.home_auction.starting_price')} <Text strong>{auction.startPrice?.toLocaleString()}</Text>{' '}
+                VND
               </Text>
               <br />
               <Space size={20} className={styles.btnGroup}>
                 <Link to={`/auction/detail?id=${auction.auctionId}`}>
                   <Button type="primary" className={styles.detailButton}>
-                    Xem chi tiết
+                    {t('component.home_auction.view_details')}
                   </Button>
                 </Link>
                 <Button icon={<ShareAltOutlined />} shape="circle" onClick={() => handleShare(auction.auctionId)} />
@@ -85,7 +92,7 @@ function AuctionList({ auctions, type = 'scheduled' }) {
         <div className={styles.viewAll}>
           <Link to={`/auction?status=${type}&page=0&size=6&sort=desc`}>
             <Button type="primary" ghost className={styles.viewAllButton}>
-              Xem tất cả
+              {t('component.home_auction.view_all')}
             </Button>
           </Link>
         </div>
