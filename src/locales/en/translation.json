@@ -1,0 +1,106 @@
+{
+  "component": {
+    "breadcrumb": {
+      "home": "Home",
+      "login": "Login",
+      "register": "Register",
+      "forgot_password": "Forgot Password",
+      "access_denied": "403",
+      "auction": "Auctions",
+      "auction_detail": "Auction Details",
+      "auction_bid": "Bid",
+      "account_center": "Account Center",
+      "profile": "Personal Information",
+      "wallet": "Wallet Management",
+      "schedule": "Schedule Management",
+      "order": "Order Management",
+      "auction_management": "Auction Management",
+      "koi_management": "Koi Management",
+      "not_found": "404"
+    },
+    "header": {
+      "account_center": "Account Center",
+      "personal_info": "Personal Information",
+      "wallet_management": "Wallet Management",
+      "schedule_management": "Schedule Management",
+      "order_management": "Order Management",
+      "auction_management": "Auction Management",
+      "koi_management": "Koi Management",
+      "logout": "Logout",
+      "search_placeholder": "Search...",
+      "login": "Login",
+      "register": "Register",
+      "offline_status": "No network connection"
+    },
+    "menu": {
+      "auctions": " Auctions",
+      "home": "Home",
+      "about": "About Us",
+      "contact": "Contact",
+      "blog": "Blog",
+      "scheduled_auction": "Scheduled Auction",
+      "ongoing_auction": "Ongoing Auction",
+      "closed_auction": "Closed Auction"
+    },
+    "intro": {
+      "welcome": "Welcome to KOIAUCTION",
+      "title": "Online auction platform for Koi fish enthusiasts",
+      "description": "KOIAUCTION was established with the goal of providing a convenient and trustworthy online auction space for the Koi fish community. Whether you are new to the hobby or a seasoned collector, we aim to create an easy, secure, and friendly experience, allowing everyone to connect and interact through exciting auction sessions.",
+      "explore": "Explore Now"
+    },
+    "home_auction": {
+      "scheduled": "Scheduled Auctions",
+      "ongoing": "Ongoing Auctions",
+      "no_scheduled": "No scheduled auctions available",
+      "no_ongoing": "No ongoing auctions available",
+      "auction_time": "Start Time",
+      "time_left": "Time Left",
+      "auction_number": "Auction No. ",
+      "starting_price": "Starting Price: ",
+      "view_details": "View Details",
+      "link_copied": "Link copied successfully!",
+      "copy_error": "Could not copy: ",
+      "view_all": "View All"
+    },
+    "partner": {
+      "title": "Featured Customers & Partners"
+    },
+    "footer": {
+      "contact": {
+        "email": "Email: support@example.com",
+        "phone": "Phone: +84 123 456 789"
+      },
+      "legal": {
+        "privacy_policy": "Privacy Policy",
+        "terms_of_service": "Terms of Service",
+        "refund_policy": "Refund Policy"
+      },
+      "copyright": "© 2024 Software Development Project SWP391",
+      "powered_by": "Powered by Ant Design"
+    },
+    "google_login": {
+      "login_error": "Failed to access Google account.",
+      "login_success": "Login successful!",
+      "login_failure": "Login failed! Please try again later.",
+      "button_text": "Sign in with Google"
+    }
+  },
+  "page": {
+    "login": {
+      "title": "Login",
+      "username_label": "Username/Email",
+      "username_placeholder": "Username or email",
+      "username_required": "Please enter your username or email!",
+      "password_label": "Password",
+      "password_placeholder": "Password",
+      "password_required": "Please enter your password!",
+      "remember_me": "Remember me for next login",
+      "login_button_loading": "Logging in...",
+      "login_button": "Login",
+      "login_success": "Login successful!",
+      "login_failure": "Login failed! Please check your information.",
+      "forgot_password": "Forgot password?",
+      "register": "Register"
+    }
+  }
+}

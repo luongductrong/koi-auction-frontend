@@ -1,0 +1,106 @@
+{
+  "component": {
+    "breadcrumb": {
+      "home": "ホーム",
+      "login": "ログイン",
+      "register": "登録",
+      "forgot_password": "パスワードを忘れた",
+      "access_denied": "403",
+      "auction": "オークション",
+      "auction_detail": "オークションの詳細",
+      "auction_bid": "入札",
+      "account_center": "アカウントセンター",
+      "profile": "個人情報",
+      "wallet": "ウォレット管理",
+      "schedule": "スケジュール管理",
+      "order": "注文管理",
+      "auction_management": "オークション管理",
+      "koi_management": "鯉管理",
+      "not_found": "404"
+    },
+    "header": {
+      "account_center": "アカウントセンター",
+      "personal_info": "個人情報",
+      "wallet_management": "ウォレット管理",
+      "schedule_management": "スケジュール管理",
+      "order_management": "注文管理",
+      "auction_management": "オークション管理",
+      "koi_management": "鯉管理",
+      "logout": "ログアウト",
+      "search_placeholder": "検索...",
+      "login": "ログイン",
+      "register": "登録",
+      "offline_status": "ネットワーク接続なし"
+    },
+    "menu": {
+      "auctions": "オークション",
+      "home": "ホーム",
+      "about": "私たちについて",
+      "contact": "お問い合わせ",
+      "blog": "ブログ",
+      "scheduled_auction": "予定されたオークション",
+      "ongoing_auction": "進行中のオークション",
+      "closed_auction": "終了したオークション"
+    },
+    "intro": {
+      "welcome": "KOIAUCTIONへようこそ",
+      "title": "鯉愛好家のためのオンラインオークションプラットフォーム",
+      "description": "KOIAUCTIONは、鯉愛好家コミュニティに便利で信頼できるオンラインオークションスペースを提供することを目指して設立されました。初心者からコレクターまで、誰もが簡単で安全かつフレンドリーな体験を楽しみながら、オークションを通じて交流できるようなプラットフォームです。",
+      "explore": "今すぐ探索"
+    },
+    "home_auction": {
+      "scheduled": "予定されたオークション",
+      "ongoing": "進行中のオークション",
+      "no_scheduled": "予定されたオークションはありません",
+      "no_ongoing": "進行中のオークションはありません",
+      "auction_time": "開始時間",
+      "time_left": "残り時間",
+      "auction_number": "オークション番号 ",
+      "starting_price": "開始価格: ",
+      "view_details": "詳細を見る",
+      "link_copied": "リンクが正常にコピーされました！",
+      "copy_error": "コピーできませんでした: ",
+      "view_all": "すべて見る"
+    },
+    "partner": {
+      "title": "注目のお客様＆パートナー"
+    },
+    "footer": {
+      "contact": {
+        "email": "メール: support@example.com",
+        "phone": "電話: +84 123 456 789"
+      },
+      "legal": {
+        "privacy_policy": "プライバシーポリシー",
+        "terms_of_service": "利用規約",
+        "refund_policy": "返金ポリシー"
+      },
+      "copyright": "© 2024 ソフトウェア開発プロジェクト SWP391",
+      "powered_by": "Ant Design 提供"
+    },
+    "google_login": {
+      "login_error": "Googleアカウントにアクセスできませんでした。",
+      "login_success": "ログイン成功!",
+      "login_failure": "ログインに失敗しました！後でもう一度お試しください。",
+      "button_text": "Googleでログイン"
+    }
+  },
+  "page": {
+    "login": {
+      "title": "ログイン",
+      "username_label": "ユーザー名/メールアドレス",
+      "username_placeholder": "ユーザー名",
+      "username_required": "ユーザー名またはメールアドレスを入力してください！",
+      "password_label": "パスワード",
+      "password_placeholder": "パスワード",
+      "password_required": "パスワードを入力してください！",
+      "remember_me": "次回のログインを記憶する",
+      "login_button_loading": "ログイン中...",
+      "login_button": "ログイン",
+      "login_success": "ログインに成功しました！",
+      "login_failure": "ログインに失敗しました！情報を再確認してください。",
+      "forgot_password": "パスワードを忘れましたか？",
+      "register": "登録"
+    }
+  }
+}

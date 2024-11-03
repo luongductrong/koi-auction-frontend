@@ -1,0 +1,106 @@
+{
+  "component": {
+    "breadcrumb": {
+      "home": "首页",
+      "login": "登录",
+      "register": "注册",
+      "forgot_password": "忘记密码",
+      "access_denied": "403",
+      "auction": "拍卖",
+      "auction_detail": "拍卖详情",
+      "auction_bid": "出价",
+      "account_center": "账户中心",
+      "profile": "个人信息",
+      "wallet": "钱包管理",
+      "schedule": "日程管理",
+      "order": "订单管理",
+      "auction_management": "拍卖管理",
+      "koi_management": "锦鲤管理",
+      "not_found": "404"
+    },
+    "header": {
+      "account_center": "账户中心",
+      "personal_info": "个人信息",
+      "wallet_management": "钱包管理",
+      "schedule_management": "日程管理",
+      "order_management": "订单管理",
+      "auction_management": "拍卖管理",
+      "koi_management": "锦鲤管理",
+      "logout": "登出",
+      "search_placeholder": "搜索...",
+      "login": "登录",
+      "register": "注册",
+      "offline_status": "无网络连接"
+    },
+    "menu": {
+      "auctions": "拍卖",
+      "home": "首页",
+      "about": "关于我们",
+      "contact": "联系我们",
+      "blog": "博客",
+      "scheduled_auction": "即将开始的拍卖",
+      "ongoing_auction": "进行中的拍卖",
+      "closed_auction": "已结束的拍卖"
+    },
+    "intro": {
+      "welcome": "欢迎来到KOIAUCTION",
+      "title": "为锦鲤爱好者打造的在线拍卖平台",
+      "description": "KOIAUCTION致力于为锦鲤爱好者社区提供一个方便、可靠的在线拍卖空间。不论您是新手还是资深收藏者，我们都希望创造一个简单、安全且友好的体验，让每个人都可以通过精彩的拍卖会进行互动和交流。",
+      "explore": "立即探索"
+    },
+    "home_auction": {
+      "scheduled": "即将开始的拍卖",
+      "ongoing": "进行中的拍卖",
+      "no_scheduled": "暂无即将开始的拍卖",
+      "no_ongoing": "暂无进行中的拍卖",
+      "auction_time": "拍卖时间",
+      "time_left": "剩余时间",
+      "auction_number": "拍卖编号",
+      "starting_price": "起拍价：",
+      "view_details": "查看详情",
+      "link_copied": "链接已复制！",
+      "copy_error": "无法复制：",
+      "view_all": "查看全部"
+    },
+    "partner": {
+      "title": "精选客户与合作伙伴"
+    },
+    "footer": {
+      "contact": {
+        "email": "电子邮件：support@example.com",
+        "phone": "电话：+84 123 456 789"
+      },
+      "legal": {
+        "privacy_policy": "隐私政策",
+        "terms_of_service": "服务条款",
+        "refund_policy": "退款政策"
+      },
+      "copyright": "© 2024 软件开发项目 SWP391",
+      "powered_by": "技术支持：Ant Design"
+    },
+    "google_login": {
+      "login_error": "无法访问Google账户。",
+      "login_success": "登录成功！",
+      "login_failure": "登录失败！请稍后再试。",
+      "button_text": "通过Google登录"
+    }
+  },
+  "page": {
+    "login": {
+      "title": "登录",
+      "username_label": "用户名/电子邮件",
+      "username_placeholder": "用户名或电子邮件",
+      "username_required": "请输入用户名或电子邮件！",
+      "password_label": "密码",
+      "password_placeholder": "密码",
+      "password_required": "请输入密码！",
+      "remember_me": "记住我的登录信息",
+      "login_button_loading": "正在登录...",
+      "login_button": "登录",
+      "login_success": "登录成功！",
+      "login_failure": "登录失败！请检查您的信息。",
+      "forgot_password": "忘记密码？",
+      "register": "注册"
+    }
+  }
+}

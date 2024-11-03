@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Drawer, Form, Input, Select, Button, DatePicker, Upload, App } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import api from '../../configs';
-import { koiTypeNameToId } from '../../utils/koi-i8';
 import moment from 'moment';
 
 const { Option } = Select;

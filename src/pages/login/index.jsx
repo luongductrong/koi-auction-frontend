@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Checkbox, App } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { setUser, clearUser } from '../../redux/userSlice';
 import GoogleLogin from '../../components/GoogleLogin';
@@ -13,6 +14,7 @@ function Login() {
 
   const { message } = App.useApp();
   const location = useLocation();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const dispatch = useDispatch();
@@ -31,7 +33,7 @@ function Login() {
       });
 
       if (response.status === 200) {
-        message.success('Đăng nhập thành công!');
+        message.success(t('page.login.login_success'));
         console.log('Login Response:', response.data);
 
         dispatch(setUser(response.data));
@@ -42,11 +44,11 @@ function Login() {
           navigate('/');
         }
       } else {
-        message.error('Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.');
+        message.error(t('page.login.login_failure'));
         console.error('Login Error:', response.data);
       }
     } catch (error) {
-      message.error('Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.');
+      message.error(t('page.login.login_failure'));
       console.error('Login Error:', error.response ? error.response.data : error.message);
     } finally {
       setLoading(false);
@@ -65,33 +67,43 @@ function Login() {
   return (
     <div className={styles.loginContainer}>
       <div className={styles.loginForm}>
-        <h2 className={styles.loginTitle}>Đăng nhập</h2>
-        <Form name="login" onFinish={handleFinish} onFinishFailed={handleFinishFailed} layout="vertical">
+        <h2 className={styles.loginTitle}>{t('page.login.title')}</h2>
+        <Form
+          name="login"
+          onFinish={handleFinish}
+          onFinishFailed={handleFinishFailed}
+          layout="vertical"
+          className={styles.form}
+        >
           <Form.Item
-            label="Tên đăng nhập/Email"
+            label={t('page.login.username_label')}
             name="username"
-            rules={[{ required: true, message: 'Vui lòng điền tên đăng nhập hoặc email!' }]}
+            rules={[{ required: true, message: t('page.login.username_required') }]}
           >
-            <Input placeholder="Username" />
+            <Input placeholder={t('page.login.username_placeholder')} />
           </Form.Item>
-          <Form.Item label="Mật khẩu" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}>
-            <Input.Password placeholder="Password" />
+          <Form.Item
+            label={t('page.login.password_label')}
+            name="password"
+            rules={[{ required: true, message: t('page.login.password_required') }]}
+          >
+            <Input.Password placeholder={t('page.login.password_placeholder')} />
           </Form.Item>
           <Form.Item name="remember" valuePropName="checked">
-            <Checkbox onChange={(e) => setRememberMe(e.target.checked)}>Ghi nhớ cho lần đăng nhập sau</Checkbox>
+            <Checkbox onChange={(e) => setRememberMe(e.target.checked)}>{t('page.login.remember_me')}</Checkbox>
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={loading} className={styles.loginBtn}>
-              {loading ? 'Đăng nhập...' : 'Đăng nhập'}
+              {loading ? t('page.login.login_button_loading') : t('page.login.login_button')}
             </Button>
           </Form.Item>
         </Form>
         <GoogleLogin />
         <Link to="/forgot-password" className={styles.forgotPasswordLink}>
-          Quên mật khẩu?
+          {t('page.login.forgot_password')}
         </Link>
         <Link to="/register" className={styles.forgotPasswordLink}>
-          Đăng ký
+          {t('page.login.register')}
         </Link>
       </div>
     </div>

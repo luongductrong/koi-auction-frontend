@@ -1,5 +1,6 @@
 import React from 'react';
 import { Carousel, Row, Col, Avatar, Typography } from 'antd';
+import { useTranslation } from 'react-i18next';
 import styles from './index.module.scss';
 import fallback from '../../assets/images/favicon.png';
 
@@ -18,12 +19,13 @@ const partners = [
 ];
 
 const Partner = () => {
+  const { t } = useTranslation();
   return (
     <div className={styles.background}>
       <div className={styles.container}>
         <Title level={3} className={styles.header}>
           <span className={styles.before}></span>
-          Khách hàng & đối tác tiêu biểu
+          {t('component.partner.title')}
           <span className={styles.after}></span>
         </Title>
         <Carousel autoplay dots={{ className: styles.dots }} draggable className={styles.carousel}>

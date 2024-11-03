@@ -1,0 +1,105 @@
+{
+  "component": {
+    "breadcrumb": {
+      "home": "หน้าหลัก",
+      "login": "เข้าสู่ระบบ",
+      "register": "สมัครสมาชิก",
+      "forgot_password": "ลืมรหัสผ่าน",
+      "access_denied": "403",
+      "auction": "การประมูล",
+      "auction_detail": "รายละเอียดการประมูล",
+      "auction_bid": "เสนอราคา",
+      "account_center": "ศูนย์บัญชี",
+      "profile": "ข้อมูลส่วนตัว",
+      "wallet": "การจัดการกระเป๋าเงิน",
+      "schedule": "การจัดการตาราง",
+      "order": "การจัดการคำสั่งซื้อ",
+      "auction_management": "การจัดการการประมูล",
+      "koi_management": "การจัดการปลาคาร์ฟ",
+      "not_found": "404"
+    },
+    "header": {
+      "account_center": "ศูนย์บัญชี",
+      "personal_info": "ข้อมูลส่วนตัว",
+      "wallet_management": "การจัดการกระเป๋าเงิน",
+      "schedule_management": "การจัดการตาราง",
+      "order_management": "การจัดการคำสั่งซื้อ",
+      "auction_management": "การจัดการการประมูล",
+      "koi_management": "การจัดการปลาคาร์ฟ",
+      "logout": "ออกจากระบบ",
+      "search_placeholder": "ค้นหา...",
+      "login": "เข้าสู่ระบบ",
+      "register": "สมัครสมาชิก",
+      "offline_status": "ไม่มีการเชื่อมต่อเครือข่าย"
+    },
+    "menu": {
+      "auctions": " การประมูล",
+      "home": "หน้าหลัก",
+      "about": "เกี่ยวกับเรา",
+      "contact": "ติดต่อ",
+      "blog": "บล็อก",
+      "scheduled_auction": "การประมูลที่กำหนดไว้",
+      "ongoing_auction": "การประมูลที่กำลังดำเนินการ",
+      "closed_auction": "การประมูลที่สิ้นสุดแล้ว"
+    },
+    "intro": {
+      "welcome": "ยินดีต้อนรับสู่ KOIAUCTION",
+      "title": "แพลตฟอร์มการประมูลออนไลน์สำหรับผู้ที่รักปลาคาร์ฟ",
+      "description": "KOIAUCTION ถูกสร้างขึ้นเพื่อมอบพื้นที่การประมูลออนไลน์ที่สะดวกและน่าเชื่อถือสำหรับชุมชนผู้ที่รักปลาคาร์ฟ ไม่ว่าคุณจะเป็นผู้ที่เพิ่งเริ่มต้นหรือเป็นนักสะสมปลาคาร์ฟมายาวนาน เรามุ่งหวังที่จะสร้างประสบการณ์ที่ง่าย ปลอดภัย และเป็นมิตร ให้ทุกคนได้เชื่อมต่อและร่วมกิจกรรมการประมูลที่น่าตื่นเต้น",
+      "explore": "สำรวจเลย"
+    },
+    "home_auction": {
+      "scheduled": "การประมูลที่กำหนดไว้",
+      "ongoing": "การประมูลที่กำลังดำเนินการ",
+      "no_scheduled": "ไม่มีการประมูลที่กำหนดไว้",
+      "no_ongoing": "ไม่มีการประมูลที่กำลังดำเนินการ",
+      "auction_time": "เวลาเริ่มการประมูล",
+      "time_left": "เวลาที่เหลือ",
+      "auction_number": "หมายเลขการประมูล",
+      "starting_price": "ราคาเริ่มต้น: ",
+      "view_details": "ดูรายละเอียด",
+      "link_copied": "คัดลอกลิงก์สำเร็จ!",
+      "copy_error": "ไม่สามารถคัดลอกได้: ",
+      "view_all": "ดูทั้งหมด"
+    },
+    "partner": {
+      "title": "ลูกค้าและพันธมิตรที่โดดเด่น"
+    },
+    "footer": {
+      "contact": {
+        "email": "อีเมล: support@example.com",
+        "phone": "โทรศัพท์: +84 123 456 789"
+      },
+      "legal": {
+        "privacy_policy": "นโยบายความเป็นส่วนตัว",
+        "terms_of_service": "เงื่อนไขการให้บริการ",
+        "refund_policy": "นโยบายการคืนเงิน"
+      },
+      "copyright": "© 2024 โครงการพัฒนาซอฟต์แวร์ SWP391",
+      "powered_by": "สนับสนุนโดย Ant Design"
+    },
+    "google_login": {
+      "login_error": "การเข้าถึงบัญชี Google ล้มเหลว",
+      "login_success": "เข้าสู่ระบบสำเร็จ!",
+      "login_failure": "เข้าสู่ระบบล้มเหลว! กรุณาลองอีกครั้งในภายหลัง",
+      "button_text": "เข้าสู่ระบบด้วย Google"
+    }
+  },
+  "page": {
+    "login": {
+      "title": "เข้าสู่ระบบ",
+      "username_label": "ชื่อผู้ใช้/อีเมล",
+      "username_placeholder": "ชื่อผู้ใช้หรืออีเมล",
+      "username_required": "กรุณากรอกชื่อผู้ใช้หรืออีเมล!",
+      "password_label": "รหัสผ่าน",
+      "password_placeholder": "รหัสผ่าน",
+      "password_required": "กรุณากรอกรหัสผ่าน!",
+      "remember_me": "จำไว้ในครั้งถัดไป",
+      "login_button": "เข้าสู่ระบบ",
+      "login_success": "เข้าสู่ระบบสำเร็จ!",
+      "login_failure": "เข้าสู่ระบบล้มเหลว! กรุณาตรวจสอบข้อมูลของคุณ",
+      "forgot_password": "ลืมรหัสผ่าน?",
+      "register": "สมัครสมาชิก"
+    }
+  }
+}
