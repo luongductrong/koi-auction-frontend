@@ -1,5 +1,23 @@
 {
   "component": {
+    "breadcrumb": {
+      "home": "Trang chủ",
+      "login": "Đăng nhập",
+      "register": "Đăng ký",
+      "forgot_password": "Quên mật khẩu",
+      "access_denied": "403",
+      "auction": "Cuộc đấu giá",
+      "auction_detail": "Chi tiết cuộc đấu giá",
+      "auction_bid": "Đấu giá",
+      "account_center": "Trung tâm tài khoản",
+      "profile": "Thông tin cá nhân",
+      "wallet": "Quản lý ví",
+      "schedule": "Quản lý lịch",
+      "order": "Quản lý đơn hàng",
+      "auction_management": "Quản lý cuộc đấu giá",
+      "koi_management": "Quản lý cá Koi",
+      "not_found": "404"
+    },
     "header": {
       "account_center": "Trung tâm tài khoản",
       "personal_info": "Thông tin cá nhân",
@@ -59,6 +77,29 @@
       },
       "copyright": "© 2024 Dự án phát triển phần mềm SWP391",
       "powered_by": "Powered by Ant Design"
+    },
+    "google_login": {
+      "login_error": "Lỗi truy cập vào tài khoản Google.",
+      "login_success": "Đăng nhập thành công!",
+      "login_failure": "Đăng nhập thất bại! Vui lòng thử lại sau.",
+      "button_text": "Đăng nhập bằng Google"
+    }
+  },
+  "page": {
+    "login": {
+      "title": "Đăng nhập",
+      "username_label": "Tên đăng nhập/Email",
+      "username_placeholder": "Tên đăng nhập hoặc email",
+      "username_required": "Vui lòng điền tên đăng nhập hoặc email!",
+      "password_label": "Mật khẩu",
+      "password_placeholder": "Mật khẩu",
+      "password_required": "Vui lòng nhập mật khẩu!",
+      "remember_me": "Ghi nhớ cho lần đăng nhập sau",
+      "login_button": "Đăng nhập",
+      "login_success": "Đăng nhập thành công!",
+      "login_failure": "Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.",
+      "forgot_password": "Quên mật khẩu?",
+      "register": "Đăng ký"
     }
   }
 }

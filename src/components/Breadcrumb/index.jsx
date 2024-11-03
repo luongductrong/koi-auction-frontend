@@ -1,26 +1,29 @@
 import React from 'react';
 import { Breadcrumb as AntBreadcrumb, ConfigProvider } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
-
-const breadcrumbNameMap = {
-  '/login': 'Đăng nhập',
-  '/register': 'Đăng ký',
-  '/forgot-password': 'Quên mật khẩu',
-  '/access-denied': '403',
-  '/auction': 'Cuộc đấu giá',
-  '/auction/detail': 'Chi tiết cuộc đấu giá',
-  '/auction/bid': 'Đấu giá',
-  '/account-center': 'Trung tâm tài khoản',
-  '/account-center/profile': 'Thông tin cá nhân',
-  '/account-center/wallet': 'Quản lý ví',
-  '/account-center/schedule': 'Quản lý lịch',
-  '/account-center/order': 'Quản lý đơn hàng',
-  '/account-center/auction': 'Quản lý cuộc đấu giá',
-  '/account-center/koi': 'Quản lý cá Koi',
-};
+import { useTranslation } from 'react-i18next';
 
 function Breadcrumb() {
   const location = useLocation();
+  const { t } = useTranslation();
+
+  const breadcrumbNameMap = {
+    '/login': t('component.breadcrumb.login'),
+    '/register': t('component.breadcrumb.register'),
+    '/forgot-password': t('component.breadcrumb.forgot_password'),
+    '/access-denied': t('component.breadcrumb.access_denied'),
+    '/auction': t('component.breadcrumb.auction'),
+    '/auction/detail': t('component.breadcrumb.auction_detail'),
+    '/auction/bid': t('component.breadcrumb.auction_bid'),
+    '/account-center': t('component.breadcrumb.account_center'),
+    '/account-center/profile': t('component.breadcrumb.profile'),
+    '/account-center/wallet': t('component.breadcrumb.wallet'),
+    '/account-center/schedule': t('component.breadcrumb.schedule'),
+    '/account-center/order': t('component.breadcrumb.order'),
+    '/account-center/auction': t('component.breadcrumb.auction_management'),
+    '/account-center/koi': t('component.breadcrumb.koi_management'),
+  };
+
   const pathSnippets = location.pathname.split('/').filter((i) => i);
 
   const breadcrumbItems = pathSnippets.map((_, index) => {
@@ -34,7 +37,7 @@ function Breadcrumb() {
   const items = [
     {
       key: 'home',
-      title: <Link to="/">Trang chủ</Link>,
+      title: <Link to="/">{t('component.breadcrumb.home')}</Link>,
     },
     ...breadcrumbItems,
   ];

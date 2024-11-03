@@ -1,5 +1,23 @@
 {
   "component": {
+    "breadcrumb": {
+      "home": "Home",
+      "login": "Login",
+      "register": "Register",
+      "forgot_password": "Forgot Password",
+      "access_denied": "403",
+      "auction": "Auctions",
+      "auction_detail": "Auction Details",
+      "auction_bid": "Bid",
+      "account_center": "Account Center",
+      "profile": "Personal Information",
+      "wallet": "Wallet Management",
+      "schedule": "Schedule Management",
+      "order": "Order Management",
+      "auction_management": "Auction Management",
+      "koi_management": "Koi Management",
+      "not_found": "404"
+    },
     "header": {
       "account_center": "Account Center",
       "personal_info": "Personal Information",
@@ -59,6 +77,30 @@
       },
       "copyright": "© 2024 Software Development Project SWP391",
       "powered_by": "Powered by Ant Design"
+    },
+    "google_login": {
+      "login_error": "Failed to access Google account.",
+      "login_success": "Login successful!",
+      "login_failure": "Login failed! Please try again later.",
+      "button_text": "Sign in with Google"
+    }
+  },
+  "page": {
+    "login": {
+      "title": "Login",
+      "username_label": "Username/Email",
+      "username_placeholder": "Username or email",
+      "username_required": "Please enter your username or email!",
+      "password_label": "Password",
+      "password_placeholder": "Password",
+      "password_required": "Please enter your password!",
+      "remember_me": "Remember me for next login",
+      "login_button_loading": "Logging in...",
+      "login_button": "Login",
+      "login_success": "Login successful!",
+      "login_failure": "Login failed! Please check your information.",
+      "forgot_password": "Forgot password?",
+      "register": "Register"
     }
   }
 }

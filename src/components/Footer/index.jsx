@@ -23,9 +23,9 @@ function Footer() {
                 Tiếng Việt
               </p>
               <p onClick={() => changeLanguage('en-US')}>English</p>
-              <p>中文</p>
-              <p>한국어</p>
               <p onClick={() => changeLanguage('ja-JP')}>日本語</p>
+              <p onClick={() => changeLanguage('zh-CN')}>中文</p>
+              <p onClick={() => changeLanguage('ko-KR')}>한국어</p>
             </Space>
           </Flex>
 

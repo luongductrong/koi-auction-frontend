@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
+import { useTranslation } from 'react-i18next';
 import { Button, App } from 'antd';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/userSlice';
@@ -13,6 +14,7 @@ const spanStyle = { display: 'flex', width: '100%', alignItems: 'center', justif
 
 function GoogleLogin() {
   const { message } = App.useApp();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -23,12 +25,12 @@ function GoogleLogin() {
         console.log('Login Google:', response.access_token);
         loginSystem(response.access_token);
       } else {
-        message.error('Lỗi truy cập vào tài khoản Google.');
+        message.error(t('component.google_login.login_error'));
       }
     },
     onError: (error) => {
       console.log('Login Failed:', error);
-      message.error('Lỗi truy cập vào tài khoản Google.');
+      message.error(t('component.google_login.login_error'));
     },
   });
 
@@ -43,17 +45,17 @@ function GoogleLogin() {
       });
 
       if (loginResponse.status === 200) {
-        message.success('Đăng nhập thành công!');
+        message.success(t('component.google_login.login_success'));
         console.log('Login Response:', loginResponse.data);
 
         dispatch(setUser(loginResponse.data));
         navigate('/');
       } else {
-        message.error('Đăng nhập thất bại! Vui lòng thử lại sau.');
+        message.error(t('component.google_login.login_failure'));
         console.error('Login Error:', loginResponse.data);
       }
     } catch (error) {
-      message.error('Đăng nhập thất bại! Vui lòng thử lại sau.');
+      message.error(t('component.google_login.login_failure'));
       console.error('Login Error:', error.response ? error.response.data : error.message);
     } finally {
       setLoading(false);
@@ -64,7 +66,7 @@ function GoogleLogin() {
     <Button type="default" htmlType="button" style={btnStyle} onClick={login} loading={loading}>
       <span style={spanStyle}>
         <img src={googleIcon} alt="Google icon" width="24" height="24" />
-        <p> Đăng nhập bằng Google</p>
+        <p> {t('component.google_login.button_text')}</p>
       </span>
     </Button>
   );
