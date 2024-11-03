@@ -2,8 +2,9 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Layout, Input, Button, ConfigProvider, Dropdown } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
-import { useNetworkStatus } from 'hook';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useNetworkStatus } from 'hook';
 import styles from './index.module.scss';
 import Logo from '../Logo';
 import Menu from '../Menu';
@@ -12,6 +13,7 @@ const { Header: AntHeader } = Layout;
 
 function Header() {
   const user = useSelector((state) => state.user.user);
+  const { t } = useTranslation();
   const fullUrl = useLocation().pathname + useLocation().search + useLocation().hash; // Get full URL
   const isOnline = useNetworkStatus();
 
@@ -22,33 +24,33 @@ function Header() {
       key: '1',
       label: (
         <Link>
-          <UserOutlined /> Trung tâm tài khoản
+          <UserOutlined /> {t('component.header.account_center')}
         </Link>
       ),
       children: [
         {
           key: '1-1',
-          label: <Link to="/account-center/profile">Thông tin cá nhân</Link>,
+          label: <Link to="/account-center/profile">{t('component.header.personal_info')}</Link>,
         },
         {
           key: '1-2',
-          label: <Link to="/account-center/wallet">Quản lý ví</Link>,
+          label: <Link to="/account-center/wallet">{t('component.header.wallet_management')}</Link>,
         },
         {
           key: '1-3',
-          label: <Link to="/account-center/schedule">Quản lý lịch</Link>,
+          label: <Link to="/account-center/schedule">{t('component.header.schedule_management')}</Link>,
         },
         {
           key: '1-4',
-          label: <Link to="/account-center/order">Quản lý đơn hàng</Link>,
+          label: <Link to="/account-center/order">{t('component.header.order_management')}</Link>,
         },
         {
           key: '1-5',
-          label: <Link to="/account-center/auction">Quản lý cuộc đấu giá</Link>,
+          label: <Link to="/account-center/auction">{t('component.header.auction_management')}</Link>,
         },
         {
           key: '1-6',
-          label: <Link to="/account-center/koi">Quản lý cá Koi</Link>,
+          label: <Link to="/account-center/koi">{t('component.header.koi_management')}</Link>,
         },
       ],
     },
@@ -56,7 +58,7 @@ function Header() {
       key: '2',
       label: (
         <Link to="login">
-          <LogoutOutlined /> Đăng xuất
+          <LogoutOutlined /> {t('component.header.logout')}
         </Link>
       ),
     },
@@ -69,13 +71,18 @@ function Header() {
       <AntHeader className={styles.header}>
         {isOnline || (
           <div className={styles.statusHeader}>
-            <p className={styles.offline}>Không có kết nối mạng</p>
+            <p className={styles.offline}>{t('component.header.offline_status')}</p>
           </div>
         )}
         <div className={styles.container}>
           <div className={styles.topHeader}>
             <Logo />
-            <Input.Search className={styles.searchBar} placeholder="Tìm kiếm..." onSearch={onSearch} loading={false} />
+            <Input.Search
+              className={styles.searchBar}
+              placeholder={t('component.header.search_placeholder')}
+              onSearch={onSearch}
+              loading={false}
+            />
             <div className={styles.btnGroup}>
               {user ? (
                 <Dropdown menu={{ items }} trigger={['hover']} arrow>
@@ -85,7 +92,7 @@ function Header() {
                 <>
                   <Link to={`/login?redirect=${fullUrl}`} className={styles.btn}>
                     <Button type="primary" ghost>
-                      Đăng nhập
+                      {t('component.header.login')}
                     </Button>
                   </Link>
                   <Link to="/register" className={styles.btn}>
@@ -95,7 +102,7 @@ function Header() {
                         marginLeft: '10px',
                       }}
                     >
-                      Đăng ký
+                      {t('component.header.register')}
                     </Button>
                   </Link>
                 </>

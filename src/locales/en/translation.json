@@ -1,0 +1,18 @@
+{
+  "component": {
+    "header": {
+      "account_center": "Account Center",
+      "personal_info": "Personal Information",
+      "wallet_management": "Wallet Management",
+      "schedule_management": "Schedule Management",
+      "order_management": "Order Management",
+      "auction_management": "Auction Management",
+      "koi_management": "Koi Management",
+      "logout": "Logout",
+      "search_placeholder": "Search...",
+      "login": "Login",
+      "register": "Register",
+      "offline_status": "No network connection"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "component": {
+    "header": {
+      "account_center": "Trung tâm tài khoản",
+      "personal_info": "Thông tin cá nhân",
+      "wallet_management": "Quản lý ví",
+      "schedule_management": "Quản lý lịch",
+      "order_management": "Quản lý đơn hàng",
+      "auction_management": "Quản lý cuộc đấu giá",
+      "koi_management": "Quản lý cá Koi",
+      "logout": "Đăng xuất",
+      "search_placeholder": "Tìm kiếm...",
+      "login": "Đăng nhập",
+      "register": "Đăng ký",
+      "offline_status": "Không có kết nối mạng"
+    }
+  }
+}
