@@ -15,6 +15,10 @@ function koiOrigin(origin) {
       return 'Malaysia';
     case 'philippines':
       return 'Philippines';
+    case 'korea':
+      return 'Hàn Quốc';
+    case 'taiwan':
+      return 'Đài Loan';
     case 'another':
       return 'Khác';
     case 'other':

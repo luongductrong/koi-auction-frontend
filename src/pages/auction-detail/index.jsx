@@ -188,7 +188,7 @@ function AuctionPage() {
           </Col>
           <Col span={12}>
             {auctionDetails?.startTime && auctionDetails?.endTime ? (
-              new Date(auctionDetails.startTime) > new Date() ? (
+              auctionDetails.status === 'Scheduled' ? (
                 <CountdownTimer
                   endTime={auctionDetails.startTime}
                   title="Bắt đầu trả giá sau"

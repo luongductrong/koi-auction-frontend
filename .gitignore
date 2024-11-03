@@ -27,4 +27,5 @@ dist-ssr
 .env
 .env.*
 
-bidding.html
+src/*html
+index2.jsx

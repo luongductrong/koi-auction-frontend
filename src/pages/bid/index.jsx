@@ -51,7 +51,7 @@ function BidPage() {
       WebSocketService.connect(auctionId, displayBidUpdate, (notification) => {
         console.log('New notification:', notification);
         message.info('Đấu giá đã kết thúc!');
-        closeAcution(null);
+        closeAcution(notification?.userId);
       });
     }
     return () => {
@@ -127,7 +127,7 @@ function BidPage() {
     } else {
       navigate('404');
     }
-  }, [location.search, auctionId]);
+  }, []);
 
   const placeBid = async () => {
     console.log(
@@ -156,13 +156,14 @@ function BidPage() {
         );
         if (response) {
           message.success('Trả giá thành công!');
-          setCurrentPrice(response?.data?.amount);
+          // setCurrentPrice(response?.data?.amount);
+          console.log('Bid...CurrentPrice', response?.data?.amount);
         }
       } catch (error) {
         console.error('Failed to place bid:', error);
         message.error('Trả giá thất bại!');
       }
-      setBidAmount(0); // Reset bid input
+      setBidAmount(0);
     } else {
       message.error('Đã xảy ra lỗi!');
     }
@@ -177,7 +178,8 @@ function BidPage() {
   };
 
   const closeAcution = (winnerId) => {
-    setAuctionDetails((auctionDetails) => ({
+    console.log('Closing auction...CurrentPrice', currentPrice);
+    setAuctionDetails(() => ({
       ...auctionDetails,
       status: 'Closed',
       endTime: new Date(),
@@ -274,17 +276,16 @@ function BidPage() {
                       : 'Mức giá cuối cùng'}
                   </strong>
                   <p className={styles.currentPriceValue}>
-                    {currentPrice && auctionDetails?.status === 'Ongoing' && bidHistory?.length > 0
+                    {/* {currentPrice && auctionDetails?.status === 'Ongoing' && bidHistory?.length > 0
                       ? currentPrice.toLocaleString()
-                      : auctionDetails?.startingPrice &&
-                        auctionDetails?.status !== 'Closed' &&
-                        auctionDetails?.status !== 'Finished'
-                      ? auctionDetails.startingPrice.toLocaleString()
                       : auctionDetails?.finalPrice &&
                         (auctionDetails?.status === 'Closed' || auctionDetails?.status === 'Finished')
                       ? auctionDetails.finalPrice.toLocaleString()
-                      : 0}{' '}
-                    <span style={{ fontSize: '14px' }}>VND</span>
+                      : auctionDetails?.startingPrice &&
+                        (auctionDetails?.status !== 'Closed' || auctionDetails?.status !== 'Finished')
+                      ? auctionDetails.startingPrice.toLocaleString()
+                      : 0}{' '} */}
+                    {currentPrice.toLocaleString()} <span style={{ fontSize: '14px' }}>VND</span>
                   </p>
                 </Flex>
                 {auctionDetails?.status === 'Ongoing' && (
@@ -318,9 +319,10 @@ function BidPage() {
                 auctionId={auctionId}
                 winnerId={winnerId || auctionDetails?.winnerID}
                 amount={
-                  auctionDetails?.finalPrice && auctionDetails?.bidderDeposit
-                    ? auctionDetails?.finalPrice - auctionDetails?.bidderDeposit
-                    : null
+                  // auctionDetails?.finalPrice && auctionDetails?.bidderDeposit
+                  //   ? auctionDetails?.finalPrice - auctionDetails?.bidderDeposit
+                  //   : null
+                  currentPrice ? currentPrice - auctionDetails?.bidderDeposit : null
                 }
                 dealine={auctionDetails?.endTime}
               />

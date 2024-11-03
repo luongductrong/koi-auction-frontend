@@ -1,15 +1,20 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Drawer, Form, Input, Select, Button, DatePicker, Upload, message } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Drawer, Form, Input, Select, Button, DatePicker, Upload, App } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import api from '../../configs';
+import { koiTypeNameToId } from '../../utils/koi-i8';
 import moment from 'moment';
 
 const { Option } = Select;
 
 const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
+  const { message } = App.useApp();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [koiInfo, setKoiInfo] = useState({});
+  const [headerImage, setHeaderImage] = useState([]);
+  const [detailImages, setDetailImages] = useState([]);
+  const [video, setVideo] = useState([]);
 
   useEffect(() => {
     if (mode !== 'create' && koiId) {
@@ -21,7 +26,13 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
           form.setFieldsValue({
             ...response.data,
             birthday: response.data.birthday ? moment(response.data.birthday) : null,
+            name: response.data.koiName,
+            koiTypeID: response.data.koiTypeName,
+            countryID: response.data.koiOriginName,
           });
+          if (response.data.headerImage) setHeaderImage([{ url: response.data.headerImage }]);
+          if (response.data.detailImages) setDetailImages(response.data.detailImages.map((img) => ({ url: img })));
+          if (response.data.video) setVideo([{ url: response.data.video }]);
         } catch (error) {
           console.error('Failed to fetch koi info:', error);
           message.error('Lỗi khi tải thông tin cá Koi!');
@@ -29,69 +40,90 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
           setLoading(false);
         }
       };
-      console.log('Fetching koi info...', koiId);
       fetchKoiInfo();
     }
   }, [koiId, form, mode, open]);
-
-  const imageBeforeUpload = (file) => {
-    const isValidImage = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/webp';
-    if (!isValidImage) {
-      message.error('Chỉ được tải lên file hình ảnh (jpg, png, webp)');
-    }
-    return isValidImage ? true : Upload.LIST_IGNORE;
-  };
-
-  const videoBeforeUpload = (file) => {
-    const isValidVideo = file.type === 'video/mp4';
-    if (!isValidVideo) {
-      message.error('Chỉ được tải lên file video định dạng mp4');
-    }
-    return isValidVideo ? true : Upload.LIST_IGNORE;
-  };
 
   const handleSubmit = () => {
     form
       .validateFields()
       .then((values) => {
-        const hasImages = values.images && values.images.fileList.length > 0;
-        const hasVideos = values.videos && values.videos.fileList.length > 0;
-
-        if (!hasImages) {
-          message.error('Vui lòng tải lên ít nhất một hình ảnh!');
+        if (headerImage.length === 0) {
+          message.error('Vui lòng tải lên một hình ảnh chính!');
           return;
         }
 
-        if (!hasVideos) {
+        if (detailImages.length === 0) {
+          message.error('Vui lòng tải lên ít nhất một hình ảnh chi tiết!');
+          return;
+        }
+
+        if (video.length === 0) {
           message.error('Vui lòng tải lên ít nhất một video!');
           return;
         }
 
+        if (mode === 'create') handleFormSubmitCreate();
         form.resetFields();
-        // onCreate(values);
       })
       .catch((info) => {
         console.log('Validate Failed:', info);
       });
   };
 
-  const handleClose = () => {
-    if (mode !== 'create') {
+  const handleFormSubmitCreate = async () => {
+    try {
+      const values = form.getFieldsValue();
+      console.log('Form Values:', values);
+      const formData = new FormData();
+
+      formData.append('name', values.name);
+      formData.append('koiTypeID', values.koiTypeID);
+      formData.append('countryID', values.countryID);
+      formData.append('weight', values.weight);
+      formData.append('length', values.length);
+      formData.append('sex', values.sex);
+      formData.append('birthday', values.birthday ? values.birthday.format('YYYY-MM-DD') : null);
+      formData.append('description', values.description || '');
+
+      // Thêm hình ảnh chính
+      formData.append('image-header', headerImage[0].originFileObj); // Ảnh chính
+      // Thêm hình ảnh chi tiết
+      detailImages.forEach((file) => {
+        formData.append('image-detail', file.originFileObj); // Ảnh chi tiết
+      });
+      // Thêm video
+      video.forEach((file) => {
+        formData.append('video', file.originFileObj); // Video
+      });
+
+      console.log('Form Data:', formData);
+
+      const response = await api.post('/koi-fish/customize-koi-fish', formData, {
+        requiresAuth: true,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      message.success('Thêm cá Koi thành công!');
       form.resetFields();
+      onCancel();
+    } catch (error) {
+      console.error('Failed to create Koi:', error);
+      message.error('Lỗi khi thêm cá Koi!');
     }
-    onCancel();
   };
 
   return (
     <Drawer
       open={open}
       title={mode === 'create' ? 'Thêm cá Koi mới' : `Thông tin cá Koi: KoiID ${koiId}`}
-      onClose={handleClose}
+      onClose={onCancel}
       width={700}
-      loading={loading}
       footer={
         <div style={{ textAlign: 'right' }}>
-          <Button onClick={handleClose} style={{ marginRight: 8 }}>
+          <Button onClick={onCancel} style={{ marginRight: 8 }}>
             Hủy
           </Button>
           <Button onClick={handleSubmit} type="primary">
@@ -101,38 +133,56 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
       }
     >
       <Form form={form} layout="vertical" name="form_in_drawer">
-        <Form.Item label="Tên cá" name="koiName" rules={[{ required: true, message: 'Vui lòng nhập tên cá!' }]}>
+        <Form.Item label="Tên cá" name="name" rules={[{ required: true, message: 'Vui lòng nhập tên cá!' }]}>
           <Input placeholder="Nhập tên cá" />
         </Form.Item>
 
-        <Form.Item label="Loại cá" name="koiTypeName" rules={[{ required: true, message: 'Vui lòng chọn loại cá!' }]}>
+        <Form.Item label="Loại cá" name="koiTypeID" rules={[{ required: true, message: 'Vui lòng chọn loại cá!' }]}>
           <Select placeholder="Chọn loại cá">
-            <Option value="Loại 1">Loại 1</Option>
-            <Option value="Loại 2">Loại 2</Option>
+            <Option value="1">Kohaku</Option>
+            <Option value="2">Taisho Sanke</Option>
+            <Option value="3">Showa Sanshoku</Option>
+            <Option value="4">Shiro Utsuriu</Option>
+            <Option value="5">Asagi</Option>
+            <Option value="6">Shusui</Option>
+            <Option value="7">Utsurimono</Option>
+            <Option value="8">Bekko</Option>
+            <Option value="9">Tancho</Option>
+            <Option value="10">Ochiba Shigure</Option>
+            <Option value="11">Kumonryu</Option>
+            <Option value="12">Doitsu</Option>
+            <Option value="13">Chagoi</Option>
+            <Option value="14">Yamabuki Ogon</Option>
+            <Option value="15">Khác</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item label="Nguồn gốc" name="countryID" rules={[{ required: true, message: 'Vui lòng chọn nguồn gốc!' }]}>
+          <Select placeholder="Chọn nguồn gốc">
+            <Option value="1">Nhật Bản</Option>
+            <Option value="2">Việt Nam</Option>
+            <Option value="3">Indonesia</Option>
+            <Option value="4">Malaysia</Option>
+            <Option value="5">Thái Lan</Option>
+            <Option value="6">Trung Quốc</Option>
+            <Option value="7">Singapore</Option>
+            <Option value="8">Hàn Quốc</Option>
+            <Option value="9">Đài Loan</Option>
+            <Option value="10">Philippines</Option>
+            <Option value="11">Khác</Option>
           </Select>
         </Form.Item>
 
         <Form.Item
-          label="Nguồn gốc"
-          name="koiOriginName"
-          rules={[{ required: true, message: 'Vui lòng nhập nguồn gốc!' }]}
+          label="Cân nặng (kg) (ước tính)"
+          name="weight"
+          rules={[{ required: true, message: 'Vui lòng nhập cân nặng!' }]}
         >
-          <Input placeholder="Nhập nguồn gốc" />
-        </Form.Item>
-
-        <Form.Item label="Trạng thái" name="status" rules={[{ required: true, message: 'Vui lòng chọn trạng thái!' }]}>
-          <Select placeholder="Chọn trạng thái">
-            <Option value="Đang nuôi">Đang nuôi</Option>
-            <Option value="Bán">Bán</Option>
-          </Select>
-        </Form.Item>
-
-        <Form.Item label="Cân nặng (kg)" name="weight" rules={[{ required: true, message: 'Vui lòng nhập cân nặng!' }]}>
           <Input type="number" placeholder="Nhập cân nặng" />
         </Form.Item>
 
         <Form.Item
-          label="Chiều dài (cm)"
+          label="Chiều dài (cm) (ước tính)"
           name="length"
           rules={[{ required: true, message: 'Vui lòng nhập chiều dài!' }]}
         >
@@ -143,10 +193,15 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
           <Select placeholder="Chọn giới tính">
             <Option value="Male">Đực</Option>
             <Option value="Female">Cái</Option>
+            <Option value="Unknown">Không xác định</Option>
           </Select>
         </Form.Item>
 
-        <Form.Item label="Ngày sinh" name="birthday" rules={[{ required: true, message: 'Vui lòng chọn ngày sinh!' }]}>
+        <Form.Item
+          label="Ngày sinh (ước tính)"
+          name="birthday"
+          rules={[{ required: true, message: 'Vui lòng chọn ngày sinh!' }]}
+        >
           <DatePicker
             style={{ width: '100%' }}
             format="DD/MM/YYYY"
@@ -161,26 +216,53 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
         </Form.Item>
 
         <Form.Item label="Mô tả" name="description">
-          <Input.TextArea rows={3} placeholder="Nhập mô tả" />
+          <Input.TextArea rows={3} placeholder="Nhập mô tả (không bắt buộc)" />
         </Form.Item>
 
         <Form.Item
-          label="Tải lên hình ảnh"
-          name="images"
-          rules={[{ required: true, message: 'Vui lòng tải lên ít nhất một hình ảnh!' }]}
+          label="Tải lên hình ảnh chính"
+          name="image-header"
+          rules={[{ required: true, message: 'Vui lòng tải lên ít nhất một hình ảnh chính!' }]}
         >
-          <Upload multiple maxCount={5} listType="picture" beforeUpload={imageBeforeUpload}>
-            <Button icon={<UploadOutlined />}>Chọn hình ảnh</Button>
+          <Upload
+            listType="picture-card"
+            fileList={headerImage}
+            onChange={({ fileList }) => setHeaderImage(fileList)}
+            beforeUpload={() => false} // Chặn upload tự động
+          >
+            {headerImage.length < 1 && <UploadOutlined />}
+          </Upload>
+        </Form.Item>
+
+        <Form.Item
+          label="Tải lên hình ảnh chi tiết"
+          name="image-detail"
+          rules={[{ required: true, message: 'Vui lòng tải lên ít nhất một hình ảnh chi tiết!' }]}
+        >
+          <Upload
+            listType="picture-card"
+            fileList={detailImages}
+            onChange={({ fileList }) => setDetailImages(fileList)}
+            beforeUpload={() => false} // Chặn upload tự động
+            multiple
+          >
+            {detailImages.length < 5 && <UploadOutlined />}
           </Upload>
         </Form.Item>
 
         <Form.Item
           label="Tải lên video"
-          name="videos"
+          name="video"
           rules={[{ required: true, message: 'Vui lòng tải lên ít nhất một video!' }]}
         >
-          <Upload multiple maxCount={3} beforeUpload={videoBeforeUpload}>
-            <Button icon={<UploadOutlined />}>Chọn video</Button>
+          <Upload
+            accept="video/*"
+            listType="picture-card"
+            fileList={video}
+            onChange={({ fileList }) => setVideo(fileList)}
+            beforeUpload={() => false} // Chặn upload tự động
+          >
+            {video.length < 1 && <UploadOutlined />}
           </Upload>
         </Form.Item>
       </Form>

@@ -1,5 +1,18 @@
+.background {
+  position: relative;
+  background-color: #eceff1;
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: -40px;
+}
+
 .container {
   margin: 60px 0;
+  width: var(--container-width);
   text-align: center;
 }
 
@@ -42,6 +55,13 @@
 
 .carousel {
   padding-bottom: 50px;
+}
+
+.item {
+  text-align: center;
+  background-color: #fff;
+  padding: 16px 32px;
+  border-radius: 6px;
 }
 
 @keyframes scaleEffect {

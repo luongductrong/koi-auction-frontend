@@ -19,26 +19,30 @@ const partners = [
 
 const Partner = () => {
   return (
-    <div className={styles.container}>
-      <Title level={3} className={styles.header}>
-        <span className={styles.before}></span>
-        Khách hàng & đối tác tiêu biểu
-        <span className={styles.after}></span>
-      </Title>
-      <Carousel autoplay dots={{ className: styles.dots }} draggable className={styles.carousel}>
-        {[0, 1].map((index) => (
-          <div key={index}>
-            <Row justify="center" gutter={[16, 16]}>
-              {partners.slice(index * 6, index * 6 + 6).map((partner, idx) => (
-                <Col span={4} key={idx} style={{ textAlign: 'center' }}>
-                  <Avatar shape="square" size={80} src={partner.logoUrl || fallback} />
-                  <Text style={{ display: 'block', marginTop: '8px' }}>{partner.name}</Text>
-                </Col>
-              ))}
-            </Row>
-          </div>
-        ))}
-      </Carousel>
+    <div className={styles.background}>
+      <div className={styles.container}>
+        <Title level={3} className={styles.header}>
+          <span className={styles.before}></span>
+          Khách hàng & đối tác tiêu biểu
+          <span className={styles.after}></span>
+        </Title>
+        <Carousel autoplay dots={{ className: styles.dots }} draggable className={styles.carousel}>
+          {[0, 1].map((index) => (
+            <div key={index}>
+              <Row justify="center" gutter={[16, 16]}>
+                {partners.slice(index * 6, index * 6 + 6).map((partner, idx) => (
+                  <Col span={4} key={idx}>
+                    <div className={styles.item}>
+                      <Avatar shape="square" size={80} src={partner.logoUrl || fallback} />
+                      <Text style={{ display: 'block', marginTop: '8px' }}>{partner.name}</Text>
+                    </div>
+                  </Col>
+                ))}
+              </Row>
+            </div>
+          ))}
+        </Carousel>
+      </div>
     </div>
   );
 };

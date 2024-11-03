@@ -17,7 +17,7 @@ function Menu() {
         </p>
       ),
       className: styles.subMenu,
-      style: { backgroundColor: 'rgb(180, 23, 18)' },
+      style: { backgroundColor: 'var(--primary-color)' },
       children: [
         { key: 'schedule', label: <Link to="/auction?status=scheduled">Cuộc đấu giá sắp diễn ra</Link> },
         { key: 'current', label: <Link to="/auction?status=ongoing">Cuộc đấu giá đang diễn ra</Link> },
@@ -35,7 +35,7 @@ function Menu() {
     <ConfigProvider
       theme={{
         token: {
-          fontSize: '16px',
+          fontSize: '14px',
         },
         components: {
           Menu: {},

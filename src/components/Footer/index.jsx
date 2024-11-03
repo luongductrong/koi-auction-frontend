@@ -11,7 +11,7 @@ function Footer() {
         <div className={styles.container}>
           <Flex className={styles.settingGroup} justify="center">
             <Space size="large">
-              <p>Tiếng Việt</p>
+              <p style={{ color: 'red' }}>Tiếng Việt</p>
               <p>English</p>
               <p>中文</p>
               <p>한국어</p>
