@@ -101,6 +101,40 @@
       "login_failure": "ログインに失敗しました！情報を再確認してください。",
       "forgot_password": "パスワードを忘れましたか？",
       "register": "登録"
+    },
+    "forgot_password": {
+      "title": "パスワードをリセット",
+      "email_label": "メール",
+      "email_placeholder": "リカバリーメールを入力...",
+      "email_required": "有効なメールアドレスを入力してください！",
+      "new_password_label": "新しいパスワード",
+      "new_password_placeholder": "新しいパスワード",
+      "new_password_required": "新しいパスワードを入力してください！",
+      "confirm_password_label": "パスワードの確認",
+      "confirm_password_placeholder": "パスワードの確認",
+      "confirm_password_required": "パスワードを確認してください！",
+      "confirm_password_mismatch": "パスワードが一致しません！",
+      "otp_label": "OTPコード",
+      "otp_required": "OTPを入力してください！",
+      "otp_invalid": "OTPは6桁である必要があります！",
+      "send_otp_success": "OTPがメールに送信されました！",
+      "email_not_exist": "メールが存在しません。もう一度確認してください。",
+      "otp_invalid_error": "無効なOTPです。もう一度確認してください。",
+      "otp_expired": "OTPが期限切れです。再試行してください。",
+      "reset_password_success": "パスワードが正常にリセットされました！",
+      "unexpected_error": "エラーが発生しました！後でもう一度お試しください。",
+      "button_continue": "続行",
+      "button_continue_loading": "続行中...",
+      "button_back": "戻る",
+      "button_reset_password": "パスワードをリセット",
+      "button_reset_password_loading": "パスワードをリセット中...",
+      "button_resend_otp_countdown": "再送信",
+      "link_back_to_login": "ログインに戻る"
+    },
+    "not_found": {
+      "title": "404",
+      "message": "お探しの内容は存在しません",
+      "button_home": "ホームに戻る"
     }
   }
 }

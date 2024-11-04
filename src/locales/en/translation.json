@@ -101,6 +101,40 @@
       "login_failure": "Login failed! Please check your information.",
       "forgot_password": "Forgot password?",
       "register": "Register"
+    },
+    "forgot_password": {
+      "title": "Reset Password",
+      "email_label": "Email",
+      "email_placeholder": "Enter recovery email...",
+      "email_required": "Please enter a valid email!",
+      "new_password_label": "New Password",
+      "new_password_placeholder": "New password",
+      "new_password_required": "Please enter a new password!",
+      "confirm_password_label": "Confirm Password",
+      "confirm_password_placeholder": "Confirm password",
+      "confirm_password_required": "Please confirm your password!",
+      "confirm_password_mismatch": "Passwords do not match!",
+      "otp_label": "OTP Code",
+      "otp_required": "Please enter the OTP!",
+      "otp_invalid": "OTP must be 6 digits!",
+      "send_otp_success": "OTP has been sent to your email!",
+      "email_not_exist": "Email does not exist. Please check again.",
+      "otp_invalid_error": "Invalid OTP. Please check again.",
+      "otp_expired": "OTP has expired. Please try again.",
+      "reset_password_success": "Password reset successfully!",
+      "unexpected_error": "An error occurred! Please try again later.",
+      "button_continue": "Continue",
+      "button_continue_loading": "Continuing...",
+      "button_back": "Go back",
+      "button_reset_password": "Reset password",
+      "button_reset_password_loading": "Resetting password...",
+      "button_resend_otp_countdown": "Resend",
+      "link_back_to_login": "Back to login"
+    },
+    "not_found": {
+      "title": "404",
+      "message": "The content you are looking for does not exist",
+      "button_home": "Back to Home"
     }
   }
 }

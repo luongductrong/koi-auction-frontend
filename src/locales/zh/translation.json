@@ -101,6 +101,40 @@
       "login_failure": "登录失败！请检查您的信息。",
       "forgot_password": "忘记密码？",
       "register": "注册"
+    },
+    "forgot_password": {
+      "title": "重置密码",
+      "email_label": "邮箱",
+      "email_placeholder": "输入恢复邮箱...",
+      "email_required": "请输入有效的邮箱！",
+      "new_password_label": "新密码",
+      "new_password_placeholder": "新密码",
+      "new_password_required": "请输入新密码！",
+      "confirm_password_label": "确认密码",
+      "confirm_password_placeholder": "确认密码",
+      "confirm_password_required": "请确认密码！",
+      "confirm_password_mismatch": "密码不匹配！",
+      "otp_label": "OTP代码",
+      "otp_required": "请输入OTP！",
+      "otp_invalid": "OTP必须为6位数字！",
+      "send_otp_success": "OTP已发送到您的邮箱！",
+      "email_not_exist": "邮箱不存在。请检查。",
+      "otp_invalid_error": "无效的OTP。请检查。",
+      "otp_expired": "OTP已过期。请重试。",
+      "reset_password_success": "密码重置成功！",
+      "unexpected_error": "发生错误！请稍后再试。",
+      "button_continue": "继续",
+      "button_continue_loading": "继续中...",
+      "button_back": "返回",
+      "button_reset_password": "重置密码",
+      "button_reset_password_loading": "重置密码中...",
+      "button_resend_otp_countdown": "重新发送",
+      "link_back_to_login": "返回登录"
+    },
+    "not_found": {
+      "title": "404",
+      "message": "您访问的内容不存在",
+      "button_home": "返回主页"
     }
   }
 }

@@ -100,6 +100,40 @@
       "login_failure": "Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.",
       "forgot_password": "Quên mật khẩu?",
       "register": "Đăng ký"
+    },
+    "forgot_password": {
+      "title": "Đặt lại mật khẩu",
+      "email_label": "Email",
+      "email_placeholder": "Nhập email khôi phục...",
+      "email_required": "Vui lòng nhập email hợp lệ!",
+      "new_password_label": "Mật khẩu mới",
+      "new_password_placeholder": "Mật khẩu mới",
+      "new_password_required": "Vui lòng nhập mật khẩu mới!",
+      "confirm_password_label": "Xác nhận mật khẩu",
+      "confirm_password_placeholder": "Xác nhận mật khẩu",
+      "confirm_password_required": "Vui lòng xác nhận mật khẩu!",
+      "confirm_password_mismatch": "Mật khẩu không khớp!",
+      "otp_label": "Mã OTP",
+      "otp_required": "Vui lòng nhập mã OTP!",
+      "otp_invalid": "OTP phải bao gồm 6 chữ số!",
+      "send_otp_success": "Mã OTP đã được gửi đến email của bạn!",
+      "email_not_exist": "Email không tồn tại. Vui lòng kiểm tra lại.",
+      "otp_invalid_error": "Mã OTP không hợp lệ. Vui lòng kiểm tra lại.",
+      "otp_expired": "OTP đã hết hạn. Vui lòng thử lại",
+      "reset_password_success": "Đặt lại mật khẩu thành công!",
+      "unexpected_error": "Có lỗi xảy ra! Vui lòng thử lại sau.",
+      "button_continue": "Tiếp tục",
+      "button_continue_loading": "Tiếp tục...",
+      "button_back": "Quay lại",
+      "button_reset_password": "Đặt mật khẩu",
+      "button_reset_password_loading": "Đặt mật khẩu mới...",
+      "button_resend_otp_countdown": "Gửi lại",
+      "link_back_to_login": "Quay lại đăng nhập"
+    },
+    "not_found": {
+      "title": "404",
+      "message": "Nội dung truy cập không tồn tại",
+      "button_home": "Về Trang chủ"
     }
   }
 }
