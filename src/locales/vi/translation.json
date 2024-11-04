@@ -134,6 +134,40 @@
       "title": "404",
       "message": "Nội dung truy cập không tồn tại",
       "button_home": "Về Trang chủ"
+    },
+    "auction": {
+      "sidebar": {
+        "search_title": "Tìm kiếm",
+        "search_placeholder": "Nhập từ khóa...",
+        "filter_button": "Lọc",
+        "status_title": "Trạng thái",
+        "status_all": "Tất cả",
+        "status_scheduled": "Sắp diễn ra",
+        "status_ongoing": "Đang diễn ra",
+        "status_closed": "Đã kết thúc",
+        "method_title": "Phương thức",
+        "method_all": "Tất cả",
+        "method_ascending": "Trả giá lên",
+        "method_descending": "Đặt giá xuống",
+        "method_first_come": "Trả giá một lần",
+        "method_fixed_price": "Giá xác định"
+      },
+      "main": {
+        "loading_tip": "Đang tải dữ liệu",
+        "sort_old_to_new": "Cũ → Mới",
+        "sort_new_to_old": "Mới → Cũ",
+        "auction_card": {
+          "title_prefix": "Cuộc đấu giá #",
+          "start_price_label": "Giá khởi điểm:",
+          "status_label": "Trạng thái:",
+          "status_scheduled": "Sắp diễn ra",
+          "status_ongoing": "Đang diễn ra",
+          "status_closed": "Đã kết thúc",
+          "status_unknown": "Không xác định",
+          "detail_button": "Chi Tiết"
+        },
+        "no_auctions": "Không có cuộc đấu giá nào"
+      }
     }
   }
 }

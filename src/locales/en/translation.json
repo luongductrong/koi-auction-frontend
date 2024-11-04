@@ -135,6 +135,40 @@
       "title": "404",
       "message": "The content you are looking for does not exist",
       "button_home": "Back to Home"
+    },
+    "auction": {
+      "sidebar": {
+        "search_title": "Search",
+        "search_placeholder": "Enter keyword...",
+        "filter_button": "Filter",
+        "status_title": "Status",
+        "status_all": "All",
+        "status_scheduled": "Scheduled",
+        "status_ongoing": "Ongoing",
+        "status_closed": "Closed",
+        "method_title": "Method",
+        "method_all": "All",
+        "method_ascending": "Ascending",
+        "method_descending": "Descending",
+        "method_first_come": "First-Come",
+        "method_fixed_price": "Fixed Price"
+      },
+      "main": {
+        "loading_tip": "Loading data",
+        "sort_old_to_new": "Old → New",
+        "sort_new_to_old": "New → Old",
+        "auction_card": {
+          "title_prefix": "Auction #",
+          "start_price_label": "Starting Price:",
+          "status_label": "Status:",
+          "status_scheduled": "Scheduled",
+          "status_ongoing": "Ongoing",
+          "status_closed": "Closed",
+          "status_unknown": "Unknown",
+          "detail_button": "Detail"
+        },
+        "no_auctions": "No auctions available"
+      }
     }
   }
 }

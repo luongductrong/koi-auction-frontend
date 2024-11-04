@@ -33,7 +33,7 @@
       "offline_status": "ネットワーク接続なし"
     },
     "menu": {
-      "auctions": "オークション",
+      "auctions": " オークション",
       "home": "ホーム",
       "about": "私たちについて",
       "contact": "お問い合わせ",
@@ -135,6 +135,40 @@
       "title": "404",
       "message": "お探しの内容は存在しません",
       "button_home": "ホームに戻る"
+    },
+    "auction": {
+      "sidebar": {
+        "search_title": "検索",
+        "search_placeholder": "キーワードを入力...",
+        "filter_button": "フィルター",
+        "status_title": "ステータス",
+        "status_all": "すべて",
+        "status_scheduled": "予定",
+        "status_ongoing": "進行中",
+        "status_closed": "終了",
+        "method_title": "方法",
+        "method_all": "すべて",
+        "method_ascending": "上昇",
+        "method_descending": "下降",
+        "method_first_come": "先着順",
+        "method_fixed_price": "固定価格"
+      },
+      "main": {
+        "loading_tip": "データを読み込んでいます",
+        "sort_old_to_new": "古い順 → 新しい順",
+        "sort_new_to_old": "新しい順 → 古い順",
+        "auction_card": {
+          "title_prefix": "オークション #",
+          "start_price_label": "開始価格:",
+          "status_label": "ステータス:",
+          "status_scheduled": "予定",
+          "status_ongoing": "進行中",
+          "status_closed": "終了",
+          "status_unknown": "不明",
+          "detail_button": "詳細"
+        },
+        "no_auctions": "利用可能なオークションはありません"
+      }
     }
   }
 }

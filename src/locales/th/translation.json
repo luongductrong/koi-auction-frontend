@@ -134,6 +134,40 @@
       "title": "404",
       "message": "ไม่พบเนื้อหาที่คุณกำลังค้นหา",
       "button_home": "กลับไปที่หน้าแรก"
+    },
+    "auction": {
+      "sidebar": {
+        "search_title": "ค้นหา",
+        "search_placeholder": "ป้อนคำสำคัญ...",
+        "filter_button": "กรอง",
+        "status_title": "สถานะ",
+        "status_all": "ทั้งหมด",
+        "status_scheduled": "กำหนดเวลา",
+        "status_ongoing": "ดำเนินการอยู่",
+        "status_closed": "ปิด",
+        "method_title": "วิธี",
+        "method_all": "ทั้งหมด",
+        "method_ascending": "ราคาขึ้น",
+        "method_descending": "ราคาลง",
+        "method_first_come": "มาก่อนรับก่อน",
+        "method_fixed_price": "ราคาคงที่"
+      },
+      "main": {
+        "loading_tip": "กำลังโหลดข้อมูล",
+        "sort_old_to_new": "เก่า → ใหม่",
+        "sort_new_to_old": "ใหม่ → เก่า",
+        "auction_card": {
+          "title_prefix": "ประมูล #",
+          "start_price_label": "ราคาเริ่มต้น:",
+          "status_label": "สถานะ:",
+          "status_scheduled": "กำหนดเวลา",
+          "status_ongoing": "ดำเนินการอยู่",
+          "status_closed": "ปิด",
+          "status_unknown": "ไม่ทราบ",
+          "detail_button": "รายละเอียด"
+        },
+        "no_auctions": "ไม่มีการประมูล"
+      }
     }
   }
 }

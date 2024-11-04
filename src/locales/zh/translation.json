@@ -33,7 +33,7 @@
       "offline_status": "无网络连接"
     },
     "menu": {
-      "auctions": "拍卖",
+      "auctions": " 拍卖",
       "home": "首页",
       "about": "关于我们",
       "contact": "联系我们",
@@ -135,6 +135,40 @@
       "title": "404",
       "message": "您访问的内容不存在",
       "button_home": "返回主页"
+    },
+    "auction": {
+      "sidebar": {
+        "search_title": "搜索",
+        "search_placeholder": "输入关键字...",
+        "filter_button": "筛选",
+        "status_title": "状态",
+        "status_all": "全部",
+        "status_scheduled": "即将开始",
+        "status_ongoing": "进行中",
+        "status_closed": "已结束",
+        "method_title": "方法",
+        "method_all": "全部",
+        "method_ascending": "升序",
+        "method_descending": "降序",
+        "method_first_come": "先到先得",
+        "method_fixed_price": "固定价格"
+      },
+      "main": {
+        "loading_tip": "正在加载数据",
+        "sort_old_to_new": " 旧 → 新",
+        "sort_new_to_old": " 新 → 旧",
+        "auction_card": {
+          "title_prefix": "拍卖 #",
+          "start_price_label": "起拍价:",
+          "status_label": "状态:",
+          "status_scheduled": "即将开始",
+          "status_ongoing": "进行中",
+          "status_closed": "已结束",
+          "status_unknown": "未知",
+          "detail_button": "详情"
+        },
+        "no_auctions": "暂无拍卖"
+      }
     }
   }
 }
