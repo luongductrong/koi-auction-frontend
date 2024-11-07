@@ -44,13 +44,7 @@ function Menu() {
         },
       }}
     >
-      <AntMenu
-        mode="horizontal"
-        className={styles.menu}
-        items={menuItems}
-        theme="light"
-        defaultSelectedKeys={currentPath}
-      />
+      <AntMenu mode="horizontal" className={styles.menu} items={menuItems} theme="light" selectedKeys={currentPath} />
     </ConfigProvider>
   );
 }

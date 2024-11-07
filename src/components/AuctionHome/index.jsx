@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Button, Typography, Space, Statistic, App, Image } from 'antd';
+import { Row, Col, Card, Button, Typography, Space, Statistic, App, Image, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ShareAltOutlined } from '@ant-design/icons';
@@ -10,7 +10,7 @@ import styles from './index.module.scss';
 const { Text, Title } = Typography;
 const { Countdown } = Statistic;
 
-function AuctionList({ auctions, type = 'scheduled' }) {
+function AuctionList({ auctions, type = 'scheduled', loading }) {
   const { message } = App.useApp();
   const { t } = useTranslation();
   const handleShare = (id) => {
@@ -33,10 +33,15 @@ function AuctionList({ auctions, type = 'scheduled' }) {
         {type === 'scheduled' ? t('component.home_auction.scheduled') : t('component.home_auction.ongoing')}
         <span className={styles.after}></span>
       </Title>
-      {(!auctions || auctions.length === 0) && (
+      {((!auctions && !loading) || (auctions.length === 0 && !loading)) && (
         <Text type="secondary" className={styles.empty}>
           {type === 'scheduled' ? t('component.home_auction.no_scheduled') : t('component.home_auction.no_ongoing')}
         </Text>
+      )}
+      {loading && (
+        <div className={styles.loading}>
+          <Spin />
+        </div>
       )}
       <Row gutter={[24, 16]} className={styles.auctionGrid} justify="center">
         {auctions.map((auction, index) => (
@@ -69,7 +74,7 @@ function AuctionList({ auctions, type = 'scheduled' }) {
               }
             >
               <Title level={5} className={styles.auctionId}>
-                {`${t('component.home_auction.auction_number')}${auction.auctionId}`}
+                {`${t('component.home_auction.auction_number')} ${auction.auctionId}`}
               </Title>
               <Text type="secondary">
                 {t('component.home_auction.starting_price')} <Text strong>{auction.startPrice?.toLocaleString()}</Text>{' '}

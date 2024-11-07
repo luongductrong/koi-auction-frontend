@@ -94,8 +94,8 @@ function ForgotPassword() {
     } catch (error) {
       console.error('Error:', error);
       if (
-        error.response?.status === 404 &&
-        error.response?.data?.message === `Invalid OTP for email: ${values.email}`
+        error.response?.status === 400
+        // error.response?.data?.message === `Invalid OTP for email: ${values.email}`
       ) {
         message.error({
           content: t('page.forgot_password.otp_invalid_error'),

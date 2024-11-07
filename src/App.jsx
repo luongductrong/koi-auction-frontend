@@ -12,7 +12,7 @@ import Header from './components/Header';
 import Content from './components/Content';
 import Footer from './components/Footer';
 
-const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 
 function App() {
   return (
