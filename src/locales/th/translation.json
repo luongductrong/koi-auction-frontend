@@ -100,6 +100,74 @@
       "login_failure": "เข้าสู่ระบบล้มเหลว! กรุณาตรวจสอบข้อมูลของคุณ",
       "forgot_password": "ลืมรหัสผ่าน?",
       "register": "สมัครสมาชิก"
+    },
+    "forgot_password": {
+      "title": "รีเซ็ตรหัสผ่าน",
+      "email_label": "อีเมล",
+      "email_placeholder": "ป้อนอีเมลสำหรับกู้คืน...",
+      "email_required": "กรุณาใส่อีเมลที่ถูกต้อง!",
+      "new_password_label": "รหัสผ่านใหม่",
+      "new_password_placeholder": "รหัสผ่านใหม่",
+      "new_password_required": "กรุณาใส่รหัสผ่านใหม่!",
+      "confirm_password_label": "ยืนยันรหัสผ่าน",
+      "confirm_password_placeholder": "ยืนยันรหัสผ่าน",
+      "confirm_password_required": "กรุณายืนยันรหัสผ่าน!",
+      "confirm_password_mismatch": "รหัสผ่านไม่ตรงกัน!",
+      "otp_label": "รหัส OTP",
+      "otp_required": "กรุณาใส่ OTP!",
+      "otp_invalid": "OTP ต้องมี 6 หลัก!",
+      "send_otp_success": "OTP ได้ถูกส่งไปยังอีเมลของคุณ!",
+      "email_not_exist": "ไม่มีอีเมลนี้ในระบบ กรุณาตรวจสอบอีกครั้ง",
+      "otp_invalid_error": "OTP ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
+      "otp_expired": "OTP หมดอายุแล้ว กรุณาลองอีกครั้ง",
+      "reset_password_success": "รีเซ็ตรหัสผ่านสำเร็จ!",
+      "unexpected_error": "เกิดข้อผิดพลาด! กรุณาลองใหม่ภายหลัง",
+      "button_continue": "ดำเนินการต่อ",
+      "button_continue_loading": "กำลังดำเนินการ...",
+      "button_back": "กลับ",
+      "button_reset_password": "รีเซ็ตรหัสผ่าน",
+      "button_reset_password_loading": "กำลังรีเซ็ตรหัสผ่าน...",
+      "button_resend_otp_countdown": "ส่งอีกครั้ง",
+      "link_back_to_login": "กลับไปที่เข้าสู่ระบบ"
+    },
+    "not_found": {
+      "title": "404",
+      "message": "ไม่พบเนื้อหาที่คุณกำลังค้นหา",
+      "button_home": "กลับไปที่หน้าแรก"
+    },
+    "auction": {
+      "sidebar": {
+        "search_title": "ค้นหา",
+        "search_placeholder": "ป้อนคำสำคัญ...",
+        "filter_button": "กรอง",
+        "status_title": "สถานะ",
+        "status_all": "ทั้งหมด",
+        "status_scheduled": "กำหนดเวลา",
+        "status_ongoing": "ดำเนินการอยู่",
+        "status_closed": "ปิด",
+        "method_title": "วิธี",
+        "method_all": "ทั้งหมด",
+        "method_ascending": "ราคาขึ้น",
+        "method_descending": "ราคาลง",
+        "method_first_come": "มาก่อนรับก่อน",
+        "method_fixed_price": "ราคาคงที่"
+      },
+      "main": {
+        "loading_tip": "กำลังโหลดข้อมูล",
+        "sort_old_to_new": "เก่า → ใหม่",
+        "sort_new_to_old": "ใหม่ → เก่า",
+        "auction_card": {
+          "title_prefix": "ประมูล #",
+          "start_price_label": "ราคาเริ่มต้น:",
+          "status_label": "สถานะ:",
+          "status_scheduled": "กำหนดเวลา",
+          "status_ongoing": "ดำเนินการอยู่",
+          "status_closed": "ปิด",
+          "status_unknown": "ไม่ทราบ",
+          "detail_button": "รายละเอียด"
+        },
+        "no_auctions": "ไม่มีการประมูล"
+      }
     }
   }
 }

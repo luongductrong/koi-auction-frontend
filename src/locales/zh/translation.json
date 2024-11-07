@@ -33,7 +33,7 @@
       "offline_status": "无网络连接"
     },
     "menu": {
-      "auctions": "拍卖",
+      "auctions": " 拍卖",
       "home": "首页",
       "about": "关于我们",
       "contact": "联系我们",
@@ -101,6 +101,74 @@
       "login_failure": "登录失败！请检查您的信息。",
       "forgot_password": "忘记密码？",
       "register": "注册"
+    },
+    "forgot_password": {
+      "title": "重置密码",
+      "email_label": "邮箱",
+      "email_placeholder": "输入恢复邮箱...",
+      "email_required": "请输入有效的邮箱！",
+      "new_password_label": "新密码",
+      "new_password_placeholder": "新密码",
+      "new_password_required": "请输入新密码！",
+      "confirm_password_label": "确认密码",
+      "confirm_password_placeholder": "确认密码",
+      "confirm_password_required": "请确认密码！",
+      "confirm_password_mismatch": "密码不匹配！",
+      "otp_label": "OTP代码",
+      "otp_required": "请输入OTP！",
+      "otp_invalid": "OTP必须为6位数字！",
+      "send_otp_success": "OTP已发送到您的邮箱！",
+      "email_not_exist": "邮箱不存在。请检查。",
+      "otp_invalid_error": "无效的OTP。请检查。",
+      "otp_expired": "OTP已过期。请重试。",
+      "reset_password_success": "密码重置成功！",
+      "unexpected_error": "发生错误！请稍后再试。",
+      "button_continue": "继续",
+      "button_continue_loading": "继续中...",
+      "button_back": "返回",
+      "button_reset_password": "重置密码",
+      "button_reset_password_loading": "重置密码中...",
+      "button_resend_otp_countdown": "重新发送",
+      "link_back_to_login": "返回登录"
+    },
+    "not_found": {
+      "title": "404",
+      "message": "您访问的内容不存在",
+      "button_home": "返回主页"
+    },
+    "auction": {
+      "sidebar": {
+        "search_title": "搜索",
+        "search_placeholder": "输入关键字...",
+        "filter_button": "筛选",
+        "status_title": "状态",
+        "status_all": "全部",
+        "status_scheduled": "即将开始",
+        "status_ongoing": "进行中",
+        "status_closed": "已结束",
+        "method_title": "方法",
+        "method_all": "全部",
+        "method_ascending": "升序",
+        "method_descending": "降序",
+        "method_first_come": "先到先得",
+        "method_fixed_price": "固定价格"
+      },
+      "main": {
+        "loading_tip": "正在加载数据",
+        "sort_old_to_new": " 旧 → 新",
+        "sort_new_to_old": " 新 → 旧",
+        "auction_card": {
+          "title_prefix": "拍卖 #",
+          "start_price_label": "起拍价:",
+          "status_label": "状态:",
+          "status_scheduled": "即将开始",
+          "status_ongoing": "进行中",
+          "status_closed": "已结束",
+          "status_unknown": "未知",
+          "detail_button": "详情"
+        },
+        "no_auctions": "暂无拍卖"
+      }
     }
   }
 }

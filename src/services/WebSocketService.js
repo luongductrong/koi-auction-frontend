@@ -7,7 +7,7 @@ class WebSocketService {
   }
 
   connect(auctionId, displayBidUpdate, displayNotification) {
-    const socketUrl = import.meta.env.VITE_SOCKET_URL; // Get the WebSocket URL from the environment variables
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || ''; // Get the WebSocket URL from the environment variables
     console.log('WebSocket URL:', socketUrl);
     const socket = new SockJS(socketUrl);
     this.stompClient = Stomp.over(() => socket);

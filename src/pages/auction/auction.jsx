@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Layout, Pagination, Input, DatePicker, Checkbox, Button, Card } from 'antd';
 import { Row, Col, Empty, Avatar, Select, Spin } from 'antd';
 import { UserOutlined, AppstoreOutlined, UnorderedListOutlined } from '@ant-design/icons';
@@ -13,6 +14,7 @@ const { RangePicker } = DatePicker;
 function Auction() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const { t } = useTranslation();
   const states = params.getAll('status');
   const methods = params.getAll('method');
   const pageParam = params.get('page');
@@ -38,7 +40,9 @@ function Auction() {
   const [sort, setSort] = useState(() => (sortParam === 'asc' ? 'asc' : 'desc'));
 
   const [pagination, setPagination] = useState({ currentPage: page, totalPage: 0, totalItem: 0 });
-  const [auctions, setAuctions] = useState([{ auctionId: 0, startTime: '', status: 'Đang tải...' }]);
+  const [auctions, setAuctions] = useState([
+    { auctionId: 0, startTime: '', status: t('page.auction.main.loading_tip') + '...' },
+  ]);
   const [loading, setLoading] = useState(false);
 
   console.log('Child Auction render');
@@ -174,56 +178,56 @@ function Auction() {
       <Row gutter={16} style={{ background: 'transparent' }}>
         <Col span={6}>
           <div className={styles.sider}>
-            <h3 className={styles.siderTitle}>Tìm kiếm</h3>
-            <Input placeholder="Nhập từ khóa..." className={styles.searchBar} />
+            <h3 className={styles.siderTitle}>{t('page.auction.sidebar.search_title')}</h3>
+            <Input placeholder={t('page.auction.sidebar.search_placeholder')} className={styles.searchBar} />
             <RangePicker />
             <Button type="primary" block className={styles.filterBtn}>
-              Lọc
+              {t('page.auction.sidebar.filter_button')}
             </Button>
 
-            <h3 className={styles.siderTitle}>Trạng thái</h3>
+            <h3 className={styles.siderTitle}>{t('page.auction.sidebar.status_title')}</h3>
             <Checkbox.Group className={styles.checkboxGroup} value={stateFilter}>
               <Checkbox value="all" className={styles.checkbox} onChange={() => handleToggleAllState()}>
-                Tất cả
+                {t('page.auction.sidebar.status_all')}
               </Checkbox>
               <Checkbox value="scheduled" className={styles.checkbox} onChange={() => handleToggleState('scheduled')}>
-                Sắp diễn ra
+                {t('page.auction.sidebar.status_scheduled')}
               </Checkbox>
               <Checkbox value="ongoing" className={styles.checkbox} onChange={() => handleToggleState('ongoing')}>
-                Đang diễn ra
+                {t('page.auction.sidebar.status_ongoing')}
               </Checkbox>
               <Checkbox value="closed" className={styles.checkbox} onChange={() => handleToggleState('closed')}>
-                Đã kết thúc
+                {t('page.auction.sidebar.status_closed')}
               </Checkbox>
             </Checkbox.Group>
-            <h3 className={styles.siderTitle}>Phương thức</h3>
+            <h3 className={styles.siderTitle}> {t('page.auction.sidebar.method_title')}</h3>
             <Checkbox.Group className={styles.checkboxGroup} value={methodFilter}>
               <Checkbox value="all" className={styles.checkbox} onChange={() => handleToggleAllMethod()}>
-                Tất cả
+                {t('page.auction.sidebar.method_all')}
               </Checkbox>
               <Checkbox value="ascending" className={styles.checkbox} onChange={() => handleToggleMethod('ascending')}>
-                Trả giá lên
+                {t('page.auction.sidebar.method_ascending')}
               </Checkbox>
               <Checkbox
                 value="descending"
                 className={styles.checkbox}
                 onChange={() => handleToggleMethod('descending')}
               >
-                Đặt giá xuống
+                {t('page.auction.sidebar.method_descending')}
               </Checkbox>
               <Checkbox
                 value="first-come"
                 className={styles.checkbox}
                 onChange={() => handleToggleMethod('first-come')}
               >
-                Trả giá một lần
+                {t('page.auction.sidebar.method_first_come')}
               </Checkbox>
               <Checkbox
                 value="fixed-price"
                 className={styles.checkbox}
                 onChange={() => handleToggleMethod('fixed-price')}
               >
-                Giá xác định
+                {t('page.auction.sidebar.method_fixed_price')}
               </Checkbox>
             </Checkbox.Group>
           </div>
@@ -231,7 +235,7 @@ function Auction() {
 
         <Col span={18} style={{ background: 'transparent' }}>
           {loading ? (
-            <Spin size="large" tip="Đang tải dữ liệu" className={styles.spin}>
+            <Spin size="large" tip={t('page.auction.main.loading_tip')} className={styles.spin}>
               <div></div>
             </Spin>
           ) : (
@@ -241,13 +245,13 @@ function Auction() {
                   <Col>
                     <Select
                       defaultValue={sort === 'asc' ? 'oldToNew' : 'newToOld'}
-                      style={{ width: 120 }}
+                      style={{ minWidth: 80, maxWidth: 200 }}
                       onChange={(value) => {
                         setSort(value === 'oldToNew' ? 'asc' : 'desc');
                       }}
                     >
-                      <Option value="oldToNew">Cũ → Mới</Option>
-                      <Option value="newToOld">Mới → Cũ</Option>
+                      <Option value="oldToNew">{t('page.auction.main.sort_old_to_new')}</Option>
+                      <Option value="newToOld">{t('page.auction.main.sort_new_to_old')}</Option>
                     </Select>
                   </Col>
                   <Col>
@@ -270,25 +274,28 @@ function Auction() {
                       actions={[
                         <Link to={`/auction/detail?id=${auction.auctionId}`}>
                           <Button color="primary" variant="filled" style={{ width: '80%' }}>
-                            Chi Tiết
+                            {t('page.auction.main.auction_card.detail_button')}
                           </Button>
                         </Link>,
                       ]}
                     >
                       <Meta
-                        title={`Cuộc đấu giá #${auction.auctionId}`}
+                        title={`${t('page.auction.main.auction_card.title_prefix')}${auction.auctionId}`}
                         description={
                           <>
-                            <p>Giá khởi điểm: {auction?.startPrice?.toLocaleString()}</p>
                             <p>
-                              Trạng thái:{' '}
+                              {`${t('page.auction.main.auction_card.start_price_label')}${' '}
+                              ${auction?.startPrice?.toLocaleString()} VND`}
+                            </p>
+                            <p>
+                              {t('page.auction.main.auction_card.status_label')}{' '}
                               {auction.status === 'Scheduled'
-                                ? 'Sắp diễn ra'
+                                ? t('page.auction.main.auction_card.status_scheduled')
                                 : auction.status === 'Ongoing'
-                                ? 'Đang diễn ra'
+                                ? t('page.auction.main.auction_card.status_ongoing')
                                 : auction.status === 'Closed'
-                                ? 'Đã kết thúc'
-                                : 'Không xác định'}
+                                ? t('page.auction.main.auction_card.status_closed')
+                                : t('page.auction.main.auction_card.status_unknown')}
                             </p>
                           </>
                         }
@@ -298,7 +305,7 @@ function Auction() {
                 ))}
                 {auctions?.length === 0 && (
                   <Col span={24}>
-                    <Empty description="Không có cuộc đấu giá nào" style={{ paddingTop: '20vh' }} />
+                    <Empty description={t('page.auction.main.no_auctions')} style={{ paddingTop: '20vh' }} />
                   </Col>
                 )}
               </Row>
@@ -317,7 +324,7 @@ function Auction() {
                       onChange={(page) => setPage(page - 1)}
                       showSizeChanger
                       pageSizeOptions={['6', '12', '24', '48']}
-                      onShowSizeChange={(current, size) => setSize(size)}
+                      onShowSizeChange={(_, size) => setSize(size)}
                     />
                   </Col>
                 </Row>

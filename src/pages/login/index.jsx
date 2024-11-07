@@ -39,7 +39,7 @@ function Login() {
         dispatch(setUser(response.data));
         const redirect = new URLSearchParams(location.search).get('redirect');
         if (redirect) {
-          navigate(redirect);
+          navigate(redirect !== '/login' && redirect !== '/register' ? redirect : '/');
         } else {
           navigate('/');
         }
