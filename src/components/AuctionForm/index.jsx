@@ -97,6 +97,7 @@ const AuctionForm = ({ open, onCancel, mode = 'create', auctionId }) => {
       }
     };
 
+    console.log('Form values before validate:', form.getFieldsValue());
     form
       .validateFields()
       .then((values) => {

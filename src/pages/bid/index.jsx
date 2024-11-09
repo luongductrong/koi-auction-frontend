@@ -27,7 +27,7 @@ function BidPage() {
   const [bidHistory, setBidHistory] = useState([]);
   const [winnerId, setWinnerId] = useState(null);
   const [commentList, setCommentList] = useState(commentListSample);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   console.log('BidPage render');
 
@@ -75,7 +75,7 @@ function BidPage() {
 
         // Fetch auction details
         if (auctionDetailsResponse.status === 'fulfilled') {
-          const auctionDetailsData = auctionDetailsResponse.value.data;
+          const auctionDetailsData = auctionDetailsResponse.value?.data;
           setAuctionDetails(auctionDetailsData || null);
           setKoiMedias(
             auctionDetailsData?.koiData
@@ -360,7 +360,7 @@ function BidPage() {
           </Col>
         </Row>
       )}
-      <FloatingComment commentList={commentList} onSubmit={handleCommentSubmit} />
+      {/* <FloatingComment commentList={commentList} onSubmit={handleCommentSubmit} /> */}
     </div>
   );
 }
