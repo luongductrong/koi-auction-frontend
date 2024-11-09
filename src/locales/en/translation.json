@@ -171,6 +171,31 @@
         },
         "no_auctions": "No auctions available"
       }
+    },
+    "about": {
+      "page_title": "About KOIAUCTION",
+      "intro_paragraph_1": "KOIAUCTION is a leading online auction platform for Koi enthusiasts. We were established with the mission to create a convenient, safe, and trustworthy online auction space for Koi lovers in Vietnam and around the world.",
+      "intro_paragraph_2": "Whether you're new to Koi or a longtime collector, KOIAUCTION is committed to providing an excellent online auction experience. We strive to create a user-friendly, highly secure, and welcoming environment where everyone can connect, interact, and participate in exciting auction events.",
+      "why_choose_us_title": "Why Choose KOIAUCTION?",
+      "features": {
+        "security_trust_title": "Security & Trust",
+        "security_trust_description": "We ensure all transactions are safe and transparent.",
+        "top_quality_title": "Top Quality",
+        "top_quality_description": "Only the highest quality Koi fish are featured in our auctions.",
+        "vibrant_community_title": "Vibrant Community",
+        "vibrant_community_description": "Connect with other Koi lovers nationwide.",
+        "global_access_title": "Global Access",
+        "global_access_description": "A chance to own unique Koi fish from all over the world."
+      },
+      "commitment_title": "Our Commitments",
+      "commitments": {
+        "authentic_quality": "Ensuring authenticity and quality for every Koi fish in our auctions.",
+        "transparent_info": "Providing detailed and transparent information on each fish's origin, history, and characteristics.",
+        "customer_support": "24/7 customer support throughout the auction process and after transactions are completed.",
+        "platform_update": "Continuously updating and improving the platform to deliver the best experience to our users.",
+        "healthy_community": "Building a healthy and thriving Koi enthusiast community."
+      },
+      "join_us_cta": "Join KOIAUCTION today!"
     }
   }
 }

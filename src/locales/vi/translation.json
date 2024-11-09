@@ -170,6 +170,31 @@
         },
         "no_auctions": "Không có cuộc đấu giá nào"
       }
+    },
+    "about": {
+      "page_title": "Về KOIAUCTION",
+      "intro_paragraph_1": "KOIAUCTION là nền tảng đấu giá trực tuyến hàng đầu dành cho những người yêu thích cá Koi. Chúng tôi ra đời với sứ mệnh tạo ra một không gian đấu giá trực tuyến tiện lợi, an toàn và đáng tin cậy cho cộng đồng yêu thích cá Koi tại Việt Nam và trên toàn thế giới.",
+      "intro_paragraph_2": "Dù bạn là người mới bắt đầu tìm hiểu về cá Koi hay đã là một nhà sưu tầm lâu năm, KOIAUCTION cam kết mang đến trải nghiệm đấu giá trực tuyến tuyệt vời. Chúng tôi không ngừng nỗ lực để tạo ra một môi trường dễ dàng sử dụng, bảo mật cao và thân thiện, nơi mọi người có thể kết nối, giao lưu và tham gia vào những phiên đấu giá đầy hứng khởi.",
+      "why_choose_us_title": "Tại sao chọn KOIAUCTION?",
+      "features": {
+        "security_trust_title": "Bảo mật và Tin cậy",
+        "security_trust_description": "Chúng tôi đảm bảo mọi giao dịch đều an toàn và minh bạch.",
+        "top_quality_title": "Chất lượng Hàng đầu",
+        "top_quality_description": "Chỉ những con cá Koi chất lượng cao nhất mới được đưa lên đấu giá.",
+        "vibrant_community_title": "Cộng đồng Sôi động",
+        "vibrant_community_description": "Kết nối với những người yêu thích cá Koi khác trên toàn quốc.",
+        "global_access_title": "Tiếp cận Toàn cầu",
+        "global_access_description": "Cơ hội sở hữu những con cá Koi độc đáo từ khắp nơi trên thế giới."
+      },
+      "commitment_title": "Cam kết của chúng tôi",
+      "commitments": {
+        "authentic_quality": "Đảm bảo tính xác thực và chất lượng của mỗi con cá Koi được đưa lên đấu giá.",
+        "transparent_info": "Cung cấp thông tin chi tiết và minh bạch về nguồn gốc, lịch sử và đặc điểm của từng con cá.",
+        "customer_support": "Hỗ trợ khách hàng 24/7 trong quá trình đấu giá và sau khi giao dịch hoàn tất.",
+        "platform_update": "Liên tục cập nhật và cải tiến nền tảng để mang lại trải nghiệm tốt nhất cho người dùng.",
+        "healthy_community": "Xây dựng một cộng đồng yêu thích cá Koi lành mạnh và phát triển."
+      },
+      "join_us_cta": "Hãy tham gia cùng KOIAUCTION ngay hôm nay!"
     }
   }
 }

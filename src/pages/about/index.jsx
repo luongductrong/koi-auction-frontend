@@ -1,31 +1,33 @@
 import React from 'react';
 import { Typography, Layout, Space, Card, Row, Col, List } from 'antd';
 import { TeamOutlined, SafetyOutlined, TrophyOutlined, GlobalOutlined } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
 const { Title, Paragraph } = Typography;
 const { Content } = Layout;
 
 function AboutPage() {
+  const { t } = useTranslation();
   const features = [
     {
       icon: <SafetyOutlined style={{ fontSize: '2rem', color: 'var(--primary-color)' }} />,
-      title: 'Bảo mật và Tin cậy',
-      description: 'Chúng tôi đảm bảo mọi giao dịch đều an toàn và minh bạch.',
+      title: t('page.about.features.security_trust_title'),
+      description: t('page.about.features.security_trust_description'),
     },
     {
       icon: <TrophyOutlined style={{ fontSize: '2rem', color: 'var(--primary-color)' }} />,
-      title: 'Chất lượng Hàng đầu',
-      description: 'Chỉ những con cá Koi chất lượng cao nhất mới được đưa lên đấu giá.',
+      title: t('page.about.features.top_quality_title'),
+      description: t('page.about.features.top_quality_description'),
     },
     {
       icon: <TeamOutlined style={{ fontSize: '2rem', color: 'var(--primary-color)' }} />,
-      title: 'Cộng đồng Sôi động',
-      description: 'Kết nối với những người yêu thích cá Koi khác trên toàn quốc.',
+      title: t('page.about.features.vibrant_community_title'),
+      description: t('page.about.features.vibrant_community_description'),
     },
     {
       icon: <GlobalOutlined style={{ fontSize: '2rem', color: 'var(--primary-color)' }} />,
-      title: 'Tiếp cận Toàn cầu',
-      description: 'Cơ hội sở hữu những con cá Koi độc đáo từ khắp nơi trên thế giới.',
+      title: t('page.about.features.global_access_title'),
+      description: t('page.about.features.global_access_description'),
     },
   ];
 
@@ -34,25 +36,20 @@ function AboutPage() {
       <Content>
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <Title level={1} style={{ color: 'var(--primary-color)', textAlign: 'center' }}>
-            Về KOIAUCTION
+            {t('page.about.page_title')}
           </Title>
 
           <div>
             <Paragraph style={{ fontSize: '16px', textAlign: 'justify' }}>
-              KOIAUCTION là nền tảng đấu giá trực tuyến hàng đầu dành cho những người yêu thích cá Koi. Chúng tôi ra đời
-              với sứ mệnh tạo ra một không gian đấu giá trực tuyến tiện lợi, an toàn và đáng tin cậy cho cộng đồng yêu
-              thích cá Koi tại Việt Nam và trên toàn thế giới.
+              {t('page.about.intro_paragraph_1')}
             </Paragraph>
             <Paragraph style={{ fontSize: '16px', textAlign: 'justify' }}>
-              Dù bạn là người mới bắt đầu tìm hiểu về cá Koi hay đã là một nhà sưu tầm lâu năm, KOIAUCTION cam kết mang
-              đến trải nghiệm đấu giá trực tuyến tuyệt vời. Chúng tôi không ngừng nỗ lực để tạo ra một môi trường dễ
-              dàng sử dụng, bảo mật cao và thân thiện, nơi mọi người có thể kết nối, giao lưu và tham gia vào những
-              phiên đấu giá đầy hứng khởi.
+              {t('page.about.intro_paragraph_2')}
             </Paragraph>
           </div>
 
           <Title level={2} style={{ textAlign: 'center' }}>
-            Tại sao chọn KOIAUCTION?
+            {t('page.about.why_choose_us_title')}
           </Title>
           <Row gutter={[16, 16]}>
             {features.map((feature, index) => (
@@ -72,14 +69,14 @@ function AboutPage() {
           </Row>
 
           <Card>
-            <Title level={3}>Cam kết của chúng tôi</Title>
+            <Title level={3}>{t('page.about.commitment_title')}</Title>
             <List
               dataSource={[
-                'Đảm bảo tính xác thực và chất lượng của mỗi con cá Koi được đưa lên đấu giá.',
-                'Cung cấp thông tin chi tiết và minh bạch về nguồn gốc, lịch sử và đặc điểm của từng con cá.',
-                'Hỗ trợ khách hàng 24/7 trong quá trình đấu giá và sau khi giao dịch hoàn tất.',
-                'Liên tục cập nhật và cải tiến nền tảng để mang lại trải nghiệm tốt nhất cho người dùng.',
-                'Xây dựng một cộng đồng yêu thích cá Koi lành mạnh và phát triển.',
+                t('page.about.commitments.authentic_quality'),
+                t('page.about.commitments.transparent_info'),
+                t('page.about.commitments.customer_support'),
+                t('page.about.commitments.platform_update'),
+                t('page.about.commitments.healthy_community'),
               ]}
               renderItem={(item) => (
                 <List.Item>
@@ -95,7 +92,7 @@ function AboutPage() {
           <Paragraph
             style={{ fontSize: '20px', textAlign: 'center', color: 'var(--primary-color)', textTransform: 'uppercase' }}
           >
-            Hãy tham gia cùng KOIAUCTION ngay hôm nay!
+            {t('page.about.join_us_cta')}
           </Paragraph>
         </Space>
       </Content>
