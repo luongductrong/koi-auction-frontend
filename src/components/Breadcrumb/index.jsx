@@ -23,6 +23,7 @@ function Breadcrumb() {
     '/account-center/auction': t('component.breadcrumb.auction_management'),
     '/account-center/koi': t('component.breadcrumb.koi_management'),
     '/auction/order': t('component.breadcrumb.auction_order'),
+    '/about': t('component.breadcrumb.about'),
   };
 
   const pathSnippets = location.pathname.split('/').filter((i) => i);
