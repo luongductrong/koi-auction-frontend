@@ -16,6 +16,7 @@
       "order": "注文管理",
       "auction_management": "オークション管理",
       "koi_management": "鯉管理",
+      "auction_order": "注文",
       "not_found": "404"
     },
     "header": {

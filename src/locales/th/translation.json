@@ -16,6 +16,7 @@
       "order": "การจัดการคำสั่งซื้อ",
       "auction_management": "การจัดการการประมูล",
       "koi_management": "การจัดการปลาคาร์ฟ",
+      "auction_order": "คำสั่งซื้อ",
       "not_found": "404"
     },
     "header": {

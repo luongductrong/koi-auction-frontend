@@ -22,6 +22,7 @@ function Breadcrumb() {
     '/account-center/order': t('component.breadcrumb.order'),
     '/account-center/auction': t('component.breadcrumb.auction_management'),
     '/account-center/koi': t('component.breadcrumb.koi_management'),
+    '/auction/order': t('component.breadcrumb.auction_order'),
   };
 
   const pathSnippets = location.pathname.split('/').filter((i) => i);

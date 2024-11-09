@@ -16,6 +16,7 @@
       "order": "Quản lý đơn hàng",
       "auction_management": "Quản lý cuộc đấu giá",
       "koi_management": "Quản lý cá Koi",
+      "auction_order": "Đơn hàng",
       "not_found": "404"
     },
     "header": {

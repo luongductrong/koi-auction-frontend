@@ -16,6 +16,7 @@
       "order": "Order Management",
       "auction_management": "Auction Management",
       "koi_management": "Koi Management",
+      "auction_order": "Order",
       "not_found": "404"
     },
     "header": {

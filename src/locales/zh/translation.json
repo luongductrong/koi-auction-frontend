@@ -16,6 +16,7 @@
       "order": "订单管理",
       "auction_management": "拍卖管理",
       "koi_management": "锦鲤管理",
+      "auction_order": "订单",
       "not_found": "404"
     },
     "header": {

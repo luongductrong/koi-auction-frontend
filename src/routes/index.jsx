@@ -6,6 +6,7 @@ import AccountCenter from '../pages/account-center';
 import Auction from '../pages/auction';
 import AuctionDetail from '../pages/auction-detail';
 import BidPage from '../pages/bid';
+import Order from '../pages/order';
 import Blog from '../pages/blog';
 import AccessDenied from '../pages/access-denied';
 import NotFound from '../pages/not-found';
@@ -23,6 +24,9 @@ const publicRoutes = [
   { path: '*', component: NotFound },
 ]; // No authentication required
 
-const privateRoutes = [{ path: '/account-center/*', component: AccountCenter }]; // Authentication required
+const privateRoutes = [
+  { path: '/account-center/*', component: AccountCenter },
+  { path: '/auction/order', component: Order },
+]; // Authentication required
 
 export { publicRoutes, privateRoutes };

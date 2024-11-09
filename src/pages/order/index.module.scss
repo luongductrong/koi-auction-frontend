@@ -1,0 +1,27 @@
+.container {
+  max-width: var(--container-width);
+}
+
+.leftCol {
+  padding: 32px;
+  border: 1px solid #e8e8e8;
+  background-color: #ffffff3a;
+}
+
+.rightCol {
+  padding: 32px;
+  border: 1px solid #e8e8e8;
+}
+
+.addressInput {
+  margin-bottom: 16px;
+}
+
+.img {
+  max-width: 40%;
+}
+
+.loading {
+  width: 100%;
+  padding: 50%;
+}
