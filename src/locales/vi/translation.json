@@ -196,6 +196,19 @@
         "healthy_community": "Xây dựng một cộng đồng yêu thích cá Koi lành mạnh và phát triển."
       },
       "join_us_cta": "Hãy tham gia cùng KOIAUCTION ngay hôm nay!"
+    },
+    "contact": {
+      "page_title": "Liên Hệ Với KOIAUCTION",
+      "contact_info": "Thông tin liên hệ",
+      "email": "Email",
+      "phone": "Điện thoại",
+      "address": "Địa chỉ",
+      "address_details": "123 Đường ABC, Quận XYZ, TP. Hồ Chí Minh",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "headquarters": "Trụ sở",
+      "feedback_form": "Để lại đánh giá, nhận xét",
+      "loading_text": "Đang tải…"
     }
   }
 }

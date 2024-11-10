@@ -197,6 +197,19 @@
         "healthy_community": "健全で活気のある錦鯉愛好者コミュニティを構築します。"
       },
       "join_us_cta": "今すぐKOIAUCTIONに参加しよう！"
+    },
+    "contact": {
+      "page_title": "KOIAUCTIONへのお問い合わせ",
+      "contact_info": "連絡先情報",
+      "email": "メール",
+      "phone": "電話番号",
+      "address": "住所",
+      "address_details": "ホーチミン市XYZ区ABC通り123番地",
+      "facebook": "フェイスブック",
+      "instagram": "インスタグラム",
+      "headquarters": "本社",
+      "feedback_form": "レビューまたはフィードバックを残す",
+      "loading_text": "読み込み中..."
     }
   }
 }

@@ -196,6 +196,19 @@
         "healthy_community": "สร้างชุมชนผู้รักปลาคาร์ปที่แข็งแรงและเจริญรุ่งเรือง"
       },
       "join_us_cta": "เข้าร่วม KOIAUCTION วันนี้!"
+    },
+    "contact": {
+      "page_title": "ติดต่อ KOIAUCTION",
+      "contact_info": "ข้อมูลการติดต่อ",
+      "email": "อีเมล",
+      "phone": "โทรศัพท์",
+      "address": "ที่อยู่",
+      "address_details": "123 ถนน ABC เขต XYZ นครโฮจิมินห์",
+      "facebook": "เฟซบุ๊ก",
+      "instagram": "อินสตาแกรม",
+      "headquarters": "สำนักงานใหญ่",
+      "feedback_form": "แสดงความคิดเห็นหรือให้ข้อเสนอแนะ",
+      "loading_text": "กำลังโหลด..."
     }
   }
 }

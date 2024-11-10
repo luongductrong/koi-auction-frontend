@@ -1,59 +1,62 @@
 import React from 'react';
 import { Typography, Layout, Row, Col, Card, Space } from 'antd';
-import {
-  MailOutlined,
-  PhoneOutlined,
-  EnvironmentOutlined,
-  FacebookOutlined,
-  InstagramOutlined,
-} from '@ant-design/icons';
+import { MailOutlined, PhoneOutlined, EnvironmentOutlined } from '@ant-design/icons';
+import { FacebookOutlined, InstagramOutlined } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
 const { Title, Paragraph } = Typography;
 const { Content } = Layout;
 
 function ContactPage() {
+  const { t } = useTranslation();
   return (
     <Layout style={{ backgroundColor: 'transparent' }}>
       <Content>
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <Title level={1} style={{ color: 'var(--primary-color)', textAlign: 'center' }}>
-            Liên Hệ Với KOIAUCTION
+            {t('page.contact.page_title')}
           </Title>
 
           <Row gutter={[32, 32]}>
             <Col span={24}>
               <Card
                 title={
-                  <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>Thông tin liên hệ</span>
+                  <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
+                    {t('page.contact.contact_info')}
+                  </span>
                 }
                 bordered={false}
               >
                 <Space direction="vertical" align="center" size="middle" style={{ width: '100%' }}>
                   <Paragraph>
                     <MailOutlined style={{ color: 'var(--primary-color)', marginRight: 8 }} />
-                    Email: support@example.com
+                    {`${t('page.contact.email')}: support@example.com`}
                   </Paragraph>
                   <Paragraph>
                     <PhoneOutlined style={{ color: 'var(--primary-color)', marginRight: 8 }} />
-                    Điện thoại: 0123 456 789
+                    {`${t('page.contact.phone')}: 0123 456 789`}
                   </Paragraph>
                   <Paragraph>
                     <EnvironmentOutlined style={{ color: 'var(--primary-color)', marginRight: 8 }} />
-                    Địa chỉ: 123 Đường ABC, Quận XYZ, TP. Hồ Chí Minh
+                    {`${t('page.contact.address')}: ${t('page.contact.address_details')}`}
                   </Paragraph>
                   <Paragraph>
                     <FacebookOutlined style={{ color: 'var(--primary-color)', marginRight: 8 }} />
-                    Facebook: /koiauction
+                    {`${t('page.contact.facebook')}: /koiauction`}
                   </Paragraph>
                   <Paragraph>
                     <InstagramOutlined style={{ color: 'var(--primary-color)', marginRight: 8 }} />
-                    Instagram: @koiauction
+                    {`${t('page.contact.instagram')}: @koiauction`}
                   </Paragraph>
                 </Space>
               </Card>
 
               <Card
-                title={<span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>Trụ sở</span>}
+                title={
+                  <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
+                    {t('page.contact.headquarters')}
+                  </span>
+                }
                 style={{ marginTop: 16 }}
               >
                 <iframe
@@ -72,7 +75,7 @@ function ContactPage() {
               <Card
                 title={
                   <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
-                    Để lại đánh giá, nhận xét
+                    {t('page.contact.feedback_form')}
                   </span>
                 }
                 bordered={false}
@@ -85,7 +88,7 @@ function ContactPage() {
                   marginheight="0"
                   marginwidth="0"
                 >
-                  Đang tải…
+                  {t('page.contact.loading_text')}
                 </iframe>
               </Card>
             </Col> */}

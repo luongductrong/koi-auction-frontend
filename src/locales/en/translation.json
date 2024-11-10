@@ -197,6 +197,19 @@
         "healthy_community": "Building a healthy and thriving Koi enthusiast community."
       },
       "join_us_cta": "Join KOIAUCTION today!"
+    },
+    "contact": {
+      "page_title": "Contact KOIAUCTION",
+      "contact_info": "Contact Information",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "address_details": "123 ABC Street, XYZ District, Ho Chi Minh City",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "headquarters": "Headquarters",
+      "feedback_form": "Leave a review or feedback",
+      "loading_text": "Loading..."
     }
   }
 }

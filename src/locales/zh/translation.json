@@ -197,6 +197,19 @@
         "healthy_community": "建立一个健康、繁荣的锦鲤爱好者社区。"
       },
       "join_us_cta": "立即加入KOIAUCTION！"
+    },
+    "contact": {
+      "page_title": "联系我们 KOIAUCTION",
+      "contact_info": "联系信息",
+      "email": "电子邮件",
+      "phone": "电话",
+      "address": "地址",
+      "address_details": "胡志明市XYZ区ABC街123号",
+      "facebook": "脸书",
+      "instagram": "Instagram",
+      "headquarters": "总部",
+      "feedback_form": "留下评价或反馈",
+      "loading_text": "加载中..."
     }
   }
 }
