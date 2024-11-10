@@ -10,6 +10,7 @@ import Order from '../pages/order';
 import Blog from '../pages/blog';
 import AboutPage from '../pages/about';
 import Contact from '../pages/contact';
+import Policy from '../pages/policy';
 import AccessDenied from '../pages/access-denied';
 import NotFound from '../pages/not-found';
 
@@ -23,6 +24,7 @@ const publicRoutes = [
   { path: '/blog', component: Blog },
   { path: '/about', component: AboutPage },
   { path: '/contact', component: Contact },
+  { path: '/policy', component: Policy },
   { path: '/auction/bid', component: BidPage },
   { path: '/access-denied', component: AccessDenied },
   { path: '*', component: NotFound },

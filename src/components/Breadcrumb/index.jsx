@@ -25,6 +25,7 @@ function Breadcrumb() {
     '/auction/order': t('component.breadcrumb.auction_order'),
     '/about': t('component.breadcrumb.about'),
     '/contact': t('component.breadcrumb.contact'),
+    '/policy': t('component.breadcrumb.policy'),
   };
 
   const pathSnippets = location.pathname.split('/').filter((i) => i);
