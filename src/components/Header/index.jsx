@@ -14,7 +14,7 @@ const { Header: AntHeader } = Layout;
 function Header() {
   const user = useSelector((state) => state.user.user);
   const { t } = useTranslation();
-  const fullUrl = useLocation().pathname + useLocation().search + useLocation().hash; // Get full URL
+  const fullUrl = useLocation().pathname + useLocation().search + useLocation().hash;
   const isOnline = useNetworkStatus();
 
   const onSearch = (value) => console.log(value);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography, Layout, Row, Col, Card, Space } from 'antd';
 import { MailOutlined, PhoneOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { FacebookOutlined, InstagramOutlined } from '@ant-design/icons';
@@ -9,6 +9,11 @@ const { Content } = Layout;
 
 function ContactPage() {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    document.title = t('page.contact.dom_title');
+  }, [t]);
+
   return (
     <Layout style={{ backgroundColor: 'transparent' }}>
       <Content>

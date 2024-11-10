@@ -69,6 +69,9 @@
     "partner": {
       "title": "精选客户与合作伙伴"
     },
+    "view_all_button": {
+      "view_all": "查看所有拍卖"
+    },
     "footer": {
       "contact": {
         "email": "电子邮件：support@example.com",
@@ -90,7 +93,11 @@
     }
   },
   "page": {
+    "home": {
+      "dom_title": "首页 - KoiAuction"
+    },
     "login": {
+      "dom_title": "登录 - KOIAUCTION",
       "title": "登录",
       "username_label": "用户名/电子邮件",
       "username_placeholder": "用户名或电子邮件",
@@ -107,6 +114,7 @@
       "register": "注册"
     },
     "forgot_password": {
+      "dom_title": "忘记密码 - KOIAUCTION",
       "title": "重置密码",
       "email_label": "邮箱",
       "email_placeholder": "输入恢复邮箱...",
@@ -136,11 +144,13 @@
       "link_back_to_login": "返回登录"
     },
     "not_found": {
+      "dom_title": "404 - 未找到 - KoiAuction",
       "title": "404",
       "message": "您访问的内容不存在",
       "button_home": "返回主页"
     },
     "auction": {
+      "page_title": "拍卖 - KoiAuction",
       "sidebar": {
         "search_title": "搜索",
         "search_placeholder": "输入关键字...",
@@ -175,6 +185,7 @@
       }
     },
     "about": {
+      "dom_title": "关于我们 - KoiAuction",
       "page_title": "关于KOIAUCTION",
       "intro_paragraph_1": "KOIAUCTION是一个领先的在线拍卖平台，专为锦鲤爱好者而设。我们成立的使命是为越南和世界各地的锦鲤爱好者创造一个便捷、安全、值得信赖的在线拍卖空间。",
       "intro_paragraph_2": "无论您是锦鲤新手还是资深收藏家，KOIAUCTION致力于提供卓越的在线拍卖体验。我们努力创造一个用户友好、高度安全和温馨的环境，让每个人都可以在这里联系、互动，并参加令人激动的拍卖活动。",
@@ -200,6 +211,7 @@
       "join_us_cta": "立即加入KOIAUCTION！"
     },
     "contact": {
+      "dom_title": "联系我们 - KoiAuction",
       "page_title": "联系我们 KOIAUCTION",
       "contact_info": "联系信息",
       "email": "电子邮件",

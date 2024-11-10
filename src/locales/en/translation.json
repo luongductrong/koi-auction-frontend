@@ -69,6 +69,9 @@
     "partner": {
       "title": "Featured Customers & Partners"
     },
+    "view_all_button": {
+      "view_all": "View All Auctions"
+    },
     "footer": {
       "contact": {
         "email": "Email: support@example.com",
@@ -90,7 +93,11 @@
     }
   },
   "page": {
+    "home": {
+      "dom_title": "Home - KoiAuction"
+    },
     "login": {
+      "dom_title": "Login - KoiAuction",
       "title": "Login",
       "username_label": "Username/Email",
       "username_placeholder": "Username or email",
@@ -107,6 +114,7 @@
       "register": "Register"
     },
     "forgot_password": {
+      "dom_title": "Forgot Password - KoiAuction",
       "title": "Reset Password",
       "email_label": "Email",
       "email_placeholder": "Enter recovery email...",
@@ -136,11 +144,13 @@
       "link_back_to_login": "Back to login"
     },
     "not_found": {
+      "dom_title": "404 - Not Found - KoiAuction",
       "title": "404",
       "message": "The content you are looking for does not exist",
       "button_home": "Back to Home"
     },
     "auction": {
+      "dom_title": "Auctions - KoiAuction",
       "sidebar": {
         "search_title": "Search",
         "search_placeholder": "Enter keyword...",
@@ -175,6 +185,7 @@
       }
     },
     "about": {
+      "dom_title": "About Us - KoiAuction",
       "page_title": "About KOIAUCTION",
       "intro_paragraph_1": "KOIAUCTION is a leading online auction platform for Koi enthusiasts. We were established with the mission to create a convenient, safe, and trustworthy online auction space for Koi lovers in Vietnam and around the world.",
       "intro_paragraph_2": "Whether you're new to Koi or a longtime collector, KOIAUCTION is committed to providing an excellent online auction experience. We strive to create a user-friendly, highly secure, and welcoming environment where everyone can connect, interact, and participate in exciting auction events.",
@@ -200,6 +211,7 @@
       "join_us_cta": "Join KOIAUCTION today!"
     },
     "contact": {
+      "dom_title": "Contact Us - KoiAuction",
       "page_title": "Contact KOIAUCTION",
       "contact_info": "Contact Information",
       "email": "Email",

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import api from '../../configs';
 import styles from './index.module.scss';
 import clsx from 'clsx';
+import { use } from 'i18next';
 
 function ForgotPassword() {
   const { message } = App.useApp();
@@ -17,6 +18,10 @@ function ForgotPassword() {
   const [countdown, setCountdown] = useState(0);
 
   console.log('ForgotPassword render');
+
+  useEffect(() => {
+    document.title = t('page.forgot_password.dom_title');
+  }, [t]);
 
   const next = async () => {
     try {

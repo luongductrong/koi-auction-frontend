@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, ConfigProvider } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,10 @@ import styles from './index.module.scss';
 function NotFound() {
   const { t } = useTranslation();
   console.log('Not Found render');
+
+  useEffect(() => {
+    document.title = t('page.not_found.dom_title');
+  }, [t]);
 
   return (
     <ConfigProvider
