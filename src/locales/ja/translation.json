@@ -16,6 +16,10 @@
       "order": "注文管理",
       "auction_management": "オークション管理",
       "koi_management": "鯉管理",
+      "auction_order": "注文",
+      "about": "私たちについて",
+      "contact": "お問い合わせ",
+      "policy": "ポリシー",
       "not_found": "404"
     },
     "header": {
@@ -169,6 +173,44 @@
         },
         "no_auctions": "利用可能なオークションはありません"
       }
+    },
+    "about": {
+      "page_title": "KOIAUCTIONについて",
+      "intro_paragraph_1": "KOIAUCTIONは、錦鯉愛好家のためのオンラインオークションプラットフォームのリーダーです。私たちは、ベトナムや世界中の錦鯉愛好者に、便利で安全かつ信頼できるオンラインオークションスペースを提供することを使命として設立されました。",
+      "intro_paragraph_2": "錦鯉の初心者でも長年のコレクターでも、KOIAUCTIONは素晴らしいオンラインオークション体験を提供することに尽力しています。私たちは、ユーザーフレンドリーで高いセキュリティと歓迎的な環境を作り、皆がつながり、交流し、エキサイティングなオークションイベントに参加できる場を目指しています。",
+      "why_choose_us_title": "なぜKOIAUCTIONを選ぶのか？",
+      "features": {
+        "security_trust_title": "安全性と信頼",
+        "security_trust_description": "すべての取引が安全で透明であることを保証します。",
+        "top_quality_title": "最高の品質",
+        "top_quality_description": "オークションには、最高品質の錦鯉のみを掲載しています。",
+        "vibrant_community_title": "活気あるコミュニティ",
+        "vibrant_community_description": "全国の錦鯉愛好者とつながることができます。",
+        "global_access_title": "世界中へのアクセス",
+        "global_access_description": "世界中からのユニークな錦鯉を手に入れるチャンスです。"
+      },
+      "commitment_title": "私たちの約束",
+      "commitments": {
+        "authentic_quality": "オークションに出品される錦鯉の真正性と品質を保証します。",
+        "transparent_info": "各魚の出自、歴史、および特徴に関する詳細かつ透明な情報を提供します。",
+        "customer_support": "オークションプロセス中および取引完了後も24時間365日サポートを提供します。",
+        "platform_update": "ユーザーに最高の体験を提供するために、プラットフォームの更新と改善を続けています。",
+        "healthy_community": "健全で活気のある錦鯉愛好者コミュニティを構築します。"
+      },
+      "join_us_cta": "今すぐKOIAUCTIONに参加しよう！"
+    },
+    "contact": {
+      "page_title": "KOIAUCTIONへのお問い合わせ",
+      "contact_info": "連絡先情報",
+      "email": "メール",
+      "phone": "電話番号",
+      "address": "住所",
+      "address_details": "ホーチミン市XYZ区ABC通り123番地",
+      "facebook": "フェイスブック",
+      "instagram": "インスタグラム",
+      "headquarters": "本社",
+      "feedback_form": "レビューまたはフィードバックを残す",
+      "loading_text": "読み込み中..."
     }
   }
 }

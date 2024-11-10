@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Introduction from '../../components/Introduction';
 import AuctionHome from '../../components/AuctionHome';
 import Partner from '../../components/Partner';
+import ViewAllButton from '../../components/ViewAllButton';
 import api from '../../configs';
 
 function Home() {
@@ -15,8 +16,8 @@ function Home() {
       try {
         setLoading1(true);
         const response = await api.get('/auction/filter?page=0&size=4&status=scheduled&desc=ASC');
-        console.log('Scheduled Response:', response.data.auctions);
-        setScheduledAuctions(response.data.auctions);
+        console.log('Scheduled Response:', response?.data?.auctions);
+        setScheduledAuctions(response?.data?.auctions);
       } catch (error) {
         console.error('Error fetching scheduled auctions:', error);
       } finally {
@@ -28,8 +29,8 @@ function Home() {
       try {
         setLoading2(true);
         const response = await api.get('/auction/filter?page=0&size=4&status=ongoing&desc=DESC');
-        console.log('Ongoing Response:', response.data.auctions);
-        setOngoingAuctions(response.data.auctions);
+        console.log('Ongoing Response:', response?.data?.auctions);
+        setOngoingAuctions(response?.data?.auctions);
       } catch (error) {
         console.error('Error fetching ongoing auctions:', error);
       } finally {
@@ -46,6 +47,7 @@ function Home() {
       <Introduction />
       <AuctionHome auctions={scheduledAuctions} type="scheduled" loading={loading1} />
       <AuctionHome auctions={ongoingAuctions} type="ongoing" loading={loading2} />
+      <ViewAllButton />
       <Partner />
     </>
   );

@@ -16,6 +16,10 @@
       "order": "订单管理",
       "auction_management": "拍卖管理",
       "koi_management": "锦鲤管理",
+      "auction_order": "订单",
+      "about": "关于我们",
+      "contact": "联系我们",
+      "policy": "政策",
       "not_found": "404"
     },
     "header": {
@@ -169,6 +173,44 @@
         },
         "no_auctions": "暂无拍卖"
       }
+    },
+    "about": {
+      "page_title": "关于KOIAUCTION",
+      "intro_paragraph_1": "KOIAUCTION是一个领先的在线拍卖平台，专为锦鲤爱好者而设。我们成立的使命是为越南和世界各地的锦鲤爱好者创造一个便捷、安全、值得信赖的在线拍卖空间。",
+      "intro_paragraph_2": "无论您是锦鲤新手还是资深收藏家，KOIAUCTION致力于提供卓越的在线拍卖体验。我们努力创造一个用户友好、高度安全和温馨的环境，让每个人都可以在这里联系、互动，并参加令人激动的拍卖活动。",
+      "why_choose_us_title": "为什么选择KOIAUCTION？",
+      "features": {
+        "security_trust_title": "安全与信任",
+        "security_trust_description": "我们确保所有交易都是安全且透明的。",
+        "top_quality_title": "顶级质量",
+        "top_quality_description": "我们的拍卖只展示最高质量的锦鲤。",
+        "vibrant_community_title": "活跃的社区",
+        "vibrant_community_description": "与全国其他锦鲤爱好者交流。",
+        "global_access_title": "全球接触",
+        "global_access_description": "获得世界各地独特锦鲤的机会。"
+      },
+      "commitment_title": "我们的承诺",
+      "commitments": {
+        "authentic_quality": "确保我们拍卖中的每条锦鲤的真实性和质量。",
+        "transparent_info": "提供关于每条鱼的来源、历史和特点的详细且透明的信息。",
+        "customer_support": "在拍卖过程和交易完成后提供24/7客户支持。",
+        "platform_update": "不断更新和改进平台，以为用户提供最佳体验。",
+        "healthy_community": "建立一个健康、繁荣的锦鲤爱好者社区。"
+      },
+      "join_us_cta": "立即加入KOIAUCTION！"
+    },
+    "contact": {
+      "page_title": "联系我们 KOIAUCTION",
+      "contact_info": "联系信息",
+      "email": "电子邮件",
+      "phone": "电话",
+      "address": "地址",
+      "address_details": "胡志明市XYZ区ABC街123号",
+      "facebook": "脸书",
+      "instagram": "Instagram",
+      "headquarters": "总部",
+      "feedback_form": "留下评价或反馈",
+      "loading_text": "加载中..."
     }
   }
 }

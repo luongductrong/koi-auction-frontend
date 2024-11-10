@@ -58,10 +58,18 @@
 }
 
 .item {
+  min-height: 168px;
   text-align: center;
   background-color: #fff;
   padding: 16px 32px;
   border-radius: 6px;
+}
+.fullName {
+  display: block;
+  margin-top: 8px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @keyframes scaleEffect {

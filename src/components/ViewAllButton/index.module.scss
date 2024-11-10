@@ -1,0 +1,39 @@
+.container {
+  position: relative;
+  margin: 60px 0;
+  width: 100%;
+  text-align: center;
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 25%;
+    width: 50%;
+    height: 2px;
+    background-color: #33333324;
+  }
+}
+
+.button {
+  font-size: 16px;
+  font-weight: 550;
+  padding: 20px;
+  animation: scaleEffect 1s infinite alternate;
+  transition: background-color 0.4s ease, color 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
+
+  &:hover {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@keyframes scaleEffect {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
