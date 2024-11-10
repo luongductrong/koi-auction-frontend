@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Flex, Space } from 'antd';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
 import styles from './index.module.scss';
@@ -76,9 +77,9 @@ function Footer() {
 
           <Flex className={styles.legalLinks} justify="center">
             <Space size="large">
-              <p href="/privacy-policy">{t('component.footer.legal.privacy_policy')}</p>
-              <p href="/terms-of-service">{t('component.footer.legal.terms_of_service')}</p>
-              <p href="/refund-policy">{t('component.footer.legal.refund_policy')}</p>
+              <Link to="/policy?tab=privacy">{t('component.footer.legal.privacy_policy')}</Link>
+              <Link to="/policy?tab=terms">{t('component.footer.legal.terms_of_service')}</Link>
+              <Link to="/policy?tab=refund">{t('component.footer.legal.refund_policy')}</Link>
             </Space>
           </Flex>
 

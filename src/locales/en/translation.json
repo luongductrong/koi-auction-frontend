@@ -69,6 +69,9 @@
     "partner": {
       "title": "Featured Customers & Partners"
     },
+    "view_all_button": {
+      "view_all": "View All Auctions"
+    },
     "footer": {
       "contact": {
         "email": "Email: support@example.com",

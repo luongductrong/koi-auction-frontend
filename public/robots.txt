@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /forgot-password
+Disallow: /account-center
+Disallow: /auction/order
+Disallow: /access-denied
+
+Sitemap: https://koi-auction.vercel.app/sitemap.xml

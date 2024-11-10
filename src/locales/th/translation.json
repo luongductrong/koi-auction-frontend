@@ -69,6 +69,9 @@
     "partner": {
       "title": "ลูกค้าและพันธมิตรที่โดดเด่น"
     },
+    "view_all_button": {
+      "view_all": "ดูการประมูลทั้งหมด"
+    },
     "footer": {
       "contact": {
         "email": "อีเมล: support@example.com",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Layout, Typography, Tabs, Card, Collapse } from 'antd';
 
@@ -12,6 +12,19 @@ function Policy() {
   const tab = new URLSearchParams(location.search).get('tab');
   const [activeTab, setActiveTab] = useState(tab === 'privacy' ? '2' : tab === 'refund' ? '3' : '1');
 
+  console.log('Policy render');
+
+  useEffect(() => {
+    const tab = new URLSearchParams(location.search).get('tab');
+    if (tab === 'privacy') {
+      setActiveTab('2');
+    } else if (tab === 'refund') {
+      setActiveTab('3');
+    } else {
+      setActiveTab('1');
+    }
+  }, [location.search]);
+
   const handleTabChange = (key) => {
     setActiveTab(key);
     const url = `/policy?tab=${key === '2' ? 'privacy' : key === '3' ? 'refund' : 'terms'}`;
@@ -23,7 +36,7 @@ function Policy() {
     <Layout>
       <Content style={{ padding: '50px 50px', backgroundColor: '#fff' }}>
         <Title level={1} style={{ color: '#c41e3a', textAlign: 'center', marginBottom: '2rem' }}>
-          Chính Sách KOIAUCTION
+          Chính sách của KOIAUCTION
         </Title>
         <Card>
           <Tabs activeKey={activeTab} onChange={handleTabChange} type="card">

@@ -69,6 +69,9 @@
     "partner": {
       "title": "注目のお客様＆パートナー"
     },
+    "view_all_button": {
+      "view_all": "すべてのオークションを見る"
+    },
     "footer": {
       "contact": {
         "email": "メール: support@example.com",

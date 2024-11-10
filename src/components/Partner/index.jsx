@@ -51,7 +51,7 @@ const Partner = () => {
                 {partners.slice(index * 6, index * 6 + 6).map((partner, idx) => (
                   <Col span={4} key={idx}>
                     <div className={styles.item}>
-                      <Avatar shape="square" size={80} src={fallback} />
+                      <Avatar shape="square" size={80} src={fallback} alt="avatar" />
                       <Text className={styles.fullName}>{shorten(partner.fullName)}</Text>
                     </div>
                   </Col>
