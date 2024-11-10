@@ -24,6 +24,10 @@ function Login() {
     dispatch(clearUser());
   }, []);
 
+  useEffect(() => {
+    document.title = t('page.login.dom_title');
+  }, [t]);
+
   const handleLogin = async (values) => {
     setLoading(true);
     try {

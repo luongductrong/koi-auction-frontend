@@ -93,7 +93,11 @@
     }
   },
   "page": {
+    "home": {
+      "dom_title": "Trang chủ - KoiAuction"
+    },
     "login": {
+      "dom_title": "Đăng nhập - KoiAuction",
       "title": "Đăng nhập",
       "username_label": "Tên đăng nhập/Email",
       "username_placeholder": "Tên đăng nhập hoặc email",
@@ -109,6 +113,7 @@
       "register": "Đăng ký"
     },
     "forgot_password": {
+      "dom_title": "Quên mật khẩu - KoiAuction",
       "title": "Đặt lại mật khẩu",
       "email_label": "Email",
       "email_placeholder": "Nhập email khôi phục...",
@@ -138,11 +143,13 @@
       "link_back_to_login": "Quay lại đăng nhập"
     },
     "not_found": {
+      "dom_title": "404 - Không tìm thấy trang - KoiAuction",
       "title": "404",
       "message": "Nội dung truy cập không tồn tại",
       "button_home": "Về Trang chủ"
     },
     "auction": {
+      "dom_title": "Cuộc đấu giá - KoiAuction",
       "sidebar": {
         "search_title": "Tìm kiếm",
         "search_placeholder": "Nhập từ khóa...",
@@ -177,6 +184,7 @@
       }
     },
     "about": {
+      "dom_title": "Về chúng tôi - KoiAuction",
       "page_title": "Về KOIAUCTION",
       "intro_paragraph_1": "KOIAUCTION là nền tảng đấu giá trực tuyến hàng đầu dành cho những người yêu thích cá Koi. Chúng tôi ra đời với sứ mệnh tạo ra một không gian đấu giá trực tuyến tiện lợi, an toàn và đáng tin cậy cho cộng đồng yêu thích cá Koi tại Việt Nam và trên toàn thế giới.",
       "intro_paragraph_2": "Dù bạn là người mới bắt đầu tìm hiểu về cá Koi hay đã là một nhà sưu tầm lâu năm, KOIAUCTION cam kết mang đến trải nghiệm đấu giá trực tuyến tuyệt vời. Chúng tôi không ngừng nỗ lực để tạo ra một môi trường dễ dàng sử dụng, bảo mật cao và thân thiện, nơi mọi người có thể kết nối, giao lưu và tham gia vào những phiên đấu giá đầy hứng khởi.",
@@ -202,6 +210,7 @@
       "join_us_cta": "Hãy tham gia cùng KOIAUCTION ngay hôm nay!"
     },
     "contact": {
+      "dom_title": "Liên hệ - KoiAuction",
       "page_title": "Liên hệ với KOIAUCTION",
       "contact_info": "Thông tin liên hệ",
       "email": "Email",

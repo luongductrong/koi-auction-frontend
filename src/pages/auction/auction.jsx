@@ -48,6 +48,10 @@ function Auction() {
   console.log('Child Auction render');
 
   useEffect(() => {
+    document.title = t('page.auction.dom_title');
+  }, [t]);
+
+  useEffect(() => {
     const fetchAuctions = async ({ states = [], methods = [], page = 0, size = 6, sort = 'desc' } = {}) => {
       setLoading(true);
       try {

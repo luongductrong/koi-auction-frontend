@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Introduction from '../../components/Introduction';
 import AuctionHome from '../../components/AuctionHome';
 import Partner from '../../components/Partner';
@@ -10,6 +11,11 @@ function Home() {
   const [ongoingAuctions, setOngoingAuctions] = useState([]);
   const [loading1, setLoading1] = useState(true);
   const [loading2, setLoading2] = useState(true);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    document.title = t('page.home.dom_title');
+  }, [t]);
 
   useEffect(() => {
     const fetchScheduledAuctions = async () => {
