@@ -24,6 +24,7 @@ function Breadcrumb() {
     '/account-center/koi': t('component.breadcrumb.koi_management'),
     '/auction/order': t('component.breadcrumb.auction_order'),
     '/about': t('component.breadcrumb.about'),
+    '/contact': t('component.breadcrumb.contact'),
   };
 
   const pathSnippets = location.pathname.split('/').filter((i) => i);
