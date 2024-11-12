@@ -41,7 +41,7 @@ function Policy() {
         <Card>
           <Tabs activeKey={activeTab} onChange={handleTabChange} type="card">
             <TabPane tab="Điều Khoản Dịch Vụ" key="1">
-              <Collapse defaultActiveKey={['1']} ghost>
+              <Collapse ghost>
                 <Panel header="1. Giới thiệu" key="1">
                   <Paragraph>
                     Chào mừng bạn đến với KOIAUCTION.
@@ -91,7 +91,7 @@ function Policy() {
               </Collapse>
             </TabPane>
             <TabPane tab="Chính Sách Bảo Mật" key="2">
-              <Collapse defaultActiveKey={['1']} ghost>
+              <Collapse ghost>
                 <Panel header="1. Thu thập thông tin" key="1">
                   <Paragraph>
                     Chúng tôi thu thập thông tin cá nhân như tên, địa chỉ email, số điện thoại khi bạn đăng ký tài khoản
@@ -113,13 +113,13 @@ function Policy() {
                 </Panel>
                 <Panel header="4. Quyền của người dùng" key="4">
                   <Paragraph>
-                    Bạn có quyền yêu cầu truy cập, sửa đổi hoặc thông tin cá nhân của mình bất kỳ lúc nào.
+                    Bạn có quyền yêu cầu truy cập, sửa đổi thông tin cá nhân của mình bất kỳ lúc nào.
                   </Paragraph>
                 </Panel>
               </Collapse>
             </TabPane>
             <TabPane tab="Chính Sách Hoàn Tiền" key="3">
-              <Collapse defaultActiveKey={['1']} ghost>
+              <Collapse ghost>
                 <Panel header="1. Điều kiện hoàn tiền" key="1">
                   <Paragraph>
                     - Cá Koi không khớp với mô tả hoặc hình ảnh đăng tải.

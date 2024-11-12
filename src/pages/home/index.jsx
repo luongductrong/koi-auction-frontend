@@ -5,6 +5,7 @@ import AuctionHome from '../../components/AuctionHome';
 import Partner from '../../components/Partner';
 import ViewAllButton from '../../components/ViewAllButton';
 import api from '../../configs';
+import ImageCropper from '../../components/ImageCropper';
 
 function Home() {
   const [scheduledAuctions, setScheduledAuctions] = useState([]);
@@ -57,6 +58,11 @@ function Home() {
     fetchOngoingAuctions();
   }, []);
 
+  const handleCroppedImage = (blob) => {
+    // Tải blob lên backend hoặc xử lý theo nhu cầu
+    console.log('Ảnh đã crop:', blob);
+  };
+
   return (
     <>
       <Introduction />
@@ -64,6 +70,7 @@ function Home() {
       <AuctionHome auctions={ongoingAuctions} type="ongoing" loading={loading2} />
       <ViewAllButton />
       <Partner />
+      <ImageCropper onCrop={handleCroppedImage} />
     </>
   );
 }
