@@ -15,6 +15,15 @@ function Home() {
 
   useEffect(() => {
     document.title = t('page.home.dom_title');
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', t('page.home.meta_description'));
+    } else {
+      const metaTag = document.createElement('meta');
+      metaTag.setAttribute('name', 'description');
+      metaTag.setAttribute('content', t('page.home.meta_description'));
+      document.head.appendChild(metaTag);
+    }
   }, [t]);
 
   useEffect(() => {

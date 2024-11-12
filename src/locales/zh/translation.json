@@ -94,7 +94,8 @@
   },
   "page": {
     "home": {
-      "dom_title": "首页 - KoiAuction"
+      "dom_title": "首页 - KoiAuction",
+      "meta_description": "KOIAUCTION是领先的在线锦鲤拍卖平台，为锦鲤爱好者提供安全可靠的空间。立即加入，体验高质量锦鲤的精彩拍卖！"
     },
     "login": {
       "dom_title": "登录 - KOIAUCTION",
