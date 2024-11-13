@@ -1,89 +1,104 @@
 import React, { useState } from 'react';
 import { Drawer, Form, Input, Button, App } from 'antd';
 import { LockOutlined } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 import api from '../../configs';
 
 function PasswordChangeDrawer({ open = false, onClose = () => {} }) {
   const { message } = App.useApp();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const handleSubmit = async (values) => {
     if (values.newPassword !== values.confirmPassword) {
-      message.error('Mật khẩu mới không khớp!');
+      message.error(t('component.password_change_drawer.new_password_match_error'));
       return;
     }
     setLoading(true);
     try {
-      await api.put(
-        '/security/password',
-        { password: currentPassword, newPassword: newPassword },
-        { requiresAuth: true },
-      );
-      message.success('Đặt mật khẩu mới thành công!');
+      await api.put('/security/password', values, { requiresAuth: true });
+      message.success(t('component.password_change_drawer.success_message'));
       form.resetFields();
       onClose();
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        message.error('Mật khẩu hiện tại không đúng!');
+      if (error.response && error.response.status === 400) {
+        message.error(t('component.password_change_drawer.current_password_error'));
       } else {
-        message.error('Có lỗi xảy ra, vui lòng thử lại sau.');
+        message.error(t('component.password_change_drawer.error_message'));
       }
     } finally {
       setLoading(false);
     }
   };
 
+  const handleClose = () => {
+    form.resetFields();
+    onClose();
+  };
+
   return (
-    <Drawer title="Đổi mật khẩu" placement="right" onClose={onClose} open={open} width={500}>
+    <Drawer
+      title={t('component.password_change_drawer.title')}
+      placement="right"
+      onClose={handleClose}
+      open={open}
+      width={500}
+    >
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         <Form.Item
-          name="currentPassword"
-          label="Mật khẩu hiện tại"
-          rules={[{ required: true, message: 'Vui lòng nhập mật khẩu hiện tại!' }]}
+          name="oldPassword"
+          label={t('component.password_change_drawer.current_password')}
+          rules={[{ required: true, message: t('component.password_change_drawer.current_password_required') }]}
         >
-          <Input.Password prefix={<LockOutlined />} placeholder="Nhập mật khẩu hiện tại" />
+          <Input.Password
+            prefix={<LockOutlined />}
+            placeholder={t('component.password_change_drawer.enter_current_password')}
+          />
         </Form.Item>
         <Form.Item
           name="newPassword"
-          label="Mật khẩu mới"
+          label={t('component.password_change_drawer.new_password')}
           rules={[
-            { required: true, message: 'Vui lòng nhập mật khẩu mới!' },
-            { min: 8, message: 'Mật khẩu phải có ít nhất 8 ký tự!' },
-            { max: 100, message: 'Không được vượt quá 100 ký tự!' },
+            { required: true, message: t('component.password_change_drawer.new_password_required') },
+            { min: 8, message: t('component.password_change_drawer.password_length_error') },
+            { max: 100, message: t('component.password_change_drawer.password_max_length_error') },
             {
               pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
-              message: 'Mật khẩu phải chứa ít nhất 1 chữ hoa, 1 chữ thường và 1 số!',
+              message: t('component.password_change_drawer.password_pattern_error'),
             },
           ]}
         >
-          <Input.Password prefix={<LockOutlined />} placeholder="Nhập mật khẩu mới" />
+          <Input.Password
+            prefix={<LockOutlined />}
+            placeholder={t('component.password_change_drawer.enter_new_password')}
+          />
         </Form.Item>
         <Form.Item
           name="confirmPassword"
-          label="Xác nhận mật khẩu mới"
+          label={t('component.password_change_drawer.confirm_new_password')}
           dependencies={['newPassword']}
           rules={[
-            { required: true, message: 'Vui lòng xác nhận mật khẩu mới!' },
+            { required: true, message: t('component.password_change_drawer.confirm_password_required') },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (!value || getFieldValue('newPassword') === value) {
                   return Promise.resolve();
                 }
-                return Promise.reject(new Error('Mật khẩu xác nhận không khớp!'));
+                return Promise.reject(new Error(t('component.password_change_drawer.password_mismatch')));
               },
             }),
           ]}
         >
           <Input.Password
             prefix={<LockOutlined />}
-            placeholder="Xác nhận mật khẩu mới"
+            placeholder={t('component.password_change_drawer.enter_confirm_password')}
             onChange={() => form.validateFields(['confirmPassword'])}
           />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading} block>
-            Đổi mật khẩu
+            {t('component.password_change_drawer.change_password')}
           </Button>
         </Form.Item>
       </Form>

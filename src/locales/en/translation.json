@@ -91,6 +91,27 @@
       "login_success": "Login successful!",
       "login_failure": "Login failed! Please try again later.",
       "button_text": "Sign in with Google"
+    },
+    "password_change_drawer": {
+      "title": "Change Password",
+      "current_password": "Current Password",
+      "enter_current_password": "Enter current password",
+      "current_password_required": "Please enter the current password!",
+      "new_password": "New Password",
+      "enter_new_password": "Enter new password",
+      "confirm_new_password": "Confirm New Password",
+      "enter_confirm_password": "Confirm new password",
+      "change_password": "Change Password",
+      "success_message": "New password set successfully!",
+      "current_password_error": "Current password is incorrect!",
+      "error_message": "An error occurred, please try again later.",
+      "new_password_required": "Please enter a new password!",
+      "confirm_password_required": "Please confirm the new password!",
+      "password_mismatch": "Confirmation password does not match!",
+      "password_pattern_error": "Password must contain at least 1 uppercase, 1 lowercase letter, and 1 number!",
+      "password_length_error": "Password must be at least 8 characters long!",
+      "password_max_length_error": "Cannot exceed 100 characters!",
+      "new_password_match_error": "New passwords do not match!"
     }
   },
   "page": {
