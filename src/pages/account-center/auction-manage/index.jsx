@@ -16,6 +16,7 @@ const AuctionManage = () => {
   const [auctionId, setAuctionId] = useState(null);
   const [drawerMode, setDrawerMode] = useState('create');
   const [loading, setLoading] = useState(false);
+  const [onSuccess, setOnSuccess] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +58,7 @@ const AuctionManage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [onSuccess]);
 
   const showDrawer = () => {
     setIsDrawerOpen(true);
@@ -141,15 +142,23 @@ const AuctionManage = () => {
           ? 'Đang kiểm duyệt'
           : status === 'Scheduled'
           ? 'Sắp diễn ra'
-          : status === 'Reject'
+          : status === 'Rejected'
           ? 'Bị từ chối'
+          : status === 'Canceled'
+          ? 'Đã hủy'
+          : status === 'Failed'
+          ? 'Thất bại'
+          : status === 'Paid'
+          ? 'Đã thanh toán'
+          : status === 'Finished'
+          ? 'Thành công'
           : status,
     },
     {
       title: 'Hành động',
       key: 'action',
-      render: (text, record) => (
-        <div>
+      render: (_, record) => (
+        <div key={record?.auctionId}>
           <Button type="link" onClick={() => handleView(record?.auctionId)}>
             Chi tiết
           </Button>
@@ -183,7 +192,13 @@ const AuctionManage = () => {
           />
         </div>
       )}
-      <AuctionForm open={isDrawerOpen} onCancel={handleCancel} auctionId={auctionId} mode={drawerMode} />
+      <AuctionForm
+        open={isDrawerOpen}
+        onCancel={handleCancel}
+        auctionId={auctionId}
+        mode={drawerMode}
+        onSuccess={() => setOnSuccess(onSuccess + 1)}
+      />
     </div>
   );
 };
