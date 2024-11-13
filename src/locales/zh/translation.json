@@ -94,7 +94,7 @@
   },
   "page": {
     "home": {
-      "dom_title": "KoiAuction - 专为锦鲤爱好者打造的在线拍卖平台",
+      "dom_title": "KOIAUCTION - 专为锦鲤爱好者打造的在线拍卖平台",
       "meta_description": "KOIAUCTION是领先的在线锦鲤拍卖平台，为锦鲤爱好者提供安全可靠的空间。立即加入，体验高质量锦鲤的精彩拍卖！"
     },
     "login": {
@@ -145,13 +145,13 @@
       "link_back_to_login": "返回登录"
     },
     "not_found": {
-      "dom_title": "404 - 未找到 - KoiAuction",
+      "dom_title": "404 - 未找到 - KOIAUCTION",
       "title": "404",
       "message": "您访问的内容不存在",
       "button_home": "返回主页"
     },
     "auction": {
-      "page_title": "拍卖 - KoiAuction",
+      "page_title": "拍卖 - KOIAUCTION",
       "sidebar": {
         "search_title": "搜索",
         "search_placeholder": "输入关键字...",
@@ -186,7 +186,7 @@
       }
     },
     "about": {
-      "dom_title": "关于我们 - KoiAuction",
+      "dom_title": "关于我们 - KOIAUCTION",
       "page_title": "关于KOIAUCTION",
       "intro_paragraph_1": "KOIAUCTION是一个领先的在线拍卖平台，专为锦鲤爱好者而设。我们成立的使命是为越南和世界各地的锦鲤爱好者创造一个便捷、安全、值得信赖的在线拍卖空间。",
       "intro_paragraph_2": "无论您是锦鲤新手还是资深收藏家，KOIAUCTION致力于提供卓越的在线拍卖体验。我们努力创造一个用户友好、高度安全和温馨的环境，让每个人都可以在这里联系、互动，并参加令人激动的拍卖活动。",
@@ -212,7 +212,7 @@
       "join_us_cta": "立即加入KOIAUCTION！"
     },
     "contact": {
-      "dom_title": "联系我们 - KoiAuction",
+      "dom_title": "联系我们 - KOIAUCTION",
       "page_title": "联系我们 KOIAUCTION",
       "contact_info": "联系信息",
       "email": "电子邮件",

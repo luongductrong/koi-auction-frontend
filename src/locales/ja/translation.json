@@ -94,11 +94,11 @@
   },
   "page": {
     "home": {
-      "dom_title": "KoiAuction - 錦鯉愛好家のためのオンラインオークションプラットフォーム",
+      "dom_title": "KOIAUCTION - 錦鯉愛好家のためのオンラインオークションプラットフォーム",
       "meta_description": "KOIAUCTIONは、錦鯉愛好家のための信頼性が高く安全なオンラインオークションプラットフォームです。高品質な錦鯉のオークションを体験するために、今すぐ参加しましょう！"
     },
     "login": {
-      "dom_title": "ログイン - KoiAuction",
+      "dom_title": "ログイン - KOIAUCTION",
       "title": "ログイン",
       "username_label": "ユーザー名/メールアドレス",
       "username_placeholder": "ユーザー名",
@@ -115,7 +115,7 @@
       "register": "登録"
     },
     "forgot_password": {
-      "dom_title": "パスワードを忘れた - KoiAuction",
+      "dom_title": "パスワードを忘れた - KOIAUCTION",
       "title": "パスワードをリセット",
       "email_label": "メール",
       "email_placeholder": "リカバリーメールを入力...",
@@ -145,13 +145,13 @@
       "link_back_to_login": "ログインに戻る"
     },
     "not_found": {
-      "dom_title": "404 - KoiAuction",
+      "dom_title": "404 - KOIAUCTION",
       "title": "404",
       "message": "お探しの内容は存在しません",
       "button_home": "ホームに戻る"
     },
     "auction": {
-      "dom_title": "オークション - KoiAuction",
+      "dom_title": "オークション - KOIAUCTION",
       "sidebar": {
         "search_title": "検索",
         "search_placeholder": "キーワードを入力...",
@@ -186,7 +186,7 @@
       }
     },
     "about": {
-      "dom_title": "私たちについて - KoiAuction",
+      "dom_title": "私たちについて - KOIAUCTION",
       "page_title": "KOIAUCTIONについて",
       "intro_paragraph_1": "KOIAUCTIONは、錦鯉愛好家のためのオンラインオークションプラットフォームのリーダーです。私たちは、ベトナムや世界中の錦鯉愛好者に、便利で安全かつ信頼できるオンラインオークションスペースを提供することを使命として設立されました。",
       "intro_paragraph_2": "錦鯉の初心者でも長年のコレクターでも、KOIAUCTIONは素晴らしいオンラインオークション体験を提供することに尽力しています。私たちは、ユーザーフレンドリーで高いセキュリティと歓迎的な環境を作り、皆がつながり、交流し、エキサイティングなオークションイベントに参加できる場を目指しています。",
@@ -212,7 +212,7 @@
       "join_us_cta": "今すぐKOIAUCTIONに参加しよう！"
     },
     "contact": {
-      "dom_title": "お問い合わせ - KoiAuction",
+      "dom_title": "お問い合わせ - KOIAUCTION",
       "page_title": "KOIAUCTIONへのお問い合わせ",
       "contact_info": "連絡先情報",
       "email": "メール",

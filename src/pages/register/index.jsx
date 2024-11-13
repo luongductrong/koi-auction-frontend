@@ -329,7 +329,14 @@ function Register() {
       title: 'Mật khẩu',
       content: (
         <>
-          <Form.Item label="Mật khẩu" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}>
+          <Form.Item
+            label="Mật khẩu"
+            name="password"
+            rules={[
+              { required: true, message: 'Vui lòng nhập mật khẩu!' },
+              { max: 100, message: 'Không được vượt quá 100 ký tự!' },
+            ]}
+          >
             <Input.Password placeholder="Mật khẩu" />
           </Form.Item>
           <Form.Item
