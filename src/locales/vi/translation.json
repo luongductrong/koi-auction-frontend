@@ -23,6 +23,7 @@
       "not_found": "404"
     },
     "header": {
+      "new_user": "Người dùng mới",
       "account_center": "Trung tâm tài khoản",
       "personal_info": "Thông tin cá nhân",
       "wallet_management": "Quản lý ví",

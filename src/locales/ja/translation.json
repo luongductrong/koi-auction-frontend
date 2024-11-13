@@ -23,6 +23,7 @@
       "not_found": "404"
     },
     "header": {
+      "new_user": "新規ユーザー",
       "account_center": "アカウントセンター",
       "personal_info": "個人情報",
       "wallet_management": "ウォレット管理",

@@ -23,6 +23,7 @@
       "not_found": "404"
     },
     "header": {
+      "new_user": "新用户",
       "account_center": "账户中心",
       "personal_info": "个人信息",
       "wallet_management": "钱包管理",

@@ -56,7 +56,11 @@ function useAuth() {
     }
   };
 
-  return { onUnauthorized };
+  const onAccessDenied = () => {
+    navigate('/access-denied');
+  };
+
+  return { onUnauthorized, onAccessDenied };
 }
 
 export default useAuth;

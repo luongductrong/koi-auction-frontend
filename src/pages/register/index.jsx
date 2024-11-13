@@ -1,86 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Form, App, Steps, Select, Input, Checkbox } from 'antd';
+import React, { useState, useRef } from 'react';
+import { Button, Form, App, Steps, Input, Checkbox } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import api, { provinceApi } from '../../configs';
-import { debounce } from '../../utils/debounce';
+import debounce from 'lodash/debounce';
+import api from '../../configs';
 import styles from './index.module.scss';
 
-const { Option } = Select;
 const { Step } = Steps;
 
 function Register() {
   const navigate = useNavigate();
   const { message } = App.useApp();
-  const [provinces, setProvinces] = useState([]);
-  const [districts, setDistricts] = useState([]);
-  const [wards, setWards] = useState([]);
-  const [form] = Form.useForm();
   const [formData, setFormData] = useState({});
   const [validateStatusUserName, setValidateStatusUserName] = useState('');
   const [validateStatusEmail, setValidateStatusEmail] = useState('');
-  const [validateStatusPhoneNumber, setValidateStatusPhoneNumber] = useState('');
-  console.log('Register render');
-
+  const useLatestRequestId = useRef(0);
   const [currentStep, setCurrentStep] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchProvinces = async () => {
-      try {
-        const response = await provinceApi.get('/1/0.htm');
-        setProvinces(response.data.data);
-      } catch (error) {
-        console.error('Failed to fetch provinces:', error);
-        message.error('Lỗi khi tải danh sách tỉnh thành!');
-      }
-    };
-    fetchProvinces();
-  }, []);
-
-  const handleProvinceChange = (_, option) => {
-    form.setFieldsValue({
-      province: option.label,
-      district: null,
-      ward: null,
-    });
-    setWards([]);
-
-    // Tải danh sách quận
-    const fetchDistricts = async () => {
-      try {
-        const response = await provinceApi.get(`/2/${option.value}.htm`);
-        setDistricts(response.data.data);
-      } catch (error) {
-        console.error('Failed to fetch districts:', error);
-        message.error('Lỗi khi tải danh sách quận huyện!');
-      }
-    };
-    fetchDistricts();
-  };
-
-  const handleDistrictChange = (_, option) => {
-    form.setFieldsValue({
-      district: option.label,
-      ward: null,
-    });
-
-    const fetchWards = async () => {
-      try {
-        const response = await provinceApi.get(`/3/${option.value}.htm`);
-        setWards(response.data.data);
-      } catch (error) {
-        console.error('Failed to fetch wards:', error);
-        message.error('Lỗi khi tải danh sách xã phường!');
-      }
-    };
-    fetchWards();
-  };
-
-  const handleWardChange = (_, option) => {
-    form.setFieldsValue({
-      ward: option.label,
-    });
-  };
+  console.log('Register render');
 
   const next = (values) => {
     setFormData({ ...formData, ...values });
@@ -91,56 +28,61 @@ function Register() {
     setCurrentStep(currentStep - 1);
   };
 
-  const debouncedApiCall = debounce(async (url, onSuccess, onError) => {
+  const debouncedApiCall = debounce(async (field, value, requestId, onSuccess, onError) => {
     try {
-      await api.get(url);
-      onSuccess();
+      if (field.toLowerCase() === 'email') {
+        await api.get(`/verify/verify-email?email=${value}`);
+      } else if (field.toLowerCase() === 'username') {
+        await api.get(`/verify/verify-userName?userName=${value}`);
+      } else {
+        throw new Error('Invalid field');
+      }
+      if (requestId === useLatestRequestId.current) {
+        onSuccess();
+      }
     } catch (error) {
-      console.error('Check Exist Error:', error);
-      onError();
+      if (requestId === useLatestRequestId.current) {
+        onError();
+      }
     }
   }, 500);
 
   const checkValidate = (field, value) => {
-    if (!value || value.trim() === '') {
-      if (field.toLowerCase() === 'username') {
-        setValidateStatusUserName('error');
-        console.log('Empty value:', field);
-      } else if (field.toLowerCase() === 'email') {
-        setValidateStatusEmail('error');
-      } else if (field.toLowerCase() === 'phone') {
-        setValidateStatusPhoneNumber('error');
-      }
-      return;
-    }
-    if (!value || value.trim() === '') {
-      console.log('Empty value:', 'return thất bại');
-    }
-    if (field.toLowerCase() === 'username' && !/^[a-zA-Z]{1}[a-zA-Z0-9]*$/.test(value)) {
-      setValidateStatusUserName('error');
-      return;
-    }
-
     if (field.toLowerCase() === 'username') {
-      setValidateStatusUserName('validating');
+      useLatestRequestId.current += 1;
+      const currentRequestId = useLatestRequestId.current;
+
+      debouncedApiCall.cancel();
+
+      if (!value || value.trim() === '' || !/^[a-zA-Z]{1}[a-zA-Z0-9]*$/.test(value)) {
+        setValidateStatusUserName('error');
+        return;
+      }
+      setValidateStatusUserName('validating'); // Change to username validate status
       debouncedApiCall(
-        `/verify/verify-userName?userName=${value}`,
+        field,
+        value,
+        currentRequestId,
         () => setValidateStatusUserName('success'),
         () => setValidateStatusUserName('error'),
       );
     } else if (field.toLowerCase() === 'email') {
-      setValidateStatusEmail('validating');
+      useLatestRequestId.current += 1;
+      const currentRequestId = useLatestRequestId.current;
+
+      debouncedApiCall.cancel();
+
+      if (!value || value.trim() === '' || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
+        setValidateStatusEmail('error');
+        return;
+      }
+      setValidateStatusEmail('validating'); // Change to email validate status
       debouncedApiCall(
-        `/verify/verify-email?email=${value}`,
+        field,
+        value,
+        currentRequestId,
         () => setValidateStatusEmail('success'),
         () => setValidateStatusEmail('error'),
-      );
-    } else if (field.toLowerCase() === 'phone') {
-      setValidateStatusPhoneNumber('validating');
-      debouncedApiCall(
-        `/verify/verify-phone?phone=${value}`,
-        () => setValidateStatusPhoneNumber('success'),
-        () => setValidateStatusPhoneNumber('error'),
       );
     }
   };
@@ -148,20 +90,7 @@ function Register() {
   const handleRegister = async () => {
     try {
       setLoading(true);
-
       const req = formData;
-      req.address = JSON.stringify({
-        province: req.province,
-        district: req.district,
-        ward: req.ward,
-        address: req.address,
-      });
-
-      delete req.province;
-      delete req.district;
-      delete req.ward;
-      delete req.agreement;
-      delete req.confirmPassword;
 
       console.log('Register Request:', req);
 
@@ -225,102 +154,14 @@ function Register() {
           >
             <Input
               placeholder="Email"
+              onChange={(e) => {
+                checkValidate('email', e.target.value);
+              }}
               count={{
                 show: false,
                 max: 100,
               }}
             />
-          </Form.Item>
-        </>
-      ),
-    },
-    {
-      title: 'Thông tin cá nhân',
-      content: (
-        <>
-          <Form.Item
-            label="Họ và tên"
-            name="fullName"
-            rules={[
-              { required: true, message: 'Vui lòng nhập họ và tên!' },
-              { max: 100, message: 'Họ tên không được vượt quá 100 ký tự!' },
-            ]}
-          >
-            <Input placeholder="Họ và tên" />
-          </Form.Item>
-          <Form.Item
-            label="Số điện thoại"
-            name="phoneNumber"
-            hasFeedback
-            validateStatus={validateStatusPhoneNumber}
-            rules={[
-              { required: true, message: 'Vui lòng nhập số điện thoại!' },
-              { pattern: /^[0-9]{10}$/, message: 'Số điện thoại phải bao gồm 10 chữ số!' },
-            ]}
-          >
-            <Input
-              placeholder="Số điện thoại"
-              count={{
-                show: true,
-                max: 10,
-              }}
-            />
-          </Form.Item>
-        </>
-      ),
-    },
-    {
-      title: 'Địa chỉ',
-      content: (
-        <>
-          <Form.Item
-            label="Tỉnh/Thành phố"
-            name="province"
-            rules={[{ required: true, message: 'Vui lòng thêm thông tin tỉnh thành!' }]}
-          >
-            <Select onChange={handleProvinceChange}>
-              {provinces.map((province) => (
-                <Option key={province.id} value={province.id} label={province.full_name}>
-                  {province.full_name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Quận/Huyện"
-            name="district"
-            rules={[{ required: true, message: 'Vui lòng thêm thông tin quận huyện!' }]}
-          >
-            <Select onChange={handleDistrictChange} disabled={!form.getFieldValue().province && !districts?.length > 0}>
-              {districts.map((district) => (
-                <Option key={district.id} value={district.id} label={district.full_name}>
-                  {district.full_name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Xã/Phường"
-            name="ward"
-            rules={[{ required: true, message: 'Vui lòng thêm thông tin xã phường!' }]}
-          >
-            <Select onChange={handleWardChange} disabled={!form.getFieldValue().district && !wards?.length > 0}>
-              {wards.map((ward) => (
-                <Option key={ward.id} value={ward.id} label={ward.full_name}>
-                  {ward.full_name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Địa chỉ"
-            name="address"
-            rules={[
-              { required: true, message: 'Vui lòng nhập địa chỉ chi tiết!' },
-              { max: 100, message: 'Địa chỉ không được vượt quá 100 ký tự!' },
-            ]}
-          >
-            <Input placeholder="Địa chỉ" />
           </Form.Item>
         </>
       ),
@@ -335,6 +176,10 @@ function Register() {
             rules={[
               { required: true, message: 'Vui lòng nhập mật khẩu!' },
               { max: 100, message: 'Không được vượt quá 100 ký tự!' },
+              {
+                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+                message: 'Mật khẩu quá yếu!',
+              },
             ]}
           >
             <Input.Password placeholder="Mật khẩu" />
@@ -356,21 +201,26 @@ function Register() {
           >
             <Input.Password placeholder="Xác nhận mật khẩu" />
           </Form.Item>
-          <Form.Item
-            name="agreement"
-            valuePropName="checked"
-            rules={[
-              {
-                validator: (_, value) =>
-                  value ? Promise.resolve() : Promise.reject(new Error('Bạn phải đồng ý với điều khoản')),
-              },
-            ]}
-          >
-            <Checkbox>
-              Tôi đồng ý với <Link to="/terms">điều khoản sử dụng</Link>.
-            </Checkbox>
-          </Form.Item>
         </>
+      ),
+    },
+    {
+      title: 'Điều khoản',
+      content: (
+        <Form.Item
+          name="agreement"
+          valuePropName="checked"
+          rules={[
+            {
+              validator: (_, value) =>
+                value ? Promise.resolve() : Promise.reject(new Error('Bạn phải đồng ý với điều khoản')),
+            },
+          ]}
+        >
+          <Checkbox>
+            Tôi đồng ý với <Link to="/terms">điều khoản sử dụng</Link>.
+          </Checkbox>
+        </Form.Item>
       ),
     },
   ];
@@ -380,7 +230,7 @@ function Register() {
       <div className={styles.registerForm}>
         <h2 className={styles.registerTitle}>Đăng ký</h2>
         <div className={styles.registerContent}>
-          <Form form={form} name="register" onFinish={onFinish} layout="vertical" className={styles.formStepContent}>
+          <Form name="register" onFinish={onFinish} layout="vertical" className={styles.formStepContent}>
             {steps[currentStep].content}
             <div className={styles.stepActions}>
               {currentStep > 0 && (
@@ -388,7 +238,14 @@ function Register() {
                   Quay lại
                 </Button>
               )}
-              <Button type="primary" htmlType="submit" loading={loading}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={loading}
+                disabled={
+                  currentStep === 0 && (validateStatusEmail !== 'success' || validateStatusUserName !== 'success')
+                }
+              >
                 {currentStep === steps.length - 1 ? 'Đăng ký' : 'Tiếp tục'}
               </Button>
             </div>
@@ -406,6 +263,9 @@ function Register() {
             ))}
           </Steps>
         </div>
+        <span className={styles.registerGuider}>
+          Mật khẩu phải có ít nhất 8 kí tự, bao gồm ít 1 chữ hoa, chữ thường, số
+        </span>
       </div>
     </div>
   );

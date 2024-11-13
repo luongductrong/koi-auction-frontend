@@ -23,6 +23,7 @@
       "not_found": "404"
     },
     "header": {
+      "new_user": "ผู้ใช้ใหม่",
       "account_center": "ศูนย์บัญชี",
       "personal_info": "ข้อมูลส่วนตัว",
       "wallet_management": "การจัดการกระเป๋าเงิน",
