@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Layout, Pagination, Input, DatePicker, Checkbox, Button, Card } from 'antd';
 import { Row, Col, Empty, Avatar, Select, Spin } from 'antd';
 import { UserOutlined, AppstoreOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import moment from 'moment';
 import Cover from '../../components/AuctionCover';
 import api from '../../configs';
 import styles from './index.module.scss';
@@ -274,7 +275,13 @@ function Auction() {
                       key={auction.auctionId}
                       hoverable
                       loading={loading}
-                      cover={<Cover imageSrc="https://placehold.co/600x400" startTime={auction.startTime} />}
+                      cover={
+                        <Cover
+                          imageSrc={auction?.koiInfoList ? auction.koiInfoList[0]?.headerImageUrl : null}
+                          status={auction?.status}
+                          startTime={auction?.startTime}
+                        />
+                      }
                       actions={[
                         <Link to={`/auction/detail?id=${auction.auctionId}`}>
                           <Button color="primary" variant="filled" style={{ width: '80%' }}>
@@ -284,23 +291,82 @@ function Auction() {
                       ]}
                     >
                       <Meta
-                        title={`${t('page.auction.main.auction_card.title_prefix')}${auction.auctionId}`}
+                        // title={`${t('page.auction.main.auction_card.title_prefix')}${auction.auctionId}`}
+                        title={
+                          <div className={styles.metaTitle}>{`Đấu giá ${auction?.koiInfoList
+                            ?.map((koi) => koi.koiName)
+                            .join(', ')}`}</div>
+                        }
                         description={
                           <>
+                            {(auction?.status === 'Scheduled' || auction?.status === 'Ongoing') &&
+                              auction?.method !== 'Fixed-price' && (
+                                <p>
+                                  {t('page.auction.main.auction_card.start_price_label')}
+                                  <span
+                                    className={styles.strongValue}
+                                  >{` ${auction?.startPrice?.toLocaleString()} VND`}</span>
+                                </p>
+                              )}
+                            {(auction?.status === 'Scheduled' || auction?.status === 'Ongoing') &&
+                              auction?.method === 'Fixed-price' && (
+                                <p>
+                                  {'Giá niêm yết:'}
+                                  <span
+                                    className={styles.strongValue}
+                                  >{` ${auction?.buyoutPrice?.toLocaleString()} VND`}</span>
+                                </p>
+                              )}
+                            {(auction?.status === 'Closed' || auction?.status === 'Paid') && (
+                              <p>
+                                {'Trạng thái: '}
+                                <span className={styles.strongValueSuccess}>Đã kết thúc</span>
+                              </p>
+                            )}
+                            {auction?.status === 'Failed' && (
+                              <p>
+                                {'Trạng thái: '}
+                                <span className={styles.strongValueFailed}>Đã kết thúc thất bại</span>
+                              </p>
+                            )}
+                            {(auction?.status === 'Scheduled' || auction?.status === 'Ongoing') && (
+                              <p>
+                                {t('page.auction.main.auction_card.status_label')}{' '}
+                                {auction.status === 'Scheduled'
+                                  ? t('page.auction.main.auction_card.status_scheduled')
+                                  : auction.status === 'Ongoing'
+                                  ? t('page.auction.main.auction_card.status_ongoing')
+                                  : auction.status === 'Closed'
+                                  ? t('page.auction.main.auction_card.status_closed')
+                                  : t('page.auction.main.auction_card.status_unknown')}
+                              </p>
+                            )}
                             <p>
-                              {`${t('page.auction.main.auction_card.start_price_label')}${' '}
-                              ${auction?.startPrice?.toLocaleString()} VND`}
+                              Phương thức:
+                              <span>
+                                {` ${
+                                  auction?.method === 'Ascending'
+                                    ? 'Trả giá lên'
+                                    : auction?.method === 'Descending'
+                                    ? 'Đặt giá xuống'
+                                    : auction?.method === 'Fixed-price'
+                                    ? 'Giá cố định'
+                                    : auction?.method === 'First-come'
+                                    ? 'Trả giá một lần'
+                                    : 'Không xác định'
+                                }`}{' '}
+                              </span>
                             </p>
-                            <p>
-                              {t('page.auction.main.auction_card.status_label')}{' '}
-                              {auction.status === 'Scheduled'
-                                ? t('page.auction.main.auction_card.status_scheduled')
-                                : auction.status === 'Ongoing'
-                                ? t('page.auction.main.auction_card.status_ongoing')
-                                : auction.status === 'Closed'
-                                ? t('page.auction.main.auction_card.status_closed')
-                                : t('page.auction.main.auction_card.status_unknown')}
-                            </p>
+                            {(auction?.status === 'Closed' ||
+                              auction?.status === 'Finished' ||
+                              auction?.status === 'Paid') && (
+                              <p>
+                                Thời gian đóng:{' '}
+                                <span className={styles.strongValue}>{`${
+                                  auction?.endTime ? moment(auction?.endTime).format('DD/MM/YYYY HH:mm') : ''
+                                }`}</span>
+                              </p>
+                            )}
                           </>
                         }
                       />

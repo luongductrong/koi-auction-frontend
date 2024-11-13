@@ -142,7 +142,7 @@ const AuctionManage = () => {
           ? 'Đang kiểm duyệt'
           : status === 'Scheduled'
           ? 'Sắp diễn ra'
-          : status === 'Rejected'
+          : status === 'Reject' // Rejected
           ? 'Bị từ chối'
           : status === 'Canceled'
           ? 'Đã hủy'
