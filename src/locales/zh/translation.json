@@ -91,6 +91,27 @@
       "login_success": "登录成功！",
       "login_failure": "登录失败！请稍后再试。",
       "button_text": "通过Google登录"
+    },
+    "password_change_drawer": {
+      "title": "更改密码",
+      "current_password": "当前密码",
+      "enter_current_password": "输入当前密码",
+      "current_password_required": "请输入当前密码！",
+      "new_password": "新密码",
+      "enter_new_password": "输入新密码",
+      "confirm_new_password": "确认新密码",
+      "enter_confirm_password": "确认新密码",
+      "change_password": "更改密码",
+      "success_message": "新密码设置成功！",
+      "current_password_error": "当前密码不正确！",
+      "error_message": "发生错误，请稍后再试。",
+      "new_password_required": "请输入新密码！",
+      "confirm_password_required": "请确认新密码！",
+      "password_mismatch": "确认密码不一致！",
+      "password_pattern_error": "密码必须包含至少1个大写字母、1个小写字母和1个数字！",
+      "password_length_error": "密码长度必须至少为8个字符！",
+      "password_max_length_error": "不得超过100个字符！",
+      "new_password_match_error": "新密码不匹配！"
     }
   },
   "page": {

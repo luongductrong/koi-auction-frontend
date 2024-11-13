@@ -91,6 +91,27 @@
       "login_success": "ログイン成功!",
       "login_failure": "ログインに失敗しました！後でもう一度お試しください。",
       "button_text": "Googleでログイン"
+    },
+    "password_change_drawer": {
+      "title": "パスワードの変更",
+      "current_password": "現在のパスワード",
+      "enter_current_password": "現在のパスワードを入力",
+      "current_password_required": "現在のパスワードを入力してください！",
+      "new_password": "新しいパスワード",
+      "enter_new_password": "新しいパスワードを入力",
+      "confirm_new_password": "新しいパスワードの確認",
+      "enter_confirm_password": "新しいパスワードを確認",
+      "change_password": "パスワードを変更",
+      "success_message": "新しいパスワードが正常に設定されました！",
+      "current_password_error": "現在のパスワードが正しくありません！",
+      "error_message": "エラーが発生しました。後でもう一度お試しください。",
+      "new_password_required": "新しいパスワードを入力してください！",
+      "confirm_password_required": "新しいパスワードを確認してください！",
+      "password_mismatch": "確認用パスワードが一致しません！",
+      "password_pattern_error": "パスワードには少なくとも1つの大文字、1つの小文字、および1つの数字が含まれている必要があります！",
+      "password_length_error": "パスワードは8文字以上である必要があります！",
+      "password_max_length_error": "100文字以内にしてください！",
+      "new_password_match_error": "新しいパスワードが一致しません！"
     }
   },
   "page": {

@@ -28,7 +28,7 @@ function Wallet() {
     const amount = params.get('amount');
 
     if (success === 'true' && amount !== '') {
-      message.success(`Nạp tiền thành công! Số tiền: ${amount} VND`);
+      message.success(`Nạp tiền thành công! Số tiền: ${Number(amount).toLocaleString('vi-VN')} VND`);
       clearURLParams();
     } else if (success === 'false') {
       message.error('Nạp tiền thất bại! Vui lòng thử lại sau.');

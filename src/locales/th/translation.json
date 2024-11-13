@@ -91,6 +91,27 @@
       "login_success": "เข้าสู่ระบบสำเร็จ!",
       "login_failure": "เข้าสู่ระบบล้มเหลว! กรุณาลองอีกครั้งในภายหลัง",
       "button_text": "เข้าสู่ระบบด้วย Google"
+    },
+    "password_change_drawer": {
+      "title": "เปลี่ยนรหัสผ่าน",
+      "current_password": "รหัสผ่านปัจจุบัน",
+      "enter_current_password": "กรอกรหัสผ่านปัจจุบัน",
+      "current_password_required": "กรุณากรอกรหัสผ่านปัจจุบัน!",
+      "new_password": "รหัสผ่านใหม่",
+      "enter_new_password": "กรอกรหัสผ่านใหม่",
+      "confirm_new_password": "ยืนยันรหัสผ่านใหม่",
+      "enter_confirm_password": "ยืนยันรหัสผ่านใหม่",
+      "change_password": "เปลี่ยนรหัสผ่าน",
+      "success_message": "ตั้งค่ารหัสผ่านใหม่สำเร็จแล้ว!",
+      "current_password_error": "รหัสผ่านปัจจุบันไม่ถูกต้อง!",
+      "error_message": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
+      "new_password_required": "กรุณากรอกรหัสผ่านใหม่!",
+      "confirm_password_required": "กรุณายืนยันรหัสผ่านใหม่!",
+      "password_mismatch": "รหัสผ่านที่ยืนยันไม่ตรงกัน!",
+      "password_pattern_error": "รหัสผ่านต้องประกอบด้วยตัวอักษรพิมพ์ใหญ่ ตัวอักษรพิมพ์เล็ก และตัวเลขอย่างน้อย 1 ตัว!",
+      "password_length_error": "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร!",
+      "password_max_length_error": "ต้องไม่เกิน 100 ตัวอักษร!",
+      "new_password_match_error": "รหัสผ่านใหม่ไม่ตรงกัน!"
     }
   },
   "page": {
