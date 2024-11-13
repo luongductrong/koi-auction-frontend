@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { Flex, Space, Typography, Avatar, ConfigProvider } from 'antd';
 import { Form, Input, Button, Select, DatePicker } from 'antd';
 import { UserOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
 import useAuth from '../../../hook/useAuth';
 import moment from 'moment';
 import api, { provinceApi } from '../../../configs';
+import PasswordChangeDrawer from '../../../components/PasswordChangeDrawer';
 import styles from './profile.module.scss';
 
 const { Title } = Typography;
@@ -20,6 +20,7 @@ function Profile() {
   const [provinces, setProvinces] = useState([]);
   const [wards, setWards] = useState([]);
   const [districts, setDistricts] = useState([]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -144,7 +145,9 @@ function Profile() {
                 <CheckCircleOutlined />
                 {` ${profile ? (profile.role === 'Breeder' ? 'Nhà bán hàng' : 'Người mua') : 'Đang tải...'}`}
               </p>
-              <Link to="change-password">Đổi mật khẩu</Link>
+              <Button type="link" onClick={() => setIsDrawerOpen(true)}>
+                Đổi mật khẩu
+              </Button>
             </Space>
           </Flex>
           <div className={styles.infoContainer}>
@@ -282,6 +285,7 @@ function Profile() {
           </div>
         </Flex>
       </ConfigProvider>
+      <PasswordChangeDrawer open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
     </div>
   );
 }

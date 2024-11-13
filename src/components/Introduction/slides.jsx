@@ -6,7 +6,7 @@ const slides = [
   {
     slideId: '1',
     url: slide2,
-    alt: 'Koi Auction System',
+    alt: 'KOIAUCTION System',
   },
   {
     slideId: '2',
@@ -16,12 +16,12 @@ const slides = [
   {
     slideId: '3',
     url: slide2,
-    alt: 'Koi Auction System',
+    alt: 'KOIAUCTION System',
   },
   {
     slideId: '4',
     url: slide2,
-    alt: 'Koi Auction System',
+    alt: 'KOIAUCTION System',
   },
 ];
 

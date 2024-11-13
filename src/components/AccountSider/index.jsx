@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, ConfigProvider, Button } from 'antd';
-import {
-  UserOutlined,
-  CreditCardOutlined,
-  ScheduleOutlined,
-  ShoppingCartOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-} from '@ant-design/icons';
+import { Layout, Menu, ConfigProvider } from 'antd';
+import { UserOutlined, CreditCardOutlined, ScheduleOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styles from './index.module.scss';
 
 const { Sider: AntSider } = Layout;
@@ -16,6 +11,7 @@ const { Sider: AntSider } = Layout;
 function AccountSider() {
   console.log('Account Sider render');
 
+  const user = useSelector((state) => state.user.user);
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState(location.pathname);
   const [collapsed, setCollapsed] = useState(false);
@@ -67,12 +63,16 @@ function AccountSider() {
             <Menu.Item key="/account-center/order" icon={<ShoppingCartOutlined />} className={styles.menuItem}>
               <Link to="order">Quản lý đơn hàng</Link>
             </Menu.Item>
-            <Menu.Item key="/account-center/auction" icon={<UserOutlined />} className={styles.menuItem}>
-              <Link to="auction">Quản lý cuộc đấu giá</Link>
-            </Menu.Item>
-            <Menu.Item key="/account-center/koi" icon={<UserOutlined />} className={styles.menuItem}>
-              <Link to="koi">Quản lý cá Koi</Link>
-            </Menu.Item>
+            {user && user?.role?.toLowerCase() === 'breeder' && (
+              <>
+                <Menu.Item key="/account-center/auction" icon={<UserOutlined />} className={styles.menuItem}>
+                  <Link to="auction">Quản lý cuộc đấu giá</Link>
+                </Menu.Item>
+                <Menu.Item key="/account-center/koi" icon={<UserOutlined />} className={styles.menuItem}>
+                  <Link to="koi">Quản lý cá Koi</Link>
+                </Menu.Item>
+              </>
+            )}
             <Menu.Item icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />} className={`${styles.trigger}`}>
               <Link to="#" onClick={() => setCollapsed(!collapsed)}>
                 {collapsed ? 'Mở rộng' : ''}

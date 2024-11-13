@@ -23,6 +23,7 @@
       "not_found": "404"
     },
     "header": {
+      "new_user": "ผู้ใช้ใหม่",
       "account_center": "ศูนย์บัญชี",
       "personal_info": "ข้อมูลส่วนตัว",
       "wallet_management": "การจัดการกระเป๋าเงิน",
@@ -94,10 +95,11 @@
   },
   "page": {
     "home": {
-      "dom_title": "หน้าหลัก - KoiAuction"
+      "dom_title": "KOIAUCTION - แพลตฟอร์มประมูลออนไลน์สำหรับผู้ที่ชื่นชอบปลาคาร์พ Koi",
+      "meta_description": "KOIAUCTION แพลตฟอร์มประมูลปลาคาร์ฟออนไลน์อันดับหนึ่ง มอบพื้นที่ที่ปลอดภัยและเชื่อถือได้สำหรับคนรักปลาคาร์ฟ ร่วมสนุกกับการประมูลที่น่าตื่นเต้นของปลาคาร์ฟคุณภาพสูง!"
     },
     "login": {
-      "dom_title": "เข้าสู่ระบบ - KoiAuction",
+      "dom_title": "เข้าสู่ระบบ - KOIAUCTION",
       "title": "เข้าสู่ระบบ",
       "username_label": "ชื่อผู้ใช้/อีเมล",
       "username_placeholder": "ชื่อผู้ใช้หรืออีเมล",
@@ -113,7 +115,7 @@
       "register": "สมัครสมาชิก"
     },
     "forgot_password": {
-      "dom_title": "ลืมรหัสผ่าน - KoiAuction",
+      "dom_title": "ลืมรหัสผ่าน - KOIAUCTION",
       "title": "รีเซ็ตรหัสผ่าน",
       "email_label": "อีเมล",
       "email_placeholder": "ป้อนอีเมลสำหรับกู้คืน...",
@@ -143,13 +145,13 @@
       "link_back_to_login": "กลับไปที่เข้าสู่ระบบ"
     },
     "not_found": {
-      "dom_title": "404 - ไม่พบ - KoiAuction",
+      "dom_title": "404 - ไม่พบ - KOIAUCTION",
       "title": "404",
       "message": "ไม่พบเนื้อหาที่คุณกำลังค้นหา",
       "button_home": "กลับไปที่หน้าแรก"
     },
     "auction": {
-      "dom_title": "การประมูล - KoiAuction",
+      "dom_title": "การประมูล - KOIAUCTION",
       "sidebar": {
         "search_title": "ค้นหา",
         "search_placeholder": "ป้อนคำสำคัญ...",
@@ -184,7 +186,7 @@
       }
     },
     "about": {
-      "dom_title": "เกี่ยวกับเรา - KoiAuction",
+      "dom_title": "เกี่ยวกับเรา - KOIAUCTION",
       "page_title": "เกี่ยวกับ KOIAUCTION",
       "intro_paragraph_1": "KOIAUCTION เป็นแพลตฟอร์มการประมูลออนไลน์ชั้นนำสำหรับผู้ที่ชื่นชอบปลาคาร์ป เราก่อตั้งขึ้นด้วยพันธกิจในการสร้างพื้นที่การประมูลออนไลน์ที่สะดวก ปลอดภัย และน่าเชื่อถือสำหรับผู้ที่รักปลาคาร์ปในเวียดนามและทั่วโลก",
       "intro_paragraph_2": "ไม่ว่าคุณจะเป็นมือใหม่หรือสะสมปลาคาร์ปมาอย่างยาวนาน KOIAUCTION มุ่งมั่นที่จะมอบประสบการณ์การประมูลออนไลน์ที่ยอดเยี่ยม เรามุ่งหวังที่จะสร้างสภาพแวดล้อมที่ใช้งานง่าย มีความปลอดภัยสูง และเป็นมิตร ที่ซึ่งทุกคนสามารถเชื่อมต่อและเข้าร่วมกิจกรรมการประมูลที่น่าตื่นเต้นได้",
@@ -210,7 +212,7 @@
       "join_us_cta": "เข้าร่วม KOIAUCTION วันนี้!"
     },
     "contact": {
-      "dom_title": "ติดต่อ - KoiAuction",
+      "dom_title": "ติดต่อ - KOIAUCTION",
       "page_title": "ติดต่อ KOIAUCTION",
       "contact_info": "ข้อมูลการติดต่อ",
       "email": "อีเมล",

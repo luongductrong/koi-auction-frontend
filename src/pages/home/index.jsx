@@ -5,6 +5,7 @@ import AuctionHome from '../../components/AuctionHome';
 import Partner from '../../components/Partner';
 import ViewAllButton from '../../components/ViewAllButton';
 import api from '../../configs';
+import ImageCropper from '../../components/ImageCropper';
 
 function Home() {
   const [scheduledAuctions, setScheduledAuctions] = useState([]);
@@ -15,6 +16,15 @@ function Home() {
 
   useEffect(() => {
     document.title = t('page.home.dom_title');
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', t('page.home.meta_description'));
+    } else {
+      const metaTag = document.createElement('meta');
+      metaTag.setAttribute('name', 'description');
+      metaTag.setAttribute('content', t('page.home.meta_description'));
+      document.head.appendChild(metaTag);
+    }
   }, [t]);
 
   useEffect(() => {
@@ -48,6 +58,11 @@ function Home() {
     fetchOngoingAuctions();
   }, []);
 
+  const handleCroppedImage = (blob) => {
+    // Tải blob lên backend hoặc xử lý theo nhu cầu
+    console.log('Ảnh đã crop:', blob);
+  };
+
   return (
     <>
       <Introduction />
@@ -55,6 +70,7 @@ function Home() {
       <AuctionHome auctions={ongoingAuctions} type="ongoing" loading={loading2} />
       <ViewAllButton />
       <Partner />
+      <ImageCropper onCrop={handleCroppedImage} />
     </>
   );
 }

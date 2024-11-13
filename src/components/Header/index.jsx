@@ -17,6 +17,8 @@ function Header() {
   const fullUrl = useLocation().pathname + useLocation().search + useLocation().hash;
   const isOnline = useNetworkStatus();
 
+  const isBreeder = user && user?.role?.toLowerCase() === 'breeder';
+
   const onSearch = (value) => console.log(value);
 
   const items = [
@@ -44,14 +46,18 @@ function Header() {
           key: '1-4',
           label: <Link to="/account-center/order">{t('component.header.order_management')}</Link>,
         },
-        {
-          key: '1-5',
-          label: <Link to="/account-center/auction">{t('component.header.auction_management')}</Link>,
-        },
-        {
-          key: '1-6',
-          label: <Link to="/account-center/koi">{t('component.header.koi_management')}</Link>,
-        },
+        ...(isBreeder
+          ? [
+              {
+                key: '1-5',
+                label: <Link to="/account-center/auction">{t('component.header.auction_management')}</Link>,
+              },
+              {
+                key: '1-6',
+                label: <Link to="/account-center/koi">{t('component.header.koi_management')}</Link>,
+              },
+            ]
+          : []),
       ],
     },
     {
@@ -86,7 +92,9 @@ function Header() {
             <div className={styles.btnGroup}>
               {user ? (
                 <Dropdown menu={{ items }} trigger={['hover']} arrow>
-                  <Button type="primary">{user.fullname}</Button>
+                  <Button type="primary">
+                    {user?.fullname && user.fullname !== '' ? user.fullname : t('component.header.new_user')}
+                  </Button>
                 </Dropdown>
               ) : (
                 <>

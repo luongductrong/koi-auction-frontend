@@ -37,6 +37,12 @@ function Login() {
       });
 
       if (response.status === 200) {
+        const role = response?.data?.role;
+        if (role !== 'User' && role !== 'Breeder') {
+          navigate('/access-denied');
+          return;
+        }
+
         message.success(t('page.login.login_success'));
         console.log('Login Response:', response.data);
 
