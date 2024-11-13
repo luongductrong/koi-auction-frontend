@@ -12,7 +12,7 @@ import styles from './index.module.scss';
 function Login() {
   console.log('Login render');
 
-  const { message } = App.useApp();
+  const { message, notification } = App.useApp();
   const location = useLocation();
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
@@ -43,6 +43,15 @@ function Login() {
           return;
         }
 
+        if (response?.data?.address === null || response?.data?.address === '') {
+          notification.warning({
+            message: 'Cập nhật thông tin cá nhân',
+            description: 'Thông tin cá nhân của bạn hiện chưa đầy đủ, vui lòng cập nhật lại thông tin.',
+            placement: 'bottomRight',
+            duration: 0,
+            rtl: true,
+          });
+        }
         message.success(t('page.login.login_success'));
         console.log('Login Response:', response.data);
 

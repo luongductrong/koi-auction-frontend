@@ -31,3 +31,24 @@
   width: 100%;
   margin-top: 20%;
 }
+
+.metaTitle {
+  white-space: normal;
+  word-wrap: break-word;
+  min-height: 2.8rem;
+}
+
+.strongValue {
+  color: #1f2230;
+  font-weight: 600;
+}
+
+.strongValueSuccess {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.strongValueFailed {
+  color: #f44336;
+  font-weight: 600;
+}
