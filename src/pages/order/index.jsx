@@ -126,7 +126,7 @@ function Order() {
               messageText: 'Phiên đăng nhập đã hết hạn!',
             }),
         });
-        message.success('Đặt hàng thành công!');
+        message.success('Tạo đơn hàng thành công!');
         navigate('/account-center/order');
       } catch (error) {
         console.error('Failed to place order:', error);
@@ -169,11 +169,9 @@ function Order() {
                 <Space direction="vertical">
                   <Text>{`Tổng tiền đơn hàng: ${auctionInfo?.finalPrice?.toLocaleString()} VND`}</Text>
                   <Text>{`Số tiền đã cọc trước: ${auctionInfo?.bidderDeposit?.toLocaleString()} VNĐ`}</Text>
-                  <Text strong>{`Tổng tiền cần thanh toán: ${
-                    auctionInfo?.finalPrice && auctionInfo.bidderDeposit
-                      ? auctionInfo.finalPrice - auctionInfo.bidderDeposit
-                      : 0
-                  } VND`}</Text>
+                  <Text strong>{`Tổng tiền thanh toán: ${(
+                    auctionInfo?.finalPrice - auctionInfo?.bidderDeposit || 0
+                  ).toLocaleString('vi-VN')} VND`}</Text>
                 </Space>
               </div>
             </Space>

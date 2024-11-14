@@ -11,6 +11,7 @@ import 'moment/locale/vi';
 import { fromNow } from '../../utils/momentCustom';
 import styles from './index.module.scss';
 import { set } from 'lodash';
+import { use } from 'i18next';
 
 function BidPage() {
   const { message } = App.useApp();
@@ -49,7 +50,7 @@ function BidPage() {
       WebSocketService.connect(auctionId, displayBidUpdate, (notification) => {
         console.log('New notification:', notification);
         message.info('Đấu giá đã kết thúc!');
-        closeAcution(notification?.userId);
+        closeAuction(notification?.winderId);
       });
     }
     return () => {
@@ -127,6 +128,38 @@ function BidPage() {
     }
   }, []);
 
+  const descendingCurrentPrice = () => {
+    try {
+      const { startingPrice, buyoutPrice, startTime, endTime, bidStep } = auctionDetails;
+      // Sum of price range
+      const priceRange = startingPrice - buyoutPrice;
+      // Duration of auction
+      const duration = new Date(endTime) - new Date(startTime);
+      // Time for each step
+      const stepTimeMillis = duration / (priceRange / bidStep);
+      // Number of elapsed steps
+      const elapsedSteps = Math.floor((Date.now() - new Date(startTime)) / stepTimeMillis);
+      // Current price
+      const currentPrice = startingPrice - elapsedSteps * bidStep;
+      // Return the higher price between current price and buyout price
+      console.log('Current Desc Price:', currentPrice, buyoutPrice);
+      return Math.max(currentPrice, buyoutPrice);
+    } catch (error) {
+      console.error('Error calculating descending price:', error);
+      return startingPrice; // Return starting price if error occurs
+    }
+  };
+
+  useEffect(() => {
+    if (auctionDetails?.status === 'Ongoing' && auctionDetails?.auctionMethod === 'Descending') {
+      setCurrentPrice(descendingCurrentPrice());
+      const interval = setInterval(() => {
+        setCurrentPrice(descendingCurrentPrice());
+      }, 10000);
+      return () => clearInterval(interval);
+    }
+  }, [auctionDetails]);
+
   const placeBid = async () => {
     console.log('Placing bid:', bidAmount, currentPrice, auctionDetails?.buyoutPrice, auctionDetails?.startingPrice);
     console.log(
@@ -184,7 +217,7 @@ function BidPage() {
     setBidAmount(value);
   };
 
-  const closeAcution = (winnerId) => {
+  const closeAuction = (winnerId) => {
     console.log('Closing auction...CurrentPrice', currentPrice);
     setAuctionDetails(() => ({
       ...auctionDetails,
@@ -289,7 +322,9 @@ function BidPage() {
                   )}
                   {auctionDetails?.auctionMethod !== 'Fixed-price' && (
                     <>
-                      <strong className={styles.keyTitle}>Giá mua ngay:</strong>
+                      <strong className={styles.keyTitle}>
+                        {auctionDetails?.auctionMethod === 'Descending' ? 'Giá thấp nhất:' : 'Giá mua ngay:'}
+                      </strong>
                       <p className={styles.value}>
                         {auctionDetails?.buyoutPrice && auctionDetails?.buyoutPrice > 0
                           ? `${auctionDetails?.buyoutPrice?.toLocaleString()} VND`
@@ -433,7 +468,11 @@ function BidPage() {
             onCancel={() => setModalOpen(false)}
           >
             <span>{`Xác định mua ngay với giá ${
-              auctionDetails?.buyoutPrice ? auctionDetails?.buyoutPrice.toLocaleString() : 0
+              auctionDetails.auctionMethod === 'Descending'
+                ? descendingCurrentPrice().toLocaleString()
+                : auctionDetails?.buyoutPrice
+                ? auctionDetails?.buyoutPrice.toLocaleString()
+                : 0
             } VND?`}</span>
           </Modal>
         </>

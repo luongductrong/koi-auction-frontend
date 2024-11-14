@@ -78,14 +78,12 @@ function AuctionResult({ auctionId, winnerId, amount, deadline, method }) {
       className={`${styles.cardContainer} ${styles.animation}`}
     >
       <div>Chúc mừng bạn đã thắng đấu giá.</div>
-      {method !== 'Fixed-price' && method !== 'Descending' && (
-        <>
-          <div>{`Vui lòng thanh toán ${amount.toLocaleString()} VND trước ${date.toLocaleString()}.`}</div>
-          <Button type="primary" className={styles.cardBtn}>
-            Tiến hành thanh toán
-          </Button>
-        </>
-      )}
+      <>
+        <div>Vui lòng đến trang thanh toán và tạo đơn hàng</div>
+        <Button type="primary" className={styles.cardBtn}>
+          Đến trang thanh toán
+        </Button>
+      </>
     </Card>
   );
 }

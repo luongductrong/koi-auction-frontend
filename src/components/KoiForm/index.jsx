@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Drawer, Form, Input, Select, Button, DatePicker, Upload, App } from 'antd';
+import { Drawer, Form, Input, Select, Button, DatePicker, Upload, App, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import api from '../../configs';
 import moment from 'moment';
@@ -7,111 +7,105 @@ import moment from 'moment';
 const { Option } = Select;
 
 const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
-  const { message } = App.useApp();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [koiInfo, setKoiInfo] = useState({});
   const [headerImage, setHeaderImage] = useState([]);
   const [detailImages, setDetailImages] = useState([]);
   const [video, setVideo] = useState([]);
 
   useEffect(() => {
     if (mode !== 'create' && koiId) {
-      const fetchKoiInfo = async () => {
-        setLoading(true);
-        try {
-          const response = await api.get(`/koi-fish/${koiId}`);
-          setKoiInfo(response.data);
-          form.setFieldsValue({
-            ...response.data,
-            birthday: response.data.birthday ? moment(response.data.birthday) : null,
-            name: response.data.koiName,
-            koiTypeID: response.data.koiTypeName,
-            countryID: response.data.koiOriginName,
-          });
-          if (response.data.headerImage) setHeaderImage([{ url: response.data.headerImage }]);
-          if (response.data.detailImages) setDetailImages(response.data.detailImages.map((img) => ({ url: img })));
-          if (response.data.video) setVideo([{ url: response.data.video }]);
-        } catch (error) {
-          console.error('Failed to fetch koi info:', error);
-          message.error('Lỗi khi tải thông tin cá Koi!');
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchKoiInfo();
+      fetchKoiInfo(koiId);
     }
   }, [koiId, form, mode, open]);
 
-  const handleSubmit = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        if (headerImage.length === 0) {
-          message.error('Vui lòng tải lên một hình ảnh chính!');
-          return;
-        }
-
-        if (detailImages.length === 0) {
-          message.error('Vui lòng tải lên ít nhất một hình ảnh chi tiết!');
-          return;
-        }
-
-        if (video.length === 0) {
-          message.error('Vui lòng tải lên ít nhất một video!');
-          return;
-        }
-
-        if (mode === 'create') handleFormSubmitCreate();
-        form.resetFields();
-      })
-      .catch((info) => {
-        console.log('Validate Failed:', info);
+  const fetchKoiInfo = async (id) => {
+    setLoading(true);
+    try {
+      const response = await api.get(`/api/koi-fish/${id}`, { requiresAuth: true });
+      const data = response.data;
+      form.setFieldsValue({
+        ...data,
+        birthday: data.birthday ? moment(data.birthday) : null,
+        name: data.koiName,
+        koiTypeID: data.koiTypeName,
+        countryID: data.koiOriginName,
       });
+      if (data.headerImage) setHeaderImage([{ url: data.headerImage }]);
+      if (data.detailImages) setDetailImages(data.detailImages.map((img) => ({ url: img })));
+      if (data.video) setVideo([{ url: data.video }]);
+    } catch (error) {
+      console.error('Failed to fetch koi info:', error);
+      message.error('Lỗi khi tải thông tin cá Koi!');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleFormSubmitCreate = async () => {
+  const uploadFile = async (file, type) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('type', type);
     try {
-      const values = form.getFieldsValue();
-      console.log('Form Values:', values);
-      const formData = new FormData();
-
-      formData.append('name', values.name);
-      formData.append('koiTypeID', values.koiTypeID);
-      formData.append('countryID', values.countryID);
-      formData.append('weight', values.weight);
-      formData.append('length', values.length);
-      formData.append('sex', values.sex);
-      formData.append('birthday', values.birthday ? values.birthday.format('YYYY-MM-DD') : null);
-      formData.append('description', values.description || '');
-
-      // Thêm hình ảnh chính
-      formData.append('image-header', headerImage[0].originFileObj); // Ảnh chính
-      // Thêm hình ảnh chi tiết
-      detailImages.forEach((file) => {
-        formData.append('image-detail', file.originFileObj); // Ảnh chi tiết
-      });
-      // Thêm video
-      video.forEach((file) => {
-        formData.append('video', file.originFileObj); // Video
-      });
-
-      console.log('Form Data:', formData);
-
-      const response = await api.post('/koi-fish/customize-koi-fish', formData, {
+      const response = await api.post('/customize-file', formData, {
         requiresAuth: true,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
+      return response.data;
+    } catch (error) {
+      console.error('Failed to upload file:', error);
+      message.error('Lỗi khi tải lên file!');
+      return null;
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const values = await form.validateFields();
+
+      if (headerImage.length === 0 || detailImages.length === 0 || video.length === 0) {
+        message.error('Vui lòng tải lên đầy đủ hình ảnh và video!');
+        return;
+      }
+
+      setLoading(true);
+
+      // Upload files and get URLs
+      const headerImageUrl = await uploadFile(headerImage[0].originFileObj, 'header');
+      const detailImageUrls = await Promise.all(detailImages.map((file) => uploadFile(file.originFileObj, 'detail')));
+      const videoUrl = await uploadFile(video[0].originFileObj, 'video');
+
+      if (!headerImageUrl || detailImageUrls.includes(null) || !videoUrl) {
+        message.error('Lỗi khi tải lên file. Vui lòng thử lại.');
+        setLoading(false);
+        return;
+      }
+
+      const koiData = {
+        ...values,
+        birthday: values.birthday ? values.birthday.format('YYYY-MM-DD') : null,
+        imageHeader: headerImageUrl,
+        imageDetail: detailImageUrls,
+        video: videoUrl,
+      };
+
+      console.log('Koi Data:', koiData);
+
+      const response = await api.post('/koi-fish/customize-koi-fish', koiData, { requiresAuth: true });
 
       message.success('Thêm cá Koi thành công!');
       form.resetFields();
       onCancel();
     } catch (error) {
-      console.error('Failed to create Koi:', error);
+      console.error('Failed to submit form:', error);
       message.error('Lỗi khi thêm cá Koi!');
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleFileChange = (info, setter) => {
+    setter(info.fileList);
   };
 
   return (
@@ -125,18 +119,18 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
           <Button onClick={onCancel} style={{ marginRight: 8 }}>
             Hủy
           </Button>
-          <Button onClick={handleSubmit} type="primary">
+          <Button onClick={handleSubmit} type="primary" loading={loading}>
             {mode === 'create' ? 'Thêm' : 'Cập nhật'}
           </Button>
         </div>
       }
     >
       <Form form={form} layout="vertical" name="form_in_drawer">
-        <Form.Item label="Tên cá" name="name" rules={[{ required: true, message: 'Vui lòng nhập tên cá!' }]}>
+        <Form.Item name="name" label="Tên cá" rules={[{ required: true, message: 'Vui lòng nhập tên cá!' }]}>
           <Input placeholder="Nhập tên cá" />
         </Form.Item>
 
-        <Form.Item label="Loại cá" name="koiTypeID" rules={[{ required: true, message: 'Vui lòng chọn loại cá!' }]}>
+        <Form.Item name="koiTypeID" label="Loại cá" rules={[{ required: true, message: 'Vui lòng chọn loại cá!' }]}>
           <Select placeholder="Chọn loại cá">
             <Option value="1">Kohaku</Option>
             <Option value="2">Taisho Sanke</Option>
@@ -156,7 +150,7 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Nguồn gốc" name="countryID" rules={[{ required: true, message: 'Vui lòng chọn nguồn gốc!' }]}>
+        <Form.Item name="countryID" label="Nguồn gốc" rules={[{ required: true, message: 'Vui lòng chọn nguồn gốc!' }]}>
           <Select placeholder="Chọn nguồn gốc">
             <Option value="1">Nhật Bản</Option>
             <Option value="2">Việt Nam</Option>
@@ -172,23 +166,19 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
           </Select>
         </Form.Item>
 
-        <Form.Item
-          label="Cân nặng (kg) (ước tính)"
-          name="weight"
-          rules={[{ required: true, message: 'Vui lòng nhập cân nặng!' }]}
-        >
+        <Form.Item name="weight" label="Cân nặng (kg)" rules={[{ required: true, message: 'Vui lòng nhập cân nặng!' }]}>
           <Input type="number" placeholder="Nhập cân nặng" />
         </Form.Item>
 
         <Form.Item
-          label="Chiều dài (cm) (ước tính)"
           name="length"
+          label="Chiều dài (cm)"
           rules={[{ required: true, message: 'Vui lòng nhập chiều dài!' }]}
         >
           <Input type="number" placeholder="Nhập chiều dài" />
         </Form.Item>
 
-        <Form.Item label="Giới tính" name="sex" rules={[{ required: true, message: 'Vui lòng chọn giới tính!' }]}>
+        <Form.Item name="sex" label="Giới tính" rules={[{ required: true, message: 'Vui lòng chọn giới tính!' }]}>
           <Select placeholder="Chọn giới tính">
             <Option value="Male">Đực</Option>
             <Option value="Female">Cái</Option>
@@ -196,70 +186,52 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
           </Select>
         </Form.Item>
 
-        <Form.Item
-          label="Ngày sinh (ước tính)"
-          name="birthday"
-          rules={[{ required: true, message: 'Vui lòng chọn ngày sinh!' }]}
-        >
-          <DatePicker
-            style={{ width: '100%' }}
-            format="DD/MM/YYYY"
-            onChange={(date) => {
-              if (date) {
-                form.setFieldsValue({ birthday: date });
-              } else {
-                form.setFieldsValue({ birthday: null });
-              }
-            }}
-          />
+        <Form.Item name="birthday" label="Ngày sinh" rules={[{ required: true, message: 'Vui lòng chọn ngày sinh!' }]}>
+          <DatePicker style={{ width: '100%' }} format="DD/MM/YYYY" />
         </Form.Item>
 
-        <Form.Item label="Mô tả" name="description">
+        <Form.Item name="description" label="Mô tả">
           <Input.TextArea rows={3} placeholder="Nhập mô tả (không bắt buộc)" />
         </Form.Item>
 
         <Form.Item
-          label="Tải lên hình ảnh chính"
-          name="image-header"
-          rules={[{ required: true, message: 'Vui lòng tải lên ít nhất một hình ảnh chính!' }]}
+          name="headerImage"
+          label="Hình ảnh chính"
+          rules={[{ required: true, message: 'Vui lòng tải lên hình ảnh chính!' }]}
         >
           <Upload
             listType="picture-card"
             fileList={headerImage}
-            onChange={({ fileList }) => setHeaderImage(fileList)}
-            beforeUpload={() => false} // Chặn upload tự động
+            onChange={(info) => handleFileChange(info, setHeaderImage)}
+            beforeUpload={() => false}
           >
             {headerImage.length < 1 && <UploadOutlined />}
           </Upload>
         </Form.Item>
 
         <Form.Item
-          label="Tải lên hình ảnh chi tiết"
-          name="image-detail"
+          name="detailImages"
+          label="Hình ảnh chi tiết"
           rules={[{ required: true, message: 'Vui lòng tải lên ít nhất một hình ảnh chi tiết!' }]}
         >
           <Upload
             listType="picture-card"
             fileList={detailImages}
-            onChange={({ fileList }) => setDetailImages(fileList)}
-            beforeUpload={() => false} // Chặn upload tự động
+            onChange={(info) => handleFileChange(info, setDetailImages)}
+            beforeUpload={() => false}
             multiple
           >
             {detailImages.length < 5 && <UploadOutlined />}
           </Upload>
         </Form.Item>
 
-        <Form.Item
-          label="Tải lên video"
-          name="video"
-          rules={[{ required: true, message: 'Vui lòng tải lên ít nhất một video!' }]}
-        >
+        <Form.Item name="video" label="Video" rules={[{ required: true, message: 'Vui lòng tải lên video!' }]}>
           <Upload
             accept="video/*"
             listType="picture-card"
             fileList={video}
-            onChange={({ fileList }) => setVideo(fileList)}
-            beforeUpload={() => false} // Chặn upload tự động
+            onChange={(info) => handleFileChange(info, setVideo)}
+            beforeUpload={() => false}
           >
             {video.length < 1 && <UploadOutlined />}
           </Upload>

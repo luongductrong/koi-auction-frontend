@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Flex, Space, Typography, Avatar, ConfigProvider } from 'antd';
+import { Flex, Space, Typography, Avatar, ConfigProvider, message } from 'antd';
 import { Form, Input, Button, Select, DatePicker } from 'antd';
 import { UserOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import useAuth from '../../../hook/useAuth';
@@ -21,6 +21,7 @@ function Profile() {
   const [wards, setWards] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -125,6 +126,44 @@ function Profile() {
     console.log('Form:', form.getFieldsValue());
   };
 
+  const handleUpdateProfile = async (values) => {
+    const { username, fullname, phone, address, province, district, ward } = values;
+
+    const updateData = {
+      userName: username,
+      fullName: fullname,
+      phoneNumber: phone,
+      address: JSON.stringify({
+        address: address || '',
+        province: province,
+        district: district,
+        ward: ward,
+      }),
+    };
+
+    try {
+      setLoading(true);
+      await api.put('/user/profile', updateData, {
+        requiresAuth: true,
+        onUnauthorizedCallback: () => {
+          onUnauthorized({
+            navigation: true,
+            clear: true,
+            error: true,
+            messageText: 'Phiên đăng nhập đã hết hạn!',
+          });
+        },
+      });
+
+      message.success('Cập nhật thông tin thành công!');
+    } catch (error) {
+      console.error('Failed to update profile:', error);
+      message.error('Cập nhật thông tin thất bại!');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.profileContainer}>
       <ConfigProvider
@@ -166,6 +205,7 @@ function Profile() {
                 ward: 'Đang tải...',
                 createAt: null,
               }}
+              onFinish={handleUpdateProfile} // Call the update function when form is submitted
               className={styles.form}
             >
               <Form.Item
@@ -277,7 +317,7 @@ function Profile() {
                 <DatePicker format="DD/MM/YYYY" disabled />
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" loading={loading}>
                   Cập Nhật Thông Tin
                 </Button>
               </Form.Item>

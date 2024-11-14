@@ -58,10 +58,10 @@ function Home() {
     fetchOngoingAuctions();
   }, []);
 
-  const handleCroppedImage = (blob) => {
-    // Tải blob lên backend hoặc xử lý theo nhu cầu
-    console.log('Ảnh đã crop:', blob);
-  };
+  // const handleCroppedImage = (blob) => {
+  //   // Tải blob lên backend hoặc xử lý theo nhu cầu
+  //   console.log('Ảnh đã crop:', blob);
+  // };
 
   return (
     <>
@@ -70,7 +70,11 @@ function Home() {
       <AuctionHome auctions={ongoingAuctions} type="ongoing" loading={loading2} />
       <ViewAllButton />
       <Partner />
-      <ImageCropper onCrop={handleCroppedImage} />
+      {/* <ImageCropper
+        onUploadSuccess={(url) => {
+          alert(url);
+        }}
+      /> */}
     </>
   );
 }

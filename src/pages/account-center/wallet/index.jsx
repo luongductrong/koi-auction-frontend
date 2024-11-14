@@ -79,6 +79,16 @@ function Wallet() {
     }
   };
 
+  const withdraw = async (value) => {
+    try {
+      const response = await api.post(`/wallet/withdraw?amount=${value}`, null, { requiresAuth: true });
+      message.success('Gửi yêu cầu thành công, chúng tôi sẽ sớm liên hệ trong thời gian sớm nhất!');
+      console.log('Withdraw Response:', response.data);
+    } catch (error) {
+      console.error('Failed to withdraw:', error);
+    }
+  };
+
   const columns = [
     {
       title: 'ID Giao dịch',
@@ -173,9 +183,15 @@ function Wallet() {
                 btnClassName={styles.depositButton}
                 onOk={(value) => topup(value)}
               />
-              <Button type="default" className={styles.withdrawButton}>
-                Gửi yêu cầu rút tiền
-              </Button>
+              <InputModal
+                inputType="number"
+                buttonTitle="Rút tiền"
+                label="Rút tiền"
+                placeholder="Nhập số tiền muốn rút..."
+                message="Vui lòng nhập số tiền!"
+                btnClassName={styles.withdrawButton}
+                onOk={(value) => withdraw(value)}
+              />
             </Card>
 
             <Card className={styles.historyCard} bordered title="Lịch sử giao dịch">
