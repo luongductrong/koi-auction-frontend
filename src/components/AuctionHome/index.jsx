@@ -76,10 +76,18 @@ function AuctionList({ auctions, type = 'scheduled', loading }) {
               <Title level={5} className={styles.auctionId}>
                 {`${t('component.home_auction.auction_number')} ${auction.auctionId}`}
               </Title>
-              <Text type="secondary">
-                {t('component.home_auction.starting_price')} <Text strong>{auction.startPrice?.toLocaleString()}</Text>{' '}
-                VND
-              </Text>
+              {auction?.method !== 'Fixed-price' && (
+                <Text type="secondary">
+                  {t('component.home_auction.starting_price')}{' '}
+                  <Text strong>{auction.startPrice?.toLocaleString()}</Text> VND
+                </Text>
+              )}
+              {auction?.method === 'Fixed-price' && (
+                <Text type="secondary">
+                  {t('component.home_auction.buyout_price_fixed')}{' '}
+                  <Text strong>{auction.buyoutPrice?.toLocaleString()}</Text> VND
+                </Text>
+              )}
               <br />
               <Space size={20} className={styles.btnGroup}>
                 <Link to={`/auction/detail?id=${auction.auctionId}`}>

@@ -62,6 +62,7 @@
       "time_left": "Time Left",
       "auction_number": "Auction No. ",
       "starting_price": "Starting Price: ",
+      "buyout_price_fixed": "Listed Price: ",
       "view_details": "View Details",
       "link_copied": "Link copied successfully!",
       "copy_error": "Could not copy: ",

@@ -62,6 +62,7 @@
       "time_left": "残り時間",
       "auction_number": "オークション番号 ",
       "starting_price": "開始価格: ",
+      "buyout_price_fixed": "掲載価格: ",
       "view_details": "詳細を見る",
       "link_copied": "リンクが正常にコピーされました！",
       "copy_error": "コピーできませんでした: ",

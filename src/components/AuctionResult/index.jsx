@@ -3,14 +3,15 @@ import { Button, Card } from 'antd';
 import { useSelector } from 'react-redux';
 import api from '../../configs';
 import styles from './index.module.scss';
+import { method } from 'lodash';
 
-function AuctionResult({ auctionId, winnerId, amount, dealine }) {
+function AuctionResult({ auctionId, winnerId, amount, deadline, method }) {
   const user = useSelector((state) => state.user.user);
   const [registered, setRegistered] = useState(false);
 
-  console.log({ auctionId, winnerId, amount, dealine });
+  console.log({ auctionId, winnerId, amount, deadline, method });
 
-  const date = new Date(dealine);
+  const date = new Date(deadline);
   date.setDate(date.getDate() + 2);
 
   useEffect(() => {
@@ -77,10 +78,14 @@ function AuctionResult({ auctionId, winnerId, amount, dealine }) {
       className={`${styles.cardContainer} ${styles.animation}`}
     >
       <div>Chúc mừng bạn đã thắng đấu giá.</div>
-      <div>{`Vui lòng thanh toán ${amount.toLocaleString()} VND trước ${date.toLocaleString()}.`}</div>
-      <Button type="primary" className={styles.cardBtn}>
-        Tiến hành thanh toán
-      </Button>
+      {method !== 'Fixed-price' && method !== 'Descending' && (
+        <>
+          <div>{`Vui lòng thanh toán ${amount.toLocaleString()} VND trước ${date.toLocaleString()}.`}</div>
+          <Button type="primary" className={styles.cardBtn}>
+            Tiến hành thanh toán
+          </Button>
+        </>
+      )}
     </Card>
   );
 }
