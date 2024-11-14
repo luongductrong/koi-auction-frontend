@@ -57,9 +57,9 @@ function AccountSider() {
             <Menu.Item key="/account-center/wallet" icon={<CreditCardOutlined />} className={styles.menuItem}>
               <Link to="wallet">Quản lý ví</Link>
             </Menu.Item>
-            <Menu.Item key="/account-center/schedule" icon={<ScheduleOutlined />} className={styles.menuItem}>
+            {/* <Menu.Item key="/account-center/schedule" icon={<ScheduleOutlined />} className={styles.menuItem}>
               <Link to="schedule">Quản lý lịch</Link>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item key="/account-center/order" icon={<ShoppingCartOutlined />} className={styles.menuItem}>
               <Link to="order">Quản lý đơn hàng</Link>
             </Menu.Item>

@@ -58,7 +58,7 @@ const AuctionManage = () => {
     };
 
     fetchData();
-  }, [onSuccess]);
+  }, [onSuccess, page, size]);
 
   const showDrawer = () => {
     setIsDrawerOpen(true);

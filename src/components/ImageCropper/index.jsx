@@ -1,124 +1,134 @@
 import React, { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
-import { Slider, Button, Typography, Modal, Upload } from 'antd';
-import { getOrientation } from 'get-orientation/browser';
-// import ImgDialog from './ImgDialog';
-import { getCroppedImg, getRotatedImage } from '../../utils/canvasAPI';
+import { Button, Upload, Card, message } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import api from '../../configs';
 
-const ORIENTATION_TO_ANGLE = {
-  3: 180,
-  6: 90,
-  8: -90,
-};
-
-const ImageCropper = () => {
-  const [imageSrc, setImageSrc] = useState(null);
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [rotation, setRotation] = useState(0);
-  const [zoom, setZoom] = useState(1);
+export default function ImageCropper() {
+  const [image, setImage] = useState(null);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-  const [croppedImage, setCroppedImage] = useState(null);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
 
   const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
 
-  const showCroppedImage = useCallback(async () => {
-    try {
-      const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels, rotation);
-      setCroppedImage(croppedImage);
-    } catch (e) {
-      console.error(e);
+  const handleFileChange = (info) => {
+    if (info.file.status === 'done') {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => setImage(reader.result));
+      reader.readAsDataURL(info.file.originFileObj);
     }
-  }, [imageSrc, croppedAreaPixels, rotation]);
+  };
 
-  const onClose = useCallback(() => {
-    setCroppedImage(null);
-  }, []);
+  const createImage = (url) =>
+    new Promise((resolve, reject) => {
+      const image = new Image();
+      image.addEventListener('load', () => resolve(image));
+      image.addEventListener('error', (error) => reject(error));
+      image.src = url;
+    });
 
-  const onFileChange = async (file) => {
-    const imageDataUrl = await readFile(file);
+  const getCroppedImg = async (imageSrc, pixelCrop) => {
+    const image = await createImage(imageSrc);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    if (!ctx) {
+      return null;
+    }
+
+    canvas.width = pixelCrop.width;
+    canvas.height = pixelCrop.height;
+
+    ctx.drawImage(
+      image,
+      pixelCrop.x,
+      pixelCrop.y,
+      pixelCrop.width,
+      pixelCrop.height,
+      0,
+      0,
+      pixelCrop.width,
+      pixelCrop.height,
+    );
+
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        resolve(blob);
+      }, 'image/webp');
+    });
+  };
+
+  const uploadImage = async (blob) => {
+    const formData = new FormData();
+    formData.append('file', blob, 'cropped-image.jpg');
+
     try {
-      const orientation = await getOrientation(file);
-      const rotation = ORIENTATION_TO_ANGLE[orientation];
-      if (rotation) {
-        const rotatedImage = await getRotatedImage(imageDataUrl, rotation);
-        setImageSrc(rotatedImage);
-      } else {
-        setImageSrc(imageDataUrl);
+      const response = await api.post('/customize-file', formData, {
+        requiresAuth: true,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      setUploadedImageUrl(response.data);
+      message.success('Image uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      message.error('Failed to upload image');
+    }
+  };
+
+  const handleCropAndUpload = async () => {
+    if (image && croppedAreaPixels) {
+      const croppedImage = await getCroppedImg(image, croppedAreaPixels);
+      if (croppedImage) {
+        await uploadImage(croppedImage);
       }
-    } catch (e) {
-      console.warn('Failed to detect the orientation', e);
     }
   };
 
   return (
-    <div>
-      {imageSrc ? (
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ position: 'relative', width: '100%', height: 400, marginBottom: 16 }}>
-            <Cropper
-              image={imageSrc}
-              crop={crop}
-              rotation={rotation}
-              zoom={zoom}
-              aspect={4 / 3}
-              onCropChange={setCrop}
-              onRotationChange={setRotation}
-              onCropComplete={onCropComplete}
-              onZoomChange={setZoom}
-            />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 16 }}>
-            <Typography.Text>Zoom</Typography.Text>
-            <Slider
-              min={1}
-              max={3}
-              step={0.1}
-              value={zoom}
-              onChange={(value) => setZoom(value)}
-              style={{ width: 200 }}
-            />
-            <Typography.Text>Rotation</Typography.Text>
-            <Slider
-              min={0}
-              max={360}
-              step={1}
-              value={rotation}
-              onChange={(value) => setRotation(value)}
-              style={{ width: 200 }}
-            />
-          </div>
-          <Button type="primary" onClick={showCroppedImage} style={{ marginTop: 16 }}>
-            Show Result
-          </Button>
-          <Modal visible={!!croppedImage} footer={null} onCancel={onClose}>
-            {/* <ImgDialog img={croppedImage} /> */}
-            <div>{croppedImage}</div>
-          </Modal>
+    <Card title="Image Cropper and Uploader" style={{ width: 400, margin: 'auto' }}>
+      <Upload
+        accept="image/*"
+        showUploadList={false}
+        customRequest={({ file, onSuccess }) => {
+          setTimeout(() => {
+            onSuccess('ok', file);
+          }, 0);
+        }}
+        onChange={handleFileChange}
+      >
+        <Button icon={<UploadOutlined />}>Select Image</Button>
+      </Upload>
+      {image && (
+        <div style={{ height: 300, position: 'relative', marginTop: 20 }}>
+          <Cropper
+            image={image}
+            crop={crop}
+            zoom={zoom}
+            aspect={1}
+            onCropChange={setCrop}
+            onCropComplete={onCropComplete}
+            onZoomChange={setZoom}
+          />
         </div>
-      ) : (
-        <Upload
-          accept="image/*"
-          showUploadList={false}
-          beforeUpload={(file) => {
-            onFileChange(file);
-            return false;
-          }}
-        >
-          <Button>Upload Image</Button>
-        </Upload>
       )}
-    </div>
+      <Button type="primary" onClick={handleCropAndUpload} disabled={!image} style={{ marginTop: 20 }}>
+        Crop and Upload
+      </Button>
+      {uploadedImageUrl && (
+        <div style={{ marginTop: 20, wordBreak: 'break-all' }}>
+          <p>Uploaded Image URL:</p>
+          <a href={uploadedImageUrl} target="_blank" rel="noopener noreferrer">
+            {uploadedImageUrl}
+          </a>
+        </div>
+      )}
+    </Card>
   );
-};
-
-async function readFile(file) {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.readAsDataURL(file);
-  });
 }
-
-export default ImageCropper;

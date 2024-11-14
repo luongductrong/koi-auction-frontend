@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Image, App } from 'antd';
+import { Table, Button, Image, App, Pagination } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../configs';
 import KoiForm from '../../../components/KoiForm';
@@ -11,26 +11,34 @@ const KoiManage = () => {
   const { message } = App.useApp();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [koiData, setKoiData] = useState([]);
+  const [pagination, setPagination] = useState({ currentPage: 0, totalPage: 0, totalItem: 0 });
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
   const [koiId, setKoiId] = useState(null);
   const [drawerMode, setDrawerMode] = useState('create');
   const [loading, setLoading] = useState(false);
 
-  console.log('Koi Manage render');
-
   useEffect(() => {
     const fetchData = async () => {
-      console.log('Fetching data...');
       setLoading(true);
       try {
-        const response = await api.get('/koi-fish', {
+        const response = await api.get(`/koi-fish?page=${page}&size=${size}`, {
           requiresAuth: true,
           onUnauthorizedCallback: () => {
             message.error('Phiên đăng nhập hết hạn!');
             navigate('/login');
           },
         });
-        setKoiData(response.data);
-        console.log('Koi data:', response.data);
+        if (response?.data?.koiFishList) {
+          setKoiData(response.data.koiFishList);
+          setPagination({
+            currentPage: response.data.currentPage,
+            totalPage: response.data.totalPages,
+            totalItem: response.data.totalElements,
+          });
+        } else {
+          throw new Error("Can't get koi data");
+        }
       } catch (error) {
         console.error('Failed to fetch data:', error);
         message.error('Lỗi khi tải dữ liệu. Vui lòng thử lại!');
@@ -40,7 +48,7 @@ const KoiManage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [page, size]);
 
   const showDrawer = () => {
     setIsDrawerOpen(true);
@@ -54,7 +62,6 @@ const KoiManage = () => {
 
   const handleView = (value) => {
     setIsDrawerOpen(true);
-    console.log('Viewing koi:', value);
     setKoiId(value);
     setDrawerMode('update');
   };
@@ -83,7 +90,7 @@ const KoiManage = () => {
       dataIndex: 'status',
       key: 'status',
       render: (status) =>
-        status === 'Active' ? 'Có sẵn' : status === 'Sold' ? 'Đã bán' : status === 'For-sale' ? 'Đang bán' : status,
+        status === 'Active' ? 'Có sẵn' : status === 'Sold' ? 'Đã bán' : status === 'Selling' ? 'Đang bán' : status,
     },
     {
       title: 'Mô tả',
@@ -111,10 +118,23 @@ const KoiManage = () => {
       <Table
         columns={columns}
         dataSource={Array.isArray(koiData) ? koiData.map((item) => ({ ...item, key: item.id })) : []}
-        pagination={koiData?.length > 10 || false}
+        pagination={false} // Tắt pagination mặc định của Table
         rowClassName="koi-row"
         loading={loading}
       />
+      {pagination.totalItem > 1 && (
+        <div className={styles.pagination}>
+          <Pagination
+            defaultCurrent={page + 1}
+            pageSize={size}
+            total={pagination.totalItem}
+            onChange={(page) => setPage(page - 1)} // Tính lại page khi thay đổi
+            showSizeChanger
+            pageSizeOptions={['6', '12', '24', '48']}
+            onShowSizeChange={(current, size) => setSize(size)} // Chuyển đổi số lượng hiển thị trên mỗi trang
+          />
+        </div>
+      )}
       <KoiForm open={isDrawerOpen} onCancel={handleCancel} koiId={koiId} mode={drawerMode} />
     </div>
   );

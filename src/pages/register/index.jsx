@@ -19,9 +19,26 @@ function Register() {
 
   console.log('Register render');
 
+  const getOtp = async () => {
+    try {
+      setLoading(true);
+      const response = await api.post('/security/register', formData);
+      message.success('Mã OTP đã được gửi đến email của bạn!');
+      console.log('Get OTP Response:', response.data);
+    } catch (error) {
+      message.error('Lỗi khi gửi mã OTP! Vui lòng thử lại sau.');
+      console.error('Get OTP Error:', error?.response ? error.response.data : error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const next = (values) => {
     setFormData({ ...formData, ...values });
     setCurrentStep(currentStep + 1);
+    if (currentStep === 1) {
+      getOtp();
+    }
   };
 
   const prev = () => {
@@ -94,7 +111,7 @@ function Register() {
 
       console.log('Register Request:', req);
 
-      const response = await api.post('/security/register', req);
+      const response = await api.post(`/security/verify-otp?otp=${req.otp}`, req);
       message.success('Đăng ký tài khoản thành công!');
       navigate('/login');
       console.log('Register Response:', response.data);
@@ -107,8 +124,9 @@ function Register() {
   };
 
   const onFinish = (values) => {
+    setFormData({ ...formData, ...values });
+
     if (currentStep === steps.length - 1) {
-      setFormData({ ...formData, ...values });
       handleRegister();
     } else {
       next(values);
@@ -207,20 +225,36 @@ function Register() {
     {
       title: 'Điều khoản',
       content: (
-        <Form.Item
-          name="agreement"
-          valuePropName="checked"
-          rules={[
-            {
-              validator: (_, value) =>
-                value ? Promise.resolve() : Promise.reject(new Error('Bạn phải đồng ý với điều khoản')),
-            },
-          ]}
-        >
-          <Checkbox>
-            Tôi đồng ý với <Link to="/terms">điều khoản sử dụng</Link>.
-          </Checkbox>
-        </Form.Item>
+        <>
+          <Form.Item
+            label={'Nhập mã OTP'}
+            name="otp"
+            rules={[
+              { required: true, message: 'Vui lòng nhập OTP!' },
+              { pattern: /^[0-9]{6}$/, message: 'OTP không hợp lệ' },
+            ]}
+          >
+            <Input
+              value={formData.otp}
+              onChange={(e) => setFormData({ ...formData, otp: e.target.value })}
+              placeholder="Nhập mã OTP"
+            />
+          </Form.Item>
+          <Form.Item
+            name="agreement"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: (_, value) =>
+                  value ? Promise.resolve() : Promise.reject(new Error('Bạn phải đồng ý với điều khoản')),
+              },
+            ]}
+          >
+            <Checkbox>
+              Tôi đồng ý với <Link to="/terms">điều khoản sử dụng</Link>.
+            </Checkbox>
+          </Form.Item>
+        </>
       ),
     },
   ];
