@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Drawer, Form, Input, Select, Button, DatePicker, Upload, App, message } from 'antd';
+import { Drawer, Form, Input, Select, Button, DatePicker, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import api from '../../configs';
 import moment from 'moment';
@@ -22,7 +22,7 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
   const fetchKoiInfo = async (id) => {
     setLoading(true);
     try {
-      const response = await api.get(`/api/koi-fish/${id}`, { requiresAuth: true });
+      const response = await api.get(`/koi-fish/${id}`, { requiresAuth: true });
       const data = response.data;
       form.setFieldsValue({
         ...data,
@@ -87,9 +87,11 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
         imageHeader: headerImageUrl,
         imageDetail: detailImageUrls,
         video: videoUrl,
+        koiTypeID: parseInt(values.koiTypeID, 10),
+        countryID: parseInt(values.countryID, 10),
       };
 
-      console.log('Koi Data:', koiData);
+      console.log('Submitting Koi Data:', koiData);
 
       const response = await api.post('/koi-fish/customize-koi-fish', koiData, { requiresAuth: true });
 
@@ -132,37 +134,21 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
 
         <Form.Item name="koiTypeID" label="Loại cá" rules={[{ required: true, message: 'Vui lòng chọn loại cá!' }]}>
           <Select placeholder="Chọn loại cá">
-            <Option value="1">Kohaku</Option>
-            <Option value="2">Taisho Sanke</Option>
-            <Option value="3">Showa Sanshoku</Option>
-            <Option value="4">Shiro Utsuriu</Option>
-            <Option value="5">Asagi</Option>
-            <Option value="6">Shusui</Option>
-            <Option value="7">Utsurimono</Option>
-            <Option value="8">Bekko</Option>
-            <Option value="9">Tancho</Option>
-            <Option value="10">Ochiba Shigure</Option>
-            <Option value="11">Kumonryu</Option>
-            <Option value="12">Doitsu</Option>
-            <Option value="13">Chagoi</Option>
-            <Option value="14">Yamabuki Ogon</Option>
-            <Option value="15">Khác</Option>
+            <Option value={1}>Kohaku</Option>
+            <Option value={2}>Taisho Sanke</Option>
+            <Option value={3}>Showa Sanshoku</Option>
+            <Option value={4}>Utsurimono</Option>
+            <Option value={5}>Bekko</Option>
+            {/* Add more options as needed */}
           </Select>
         </Form.Item>
 
         <Form.Item name="countryID" label="Nguồn gốc" rules={[{ required: true, message: 'Vui lòng chọn nguồn gốc!' }]}>
           <Select placeholder="Chọn nguồn gốc">
-            <Option value="1">Nhật Bản</Option>
-            <Option value="2">Việt Nam</Option>
-            <Option value="3">Indonesia</Option>
-            <Option value="4">Malaysia</Option>
-            <Option value="5">Thái Lan</Option>
-            <Option value="6">Trung Quốc</Option>
-            <Option value="7">Singapore</Option>
-            <Option value="8">Hàn Quốc</Option>
-            <Option value="9">Đài Loan</Option>
-            <Option value="10">Philippines</Option>
-            <Option value="11">Khác</Option>
+            <Option value={1}>Nhật Bản</Option>
+            <Option value={2}>Việt Nam</Option>
+            <Option value={3}>Trung Quốc</Option>
+            {/* Add more options as needed */}
           </Select>
         </Form.Item>
 

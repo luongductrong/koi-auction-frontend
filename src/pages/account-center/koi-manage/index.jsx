@@ -29,8 +29,8 @@ const KoiManage = () => {
             navigate('/login');
           },
         });
-        if (response?.data?.koiFishList) {
-          setKoiData(response.data.koiFishList);
+        if (response?.data?.koi) {
+          setKoiData(response.data.koi);
           setPagination({
             currentPage: response.data.currentPage,
             totalPage: response.data.totalPages,
