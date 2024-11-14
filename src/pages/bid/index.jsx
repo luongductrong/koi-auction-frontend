@@ -254,7 +254,7 @@ function BidPage() {
           <Row gutter={16}>
             <Col span={12}>
               {auctionDetails?.startTime && auctionDetails?.endTime ? (
-                auctionDetails.status === 'Scheduled' ? (
+                auctionDetails.status === 'Ongoing' ? (
                   <CountdownTimer
                     endTime={auctionDetails.startTime}
                     title="Bắt đầu trả giá sau"
@@ -262,7 +262,7 @@ function BidPage() {
                   />
                 ) : (
                   <CountdownTimer
-                    endTime={auctionDetails.endTime}
+                    endTime={auctionDetails.status !== 'Ongoing' ? new Date() : null}
                     title="Thời gian trả giá còn lại"
                     status={auctionDetails.status}
                   />

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Card } from 'antd';
+import { Button, Card, message } from 'antd';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import api from '../../configs';
 import styles from './index.module.scss';
 import { method } from 'lodash';
@@ -8,11 +9,24 @@ import { method } from 'lodash';
 function AuctionResult({ auctionId, winnerId, amount, deadline, method }) {
   const user = useSelector((state) => state.user.user);
   const [registered, setRegistered] = useState(false);
+  const navigate = useNavigate();
 
   console.log({ auctionId, winnerId, amount, deadline, method });
 
   const date = new Date(deadline);
   date.setDate(date.getDate() + 2);
+
+  const payment = async () => {
+    try {
+      await api.post(`wallet/payment?auctionId=${auctionId}`, null, {
+        requiresAuth: true,
+      });
+      navigate('/auction/order?id=' + auctionId);
+    } catch (error) {
+      message.error('Lỗi khi thanh toán! Vui lòng thử lại sau.');
+      console.error('Payment Error:', error?.response ? error.response.data : error.message);
+    }
+  };
 
   useEffect(() => {
     const checkRegistered = async () => {
@@ -80,7 +94,7 @@ function AuctionResult({ auctionId, winnerId, amount, deadline, method }) {
       <div>Chúc mừng bạn đã thắng đấu giá.</div>
       <>
         <div>Vui lòng đến trang thanh toán và tạo đơn hàng</div>
-        <Button type="primary" className={styles.cardBtn}>
+        <Button type="primary" className={styles.cardBtn} onClick={() => payment()}>
           Đến trang thanh toán
         </Button>
       </>
