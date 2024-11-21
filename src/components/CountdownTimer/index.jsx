@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography } from 'antd';
+import { Typography, Divider } from 'antd';
 import dayjs from 'dayjs';
 import styles from './index.module.scss';
 
@@ -93,10 +93,12 @@ function CountdownTimer({ startTime, endTime, status, onStatusChange }) {
 
   return (
     <div className={styles.timer}>
-      <Text className={`${styles.timerTitle} ${timerTitle?.isRedColor ? styles.isRed : ''}`} strong={false}>
-        {timerTitle.title}
-      </Text>
       <div className={styles.timerContainer}>
+        <Divider>
+          <Text className={`${styles.timerTitle} ${timerTitle?.isRedColor ? styles.isRed : ''}`} strong={false}>
+            {timerTitle.title}
+          </Text>
+        </Divider>
         {timeLeft.days > 0 && (
           <div className={styles.timerBox}>
             <span className={styles.number}>{timeLeft.days || 0}</span>

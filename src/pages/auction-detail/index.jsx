@@ -1,20 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Row, Col, Carousel, Image, Button, Modal } from 'antd';
-import { App, Collapse, Card, Spin, Empty, Flex, Tag, Divider } from 'antd';
+import { App, Collapse, Card, Spin, Empty, Tag, Divider } from 'antd';
 import { PlayCircleFilled } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import AuctionVideoPlayer from '../../components/AuctionVideoPlayer';
 import CountdownTimer from '../../components/CountdownTimer';
 import RegisterAuctionModal from '../../components/AuctionRegisterModal';
+import AuctionActionButton from '../../components/AuctionActionButton';
 import api from '../../configs';
 import useAuth from '../../hook/useAuth';
 import moment from 'moment';
 import { koiOrigin } from '../../utils/koi-i8';
 import fallbackImage from '../../assets/images/100x100.svg';
-import poster from '../../assets/images/play-button.svg';
-import video from '../../assets/videos/7408770596160638254.mp4';
 import styles from './index.module.scss';
+// import poster from '../../assets/images/play-button.svg';
+// import video from '../../assets/videos/7408770596160638254.mp4';
 
 function AuctionPage() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function AuctionPage() {
   const [currentVideoSrc, setCurrentVideoSrc] = useState(null);
   const [auctionDetails, setAuctionDetails] = useState(null);
   const [koiMedias, setKoiMedias] = useState([]);
+  const [koiVideoThumbnail, setKoiVideoThumbnail] = useState([]);
   const [isRegistered, setIsRegistered] = useState(false);
   const [loading, setLoading] = useState(true);
   // const auctionId = 1;
@@ -103,11 +105,33 @@ function AuctionPage() {
     }
   }, [location.search]);
 
+  useEffect(() => {
+    if (auctionDetails) {
+      // Sử dụng Map để lấy hình ảnh đầu tiên cho mỗi koiName
+      const uniqueThumbnails = new Map();
+
+      koiMedias
+        .filter((media) => media?.mediaType === 'Image Detail') // Chỉ lấy hình ảnh
+        .forEach((media) => {
+          if (!uniqueThumbnails.has(media.koiName)) {
+            uniqueThumbnails.set(media.koiName, media); // Thêm hình ảnh đầu tiên của mỗi koiName
+          }
+        });
+
+      // Chuyển Map thành mảng
+      setKoiVideoThumbnail(Array.from(uniqueThumbnails.values()));
+    }
+  }, [auctionDetails, koiMedias]);
+
   const handleCarouselChange = (index) => {
     if (currentIndex !== index) {
       setCurrentIndex(index);
     }
   };
+
+  const handleStatusChange = (status) => {
+    setAuctionDetails((prev) => ({ ...prev, status }));
+  }; // hàm này sẽ được truyền vào CountdownTimer, để cập nhật trạng thái của cuộc đấu giá,
 
   const openVideoModal = (videoSrc) => {
     setCurrentVideoSrc(videoSrc);
@@ -142,56 +166,90 @@ function AuctionPage() {
               >
                 <h2 style={{ color: '#212529', marginBottom: '32px' }}>{`Đấu giá số ${
                   auctionDetails?.id
-                } - đấu giá cá Koi ${auctionDetails?.koiData?.map((koi) => koi.koiName).join(', ')}`}</h2>
+                } - Đấu giá ${auctionDetails?.koiData?.map((koi) => koi.koiName).join(', ')}`}</h2>
               </Divider>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col span={12}>
               <Carousel ref={carouselRef} afterChange={handleCarouselChange} dots autoplay draggable>
-                {koiMedias.map((media, index) => (
-                  <div key={index} className={styles.mediaFrame}>
-                    {media.mediaType === 'Image Detail' || media.mediaType === 'Header Image' ? (
-                      <Image
-                        src={media.url}
-                        alt={media.mediaType}
-                        width="100%"
-                        height="auto"
-                        className={styles.media}
-                      />
-                    ) : (
-                      <div>
-                        <Button
-                          icon={<PlayCircleFilled style={{ fontSize: '60px', color: '#0000005c' }} />}
-                          className={styles.playBtn}
-                          onClick={() => openVideoModal(media.url)}
+                {koiMedias
+                  .filter((media) => media?.mediaType === 'Image Detail' || media?.mediaType === 'Video')
+                  .map((media, index) => (
+                    <div key={index} className={styles.mediaFrame}>
+                      {media.mediaType === 'Image Detail' ? (
+                        <Image
+                          src={media.url}
+                          alt={media.mediaType}
+                          width="100%"
+                          height="auto"
+                          className={styles.media}
                         />
-                      </div>
-                    )}
-                    <Tag className={styles.koiMediaName}>{media.koiName}</Tag>
-                  </div>
-                ))}
+                      ) : (
+                        <div
+                          style={{
+                            backgroundImage: `url("${
+                              koiVideoThumbnail.find((thumb) => thumb.koiName === media.koiName)?.url || ''
+                            }")`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            height: '100%',
+                            width: '100%',
+                          }}
+                        >
+                          <Button
+                            icon={<PlayCircleFilled style={{ fontSize: '60px', color: '#0000005c' }} />}
+                            className={styles.playBtn}
+                            onClick={() => openVideoModal(media.url)}
+                          />
+                        </div>
+                      )}
+                      <Tag className={styles.koiMediaName}>{media.koiName}</Tag>
+                    </div>
+                  ))}
               </Carousel>
               <Row className={styles.thumbnailGroup} gutter={[8, 8]}>
-                {koiMedias.map((media, index) => (
-                  <Col span={4} key={index}>
-                    <Image
-                      src={
-                        media?.mediaType === 'Image Detail' || media?.mediaType === 'Header Image'
-                          ? media.url
-                          : media.url
-                      }
-                      alt={media.mediaType}
-                      fallback={fallbackImage}
-                      preview={false}
-                      className={`${styles.thumbnail} ${currentIndex === index ? styles.activeThumbnail : ''}`}
-                      onClick={() => {
-                        setCurrentIndex(index);
-                        carouselRef.current.goTo(index);
-                      }}
-                    />
-                  </Col>
-                ))}
+                {koiMedias
+                  .filter((media) => media?.mediaType === 'Image Detail' || media?.mediaType === 'Video')
+                  .map((media, index) => (
+                    <Col span={4} key={index}>
+                      {media.mediaType === 'Image Detail' ? (
+                        <Image
+                          src={media?.url}
+                          alt={media.mediaType}
+                          fallback={fallbackImage}
+                          preview={false}
+                          className={`${styles.thumbnail} ${currentIndex === index ? styles.activeThumbnail : ''}`}
+                          onClick={() => {
+                            setCurrentIndex(index);
+                            carouselRef.current.goTo(index);
+                          }}
+                        />
+                      ) : (
+                        <div
+                          className={`${styles.thumbnail} ${currentIndex === index ? styles.activeThumbnail : ''}`}
+                          style={{
+                            backgroundImage: `url("${
+                              koiVideoThumbnail.find((thumb) => thumb.koiName === media.koiName)?.url || ''
+                            }")`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            height: '100%',
+                            width: '100%',
+                          }}
+                        >
+                          <Button
+                            icon={<PlayCircleFilled style={{ fontSize: '60px', color: '#0000005c' }} />}
+                            className={styles.playBtn}
+                            onClick={() => {
+                              setCurrentIndex(index);
+                              carouselRef.current.goTo(index);
+                            }}
+                          />
+                        </div>
+                      )}
+                    </Col>
+                  ))}
                 {(!koiMedias || koiMedias.length === 0) && (
                   <Empty description="Không có hình ảnh hoặc video" className={styles.empty} />
                 )}
@@ -215,73 +273,20 @@ function AuctionPage() {
             <Col span={12}>
               <CountdownTimer
                 startTime={auctionDetails?.startTime}
-                // startTime={'2024-11-21T11:08:00Z'}
+                // startTime={'2024-11-21T15:10:00Z'}
                 endTime={auctionDetails?.endTime}
-                // endTime={'2024-11-21T11:08:10Z'}
+                // endTime={'2024-11-21T15:10:10Z'}
                 status={auctionDetails?.status}
                 // status={'Scheduled'}
+                onStatusChange={handleStatusChange}
               />
-              <Flex className={styles.registerGroup} justify="center" vertical>
-                {auctionDetails.auctionMethod !== 'Descending' &&
-                  auctionDetails.auctionMethod !== 'Fixed-price' &&
-                  isRegistered &&
-                  auctionDetails?.status === 'Scheduled' && (
-                    <Button
-                      color="primary"
-                      variant="filled"
-                      className={styles.registerBtn}
-                      onClick={() => message.info('Vui lòng chờ đến khi cuộc đấu giá bắt đầu')}
-                    >
-                      Đã đăng kí tham gia
-                    </Button>
-                  )}
-                {(auctionDetails?.status === 'Closed' ||
-                  auctionDetails?.status === 'Finished' ||
-                  auctionDetails?.status === 'Paid') && (
-                  <Button
-                    type="primary"
-                    onClick={() => navigate(`/auction/bid?id=${auctionDetails?.id}`)}
-                    className={styles.registerBtn}
-                  >
-                    Xem kết quả đấu giá
-                  </Button>
-                )}
-                {isRegistered && auctionDetails?.status === 'Ongoing' && (
-                  <Button
-                    type="primary"
-                    onClick={() => navigate(`/auction/bid?id=${auctionDetails?.id}`)}
-                    className={styles.registerBtn}
-                  >
-                    Tham gia đấu giá
-                  </Button>
-                )}
-                {auctionDetails.auctionMethod !== 'Descending' &&
-                  auctionDetails.auctionMethod !== 'Fixed-price' &&
-                  !isRegistered &&
-                  (auctionDetails?.status === 'Ongoing' || auctionDetails?.status === 'Scheduled') && (
-                    <Button
-                      type="primary"
-                      className={styles.registerBtn}
-                      onClick={() => {
-                        if (!user) return message.info('Vui lòng đăng nhập để tham gia đấu giá.');
-                        setIsRegisteredModalOpen(true);
-                      }}
-                    >
-                      Đăng kí tham gia đấu giá
-                    </Button>
-                  )}
-                {(auctionDetails.auctionMethod === 'Descending' || auctionDetails.auctionMethod === 'Fixed-price') &&
-                  auctionDetails?.status === 'Scheduled' && (
-                    <Button
-                      color="primary"
-                      variant="filled"
-                      className={styles.registerBtn}
-                      onClick={() => message.info('Vui lòng chờ đến khi cuộc đấu giá bắt đầu')}
-                    >
-                      Đấu giá chưa bắt đầu
-                    </Button>
-                  )}
-              </Flex>
+              <AuctionActionButton
+                auctionDetails={auctionDetails}
+                // auctionDetails={{ ...auctionDetails, status: 'Scheduled' }}
+                isRegistered={isRegistered}
+                user={user}
+                setIsRegisteredModalOpen={setIsRegisteredModalOpen}
+              />
               <div className={styles.auctionDetails}>
                 <h1 className={styles.auctionTitle}>Thông tin cuộc đấu giá</h1>
 
@@ -292,7 +297,7 @@ function AuctionPage() {
                   </p>
 
                   <strong className={styles.keyTitle}>Mã số cuộc đấu giá:</strong>
-                  <p className={styles.value}>{auctionDetails?.id}</p>
+                  <p className={styles.value}>#{auctionDetails?.id}</p>
 
                   <strong className={styles.keyTitle}>Người bán:</strong>
                   <p className={styles.value}>{auctionDetails?.breederFullName}</p>
@@ -344,15 +349,16 @@ function AuctionPage() {
                       : 'Không có'}
                   </p>
 
+                  <strong className={styles.keyTitle}>Số lượng cá đấu giá:</strong>
+                  <p className={styles.value}>{auctionDetails?.koiData?.length || 0} con</p>
+
                   <strong className={styles.keyTitle}>Trạng thái:</strong>
                   <p className={styles.value}>
                     {auctionDetails?.status === 'Ongoing'
                       ? 'Đang diễn ra'
-                      : auctionDetails?.status === 'Scheduled'
+                      : ['Scheduled', 'Pending'].includes(auctionDetails?.status)
                       ? 'Sắp diễn ra'
-                      : auctionDetails?.status === 'Closed' ||
-                        auctionDetails?.status === 'Finished' ||
-                        auctionDetails?.status === 'Paid'
+                      : ['Closed', 'Finished', 'Paid', 'Failed'].includes(auctionDetails?.status)
                       ? 'Đã kết thúc'
                       : 'Không xác định'}
                   </p>
