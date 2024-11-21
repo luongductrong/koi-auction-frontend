@@ -172,7 +172,7 @@ function Wallet() {
             <Card className={styles.balanceCard} bordered>
               <div className={styles.balanceInfo}>
                 <DollarOutlined style={{ fontSize: '48px', color: '#e60000' }} />
-                <h1>{walletAmount.toLocaleString()}</h1>
+                <h1>{`${walletAmount ? walletAmount.toLocaleString() : 0} VND`}</h1>
               </div>
               <InputModal
                 inputType="number"

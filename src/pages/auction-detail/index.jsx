@@ -213,23 +213,14 @@ function AuctionPage() {
               </Modal>
             </Col>
             <Col span={12}>
-              {auctionDetails?.startTime && auctionDetails?.endTime ? (
-                auctionDetails.status === 'Scheduled' ? (
-                  <CountdownTimer
-                    endTime={auctionDetails.startTime}
-                    title="Bắt đầu trả giá sau"
-                    status={auctionDetails.status}
-                  />
-                ) : (
-                  <CountdownTimer
-                    endTime={auctionDetails.endTime}
-                    title="Thời gian trả giá còn lại"
-                    status={auctionDetails.status}
-                  />
-                )
-              ) : (
-                <div>Lỗi hiển thị đồng hồ</div>
-              )}
+              <CountdownTimer
+                startTime={auctionDetails?.startTime}
+                // startTime={'2024-11-21T11:08:00Z'}
+                endTime={auctionDetails?.endTime}
+                // endTime={'2024-11-21T11:08:10Z'}
+                status={auctionDetails?.status}
+                // status={'Scheduled'}
+              />
               <Flex className={styles.registerGroup} justify="center" vertical>
                 {auctionDetails.auctionMethod !== 'Descending' &&
                   auctionDetails.auctionMethod !== 'Fixed-price' &&

@@ -16,6 +16,11 @@
   margin-bottom: 15px;
 }
 
+.isRed {
+  color: var(--primary-color);
+  font-weight: 450;
+}
+
 .timerBox {
   display: flex;
   min-width: 50px;
