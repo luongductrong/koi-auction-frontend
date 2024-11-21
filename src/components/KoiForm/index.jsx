@@ -113,6 +113,7 @@ const KoiForm = ({ open, onCancel, mode = 'create', koiId }) => {
   return (
     <Drawer
       open={open}
+      loading={loading}
       title={mode === 'create' ? 'Thêm cá Koi mới' : `Thông tin cá Koi: KoiID ${koiId}`}
       onClose={onCancel}
       width={700}

@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Button, InputNumber, List, Tooltip, Card, Collapse, Modal } from 'antd';
+import { Row, Col, List, Tooltip, Card, Collapse } from 'antd';
 import { Spin, Carousel, Image, Flex, Empty, App, Divider } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import WebSocketService from '../../services/WebSocketService';
 import AuctionResult from '../../components/AuctionResult';
 import CountdownTimer from '../../components/CountdownTimer';
+import BidGroup from '../../components/BidGroup';
 import api from '../../configs';
 import moment from 'moment';
 import 'moment/locale/vi';
 import { fromNow } from '../../utils/momentCustom';
 import styles from './index.module.scss';
-import { set } from 'lodash';
-import { use } from 'i18next';
 
 function BidPage() {
   const { message } = App.useApp();
+  const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const [auctionId, setAuctionId] = useState(params.get('id'));
-  const [bidAmount, setBidAmount] = useState(0);
+  const auctionId = params.get('id');
   const [auctionDetails, setAuctionDetails] = useState(null);
   const [koiMedias, setKoiMedias] = useState([]);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [bidHistory, setBidHistory] = useState([]);
   const [winnerId, setWinnerId] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [isFirstComeBided, setIsFirstComeBided] = useState(false);
 
   console.log('BidPage render');
 
@@ -44,6 +44,9 @@ function BidPage() {
         },
         ...prev,
       ]);
+      if (auctionDetails?.auctionMethod === 'First-come' && bidUpdate.bidderId === user.userId) {
+        setIsFirstComeBided(true);
+      }
     };
 
     if (auctionId && auctionDetails && auctionDetails?.status === 'Ongoing') {
@@ -160,63 +163,6 @@ function BidPage() {
     }
   }, [auctionDetails]);
 
-  const placeBid = async () => {
-    console.log('Placing bid:', bidAmount, currentPrice, auctionDetails?.buyoutPrice, auctionDetails?.startingPrice);
-    console.log(
-      'Bid:',
-      auctionDetails && auctionDetails.buyoutPrice < bidAmount,
-      auctionDetails && auctionDetails.startingPrice <= bidAmount && bidAmount >= currentPrice,
-    );
-    if (auctionDetails && auctionDetails.buyoutPrice < bidAmount) {
-      message.error('Mức giá của bạn vượt quá giá mua ngay!');
-      return;
-    }
-    if (auctionDetails && auctionDetails.startingPrice <= bidAmount && bidAmount >= currentPrice) {
-      try {
-        const response = await api.post(
-          'bid/place',
-          { auctionId: auctionId, amount: bidAmount },
-          { requiresAuth: true },
-        );
-        if (response) {
-          message.success('Trả giá thành công!');
-          console.log('Bid...CurrentPrice', response?.data?.amount);
-        }
-      } catch (error) {
-        console.error('Failed to place bid:', error);
-        message.error('Trả giá thất bại!');
-      }
-      setBidAmount(0);
-    } else {
-      message.error('Đã xảy ra lỗi!');
-    }
-  };
-
-  const handleBuyout = async () => {
-    try {
-      const response = await api.post(`/auction/user/close-auction?auctionId=${auctionId}`, null, {
-        requiresAuth: true,
-        onUnauthorizedCallback: () => {
-          message.error('Vui lòng đăng nhập lại để thực hiện chức năng này!');
-          navigate(`/login?redirect=${location.pathname + location.search}`);
-        },
-      });
-      if (response) {
-        message.success('Mua ngay thành công!');
-        console.log('Buyout...CurrentPrice', response?.data?.amount);
-      }
-    } catch (error) {
-      console.error('Failed to place bid:', error);
-      message.error('Mua ngay thất bại!');
-    } finally {
-      setModalOpen(false);
-    }
-  };
-
-  const handleBidInputChange = (value) => {
-    setBidAmount(value);
-  };
-
   const closeAuction = (winnerId) => {
     console.log('Closing auction...CurrentPrice', currentPrice);
     setAuctionDetails(() => ({
@@ -253,23 +199,14 @@ function BidPage() {
           </Row>
           <Row gutter={16}>
             <Col span={12}>
-              {auctionDetails?.startTime && auctionDetails?.endTime ? (
-                auctionDetails.status === 'Ongoing' ? (
-                  <CountdownTimer
-                    endTime={auctionDetails.startTime}
-                    title="Bắt đầu trả giá sau"
-                    status={auctionDetails.status}
-                  />
-                ) : (
-                  <CountdownTimer
-                    endTime={auctionDetails.status !== 'Ongoing' ? new Date() : null}
-                    title="Thời gian trả giá còn lại"
-                    status={auctionDetails.status}
-                  />
-                )
-              ) : (
-                <div>Lỗi hiển thị đồng hồ</div>
-              )}
+              <CountdownTimer
+                startTime={auctionDetails?.startTime}
+                endTime={auctionDetails?.endTime}
+                status={auctionDetails?.status}
+                onStatusChange={(status) => {
+                  setAuctionDetails({ ...auctionDetails, status });
+                }}
+              />
               {(auctionDetails?.status === 'Finished' || auctionDetails?.status === 'Closed') && (
                 <AuctionResult
                   auctionId={auctionId}
@@ -282,7 +219,7 @@ function BidPage() {
               <Carousel dots autoplay draggable>
                 {koiMedias.map(
                   (media, index) =>
-                    (media.mediaType === 'Image Detail' || media.mediaType === 'Header Image') && (
+                    media.mediaType === 'Image Detail' && (
                       <div key={index} className={styles.mediaFrame}>
                         <Image
                           src={media.url}
@@ -303,8 +240,8 @@ function BidPage() {
                 />
               )}
             </Col>
-            <Col span={12} style={{ marginTop: '15px' }}>
-              <Card title={'Thông tin của cuộc đấu giá'} bordered={false}>
+            <Col span={12}>
+              <Card title={'Thông tin của cuộc đấu giá'} bordered={false} style={{ border: '1px solid #ddd' }}>
                 <div className={styles.detailsBox}>
                   {auctionDetails?.auctionMethod !== 'Fixed-price' && (
                     <>
@@ -389,44 +326,12 @@ function BidPage() {
                         </p>
                       </Flex>
                     )}
-                  {auctionDetails?.status === 'Ongoing' &&
-                    (auctionDetails?.auctionMethod === 'Ascending' ||
-                      auctionDetails?.auctionMethod === 'First-come') && (
-                      <InputNumber
-                        value={bidAmount}
-                        step={auctionDetails?.bidStep}
-                        onChange={handleBidInputChange}
-                        formatter={(value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
-                        parser={(value) => value.replace(/\./g, '')}
-                        addonBefore="VND"
-                        style={{ width: '100%', marginTop: '10px' }}
-                      />
-                    )}
-                  {auctionDetails?.status === 'Ongoing' &&
-                    (auctionDetails?.auctionMethod === 'Ascending' ||
-                      auctionDetails?.auctionMethod === 'First-come') && (
-                      <Button
-                        type="primary"
-                        onClick={placeBid}
-                        style={{ width: '100%', marginTop: '10px' }}
-                        disabled={
-                          (bidHistory?.length > 0 && bidAmount <= currentPrice) ||
-                          bidAmount < auctionDetails?.startingPrice
-                        }
-                      >
-                        Đặt giá
-                      </Button>
-                    )}
-                  {auctionDetails?.status === 'Ongoing' && (
-                    <Button
-                      type="primary"
-                      ghost
-                      style={{ width: '100%', marginTop: '10px' }}
-                      onClick={() => setModalOpen(true)}
-                    >
-                      Mua ngay
-                    </Button>
-                  )}
+                  <BidGroup
+                    user={user}
+                    auctionDetails={auctionDetails}
+                    onBuyoutCompleted={closeAuction}
+                    isFirstComeBided={isFirstComeBided}
+                  />
                 </Flex>
               </Card>
               <Collapse
@@ -461,20 +366,6 @@ function BidPage() {
               {/* end of Collapse /--------------------------------------------------/ */}
             </Col>
           </Row>
-          <Modal
-            title={'Xác nhận mua ngay'}
-            open={modalOpen}
-            onOk={() => handleBuyout()}
-            onCancel={() => setModalOpen(false)}
-          >
-            <span>{`Xác định mua ngay với giá ${
-              auctionDetails.auctionMethod === 'Descending'
-                ? descendingCurrentPrice().toLocaleString()
-                : auctionDetails?.buyoutPrice
-                ? auctionDetails?.buyoutPrice.toLocaleString()
-                : 0
-            } VND?`}</span>
-          </Modal>
         </>
       )}
     </div>

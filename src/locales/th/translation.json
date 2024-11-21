@@ -130,6 +130,7 @@
       "password_placeholder": "รหัสผ่าน",
       "password_required": "กรุณากรอกรหัสผ่าน!",
       "remember_me": "จำไว้ในครั้งถัดไป",
+      "login_button_loading": "กำลังเข้าสู่ระบบ...",
       "login_button": "เข้าสู่ระบบ",
       "login_success": "เข้าสู่ระบบสำเร็จ!",
       "login_failure": "เข้าสู่ระบบล้มเหลว! กรุณาตรวจสอบข้อมูลของคุณ",

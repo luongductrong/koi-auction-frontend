@@ -65,6 +65,7 @@ function AuctionList({ auctions, type = 'scheduled', loading }) {
                   </Title>
                   <Image
                     alt="auction"
+                    width={'100%'}
                     src={auction.koiInfoList?.[0]?.headerImageUrl || fallback}
                     fallback={fallback}
                     className={styles.image}

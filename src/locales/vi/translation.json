@@ -130,6 +130,7 @@
       "password_placeholder": "Mật khẩu",
       "password_required": "Vui lòng nhập mật khẩu!",
       "remember_me": "Ghi nhớ cho lần đăng nhập sau",
+      "login_button_loading": "Đăng nhập...",
       "login_button": "Đăng nhập",
       "login_success": "Đăng nhập thành công!",
       "login_failure": "Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.",

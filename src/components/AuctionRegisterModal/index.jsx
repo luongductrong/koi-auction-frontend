@@ -40,8 +40,12 @@ function RegisterAuctionModal({ open = false, onClose, auctionId, depositAmount,
       setIsRegisted(true);
       message.success('Đã đăng ký tham gia!');
     } catch (error) {
-      message.error('Đăng ký tham gia đấu giá thất bại! Vui lòng thử lại sau.');
-      console.error('Register Auction Error:', error.response ? error.response.data : error.message);
+      if (error.response?.status === 402) {
+        message.error('Số dư tài khoản không đủ.');
+      } else {
+        message.error('Đăng ký tham gia đấu giá thất bại! Vui lòng thử lại sau.');
+        console.error('Register Auction Error:', error.response ? error.response.data : error.message);
+      }
     } finally {
       setLoading(false);
       onClose();

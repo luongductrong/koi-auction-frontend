@@ -1,19 +1,22 @@
 .timerContainer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
-  padding: 10px;
+  padding: 0px 10px 10px 10px;
   border: 1px solid #ddd;
-  border-radius: 0;
+  border-radius: 5px;
   background-color: #f9f9f9;
 }
 
 .timerTitle {
+  width: 100%;
   font-size: 16px;
-  font-weight: 400;
   color: #696969;
   font-family: Montserrat;
-  line-height: 28px;
-  margin-bottom: 15px;
+}
+
+.isRed {
+  color: var(--primary-color);
 }
 
 .timerBox {
