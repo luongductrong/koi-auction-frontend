@@ -171,7 +171,7 @@ function AuctionPage() {
             </Col>
           </Row>
           <Row gutter={16}>
-            <Col span={12}>
+            <Col md={12} sm={24}>
               <Carousel ref={carouselRef} afterChange={handleCarouselChange} dots autoplay draggable>
                 {koiMedias
                   .filter((media) => media?.mediaType === 'Image Detail' || media?.mediaType === 'Video')
@@ -270,7 +270,7 @@ function AuctionPage() {
                 )}
               </Modal>
             </Col>
-            <Col span={12}>
+            <Col md={12} sm={24}>
               <CountdownTimer
                 startTime={auctionDetails?.startTime}
                 // startTime={'2024-11-21T15:10:00Z'}

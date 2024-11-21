@@ -17,11 +17,14 @@ function Cover({ status, startTime, imageSrc }) {
     >
       <Image
         src={imageSrc}
+        width={'100%'}
         alt="Cuộc đấu giá"
         fallback={fallback}
         preview={false}
         style={{
           width: '100%',
+          height: '100%',
+          minWidth: '100%',
           objectFit: 'cover',
           transition: 'transform 1s ease-in-out',
         }}

@@ -30,7 +30,7 @@ function CountdownTimer({ startTime, endTime, status, onStatusChange }) {
     } else if (isStatusOngoing && deadline > currentTime) {
       setCurrentTarget(deadline);
       setTimerTitle({ isRedColor: false, title: 'Kết thúc sau' });
-    } else if (isStatusEnded && deadline < currentTime) {
+    } else if (isStatusEnded || deadline < currentTime) {
       setCurrentTarget(null);
       setTimerTitle({ isRedColor: true, title: 'Cuộc đấu giá đã kết thúc' });
     } else {
@@ -88,6 +88,11 @@ function CountdownTimer({ startTime, endTime, status, onStatusChange }) {
       }, 1000);
 
       return () => clearInterval(interval); // Xóa interval khi component unmount hoặc currentTarget thay đổi
+    } else {
+      const interval = setInterval(() => {
+        onStatusChange('Closed');
+        clearInterval(interval);
+      }, 1000);
     }
   }, [currentTarget, kickoff, deadline]);
 
