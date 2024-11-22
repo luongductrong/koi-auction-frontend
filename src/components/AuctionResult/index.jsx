@@ -8,6 +8,7 @@ import styles from './index.module.scss';
 function AuctionResult({ auctionId, breederID, winnerId, amount, deadline, method }) {
   const user = useSelector((state) => state.user.user);
   const [registered, setRegistered] = useState(false);
+  const [winner, setWinner] = useState(null);
   const navigate = useNavigate();
 
   console.log({ auctionId, winnerId, amount, deadline, method });
@@ -39,6 +40,23 @@ function AuctionResult({ auctionId, breederID, winnerId, amount, deadline, metho
     }
   }, [user, auctionId]);
 
+  useEffect(() => {
+    const fetchWinner = async () => {
+      try {
+        const response = await api.get(`/auction/${auctionId}/winner`, {
+          requiresAuth: true,
+        });
+        setWinner(response.data);
+      } catch (error) {
+        console.error('Failed to fetch winner:', error);
+        message.error('Lỗi khi tải thông tin người chiến thắng!');
+      }
+    };
+    if (breederID === user?.userId) {
+      fetchWinner();
+    }
+  }, [auctionId, breederID]);
+
   if (breederID === user?.userId)
     return (
       <Card
@@ -47,10 +65,21 @@ function AuctionResult({ auctionId, breederID, winnerId, amount, deadline, metho
         className={styles.cardContainer}
       >
         <p>
-          <strong>Tên người dùng:</strong>
+          <strong>Tên người dùng: </strong>
+          {winner?.username}
         </p>
         <p>
-          <strong>Họ và tên:</strong>
+          <strong>Họ và tên:</strong> {winner?.fullName}
+        </p>
+        <p>
+          <strong>Số điện thoại:</strong> {winner?.phoneNumber}
+        </p>
+        <p>
+          <strong>Email: </strong>
+          {winner?.email}{' '}
+        </p>
+        <p>
+          <strong> Địa chỉ: </strong> {winner?.address ? JSON.parse(winner.address).province : ''}
         </p>
       </Card>
     );

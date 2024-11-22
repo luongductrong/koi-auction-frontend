@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FloatButton, Drawer, List, Avatar, Input, Button, Empty, App, Divider } from 'antd';
+import { FloatButton, Drawer, List, Avatar, Input, Button, Empty, App, Divider, Spin } from 'antd';
 import WebSocketService from '../../services/WebSocketService';
 import { MessageOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import api from '../../configs';
 
 function ChatFloatButton() {
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const { message } = App.useApp();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
@@ -16,8 +18,11 @@ function ChatFloatButton() {
   const [hasNewMessage, setHasNewMessage] = useState(false);
   const messagesContainerRef = useRef(null);
   const lastMessageRef = useRef(null);
-  const [contacts, setContacts] = useState([{ id: 1, fullName: 'Quản trị viên hệ thống' }]);
+  const [contacts, setContacts] = useState([{ id: 1, fullName: 'Quản trị viên', role: 'Admin' }]);
   const [pagination, setPagination] = useState({ current: 0, totalPages: 0 });
+  const [contactLoading, setContactLoading] = useState(false);
+  const [messageLoading, setMessageLoading] = useState(false);
+  const [fetch, setFetch] = useState(false);
 
   //webSocket
   useEffect(() => {
@@ -46,25 +51,36 @@ function ChatFloatButton() {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response1 = await api.get(`/chat/systemchat`, { requiresAuth: true });
-        const response2 = await api.get(`/chat/userchat?userId=${user.user.userId}`, { requiresAuth: true });
-        setContacts([
-          ...response1?.data?.map((item) => ({ ...item, type: 'system' })),
-          ...response2?.data?.map((item) => ({ ...item, type: 'contact' })),
-        ]);
+        setContactLoading(true);
+        const response1 = await api.get(`/chat/systemchat`, {
+          requiresAuth: true,
+          onUnauthorizedCallback: () => {
+            navigate('/login');
+          },
+        });
+        const response2 = await api.get(`/chat/userchat?userId=${user.user.userId}`, {
+          requiresAuth: true,
+          onUnauthorizedCallback: () => {
+            navigate('/login');
+          },
+        });
+        setContacts([...response1.data, ...response2.data.map((contact) => ({ ...contact, role: 'contact' }))]);
       } catch (error) {
         message.error('Lỗi khi tải danh sách liên hệ!');
         console.error('Failed to fetch contacts:', error);
+      } finally {
+        setContactLoading(false);
       }
     };
     if (user?.user) {
       fetchContacts();
     }
-  }, [user]);
+  }, [user, fetch]);
 
   const fetchMessages = async (page) => {
     if (selectedContact) {
       try {
+        setMessageLoading(true);
         const response = await api.get(`/chat/messages?receiverId=${selectedContact.userId}&page=${page}`, {
           requiresAuth: true,
         });
@@ -77,6 +93,8 @@ function ChatFloatButton() {
       } catch (error) {
         message.error('Lỗi khi tải tin nhắn!');
         console.error('Failed to fetch messages:', error);
+      } finally {
+        setMessageLoading(false);
       }
     }
   };
@@ -137,23 +155,42 @@ function ChatFloatButton() {
   return (
     <>
       <FloatButton icon={<MessageOutlined />} onClick={() => setIsDrawerOpen(true)} style={{ bottom: 80, right: 30 }} />
-      <Drawer title="Chat" placement="right" onClose={() => setIsDrawerOpen(false)} open={isDrawerOpen} width={700}>
+      <Drawer
+        title="Chat"
+        placement="right"
+        onClose={() => setIsDrawerOpen(false)}
+        open={isDrawerOpen}
+        width={700}
+        afterOpenChange={() => setFetch(!fetch)}
+      >
         <div style={{ display: 'flex', height: '100%' }}>
           {/* Contact List */}
           <div style={{ width: '36%', borderRight: '1px solid #f0f0f0', overflowY: 'auto', paddingRight: '10px' }}>
-            <List
-              itemLayout="horizontal"
-              dataSource={contacts}
-              renderItem={(contact) => (
-                <List.Item onClick={() => setSelectedContact(contact)} style={{ cursor: 'pointer' }}>
-                  <List.Item.Meta
-                    avatar={<Avatar icon={<UserOutlined />} />}
-                    title={contact.fullName}
-                    description={contact.type === 'system' ? 'Nhân viên hệ thống' : 'Liên hệ của bạn'}
-                  />
-                </List.Item>
-              )}
-            />
+            <Spin spinning={contactLoading}>
+              <List
+                itemLayout="horizontal"
+                dataSource={contacts}
+                renderItem={(contact) => (
+                  <List.Item onClick={() => setSelectedContact(contact)} style={{ cursor: 'pointer' }}>
+                    <List.Item.Meta
+                      avatar={<Avatar icon={<UserOutlined />} />}
+                      title={contact.fullName}
+                      description={
+                        contact.role === 'Admin'
+                          ? 'Quản trị viên'
+                          : contact.role === 'Staff'
+                          ? 'Nhân viên hệ thống'
+                          : contact.role === 'Breeder'
+                          ? 'Người bán hàng'
+                          : contact.role === 'User'
+                          ? 'Người dùng KoiAuction'
+                          : 'Liên hệ gần đây'
+                      }
+                    />
+                  </List.Item>
+                )}
+              />
+            </Spin>
           </div>
 
           {/* Chat Box */}
@@ -165,63 +202,65 @@ function ChatFloatButton() {
                   <span style={{ marginLeft: '10px', fontWeight: 'bold' }}>{selectedContact.fullName}</span>
                 </div>
                 <div ref={messagesContainerRef} style={{ flexGrow: 1, overflowY: 'auto', padding: '10px' }}>
-                  {pagination?.current === pagination?.totalPages - 1 && (
-                    <Divider orientation="center">
-                      <p style={{ fontSize: '14px' }}>Đã xem hết tin nhắn</p>
-                    </Divider>
-                  )}
-                  {messages.map((message, index) => (
-                    <>
-                      {index === 0 ||
-                      (messages[index].datetime &&
-                        moment.utc(messages[index].datetime).local().format('DD/MM/YYYY') !==
-                          moment
-                            .utc(messages[index - 1].datetime)
-                            .local()
-                            .format('DD/MM/YYYY')) ? (
-                        <Divider orientation="center">
-                          <p style={{ fontSize: '14px' }}>
-                            {moment.utc(message.datetime).local().format('DD/MM/YYYY')}
-                          </p>
-                        </Divider>
-                      ) : null}
-                      <div
-                        ref={message === messages[messages.length - 1] ? lastMessageRef : null}
-                        key={message.chatId}
-                        style={{
-                          marginBottom: '10px',
-                          textAlign: message.senderId === user?.user.userId ? 'right' : 'left',
-                        }}
-                      >
+                  <Spin spinning={messageLoading}>
+                    {pagination?.current === pagination?.totalPages - 1 && (
+                      <Divider orientation="center">
+                        <p style={{ fontSize: '14px' }}>Đã xem hết tin nhắn</p>
+                      </Divider>
+                    )}
+                    {messages.map((message, index) => (
+                      <>
+                        {index === 0 ||
+                        (messages[index].datetime &&
+                          moment.utc(messages[index].datetime).local().format('DD/MM/YYYY') !==
+                            moment
+                              .utc(messages[index - 1].datetime)
+                              .local()
+                              .format('DD/MM/YYYY')) ? (
+                          <Divider orientation="center">
+                            <p style={{ fontSize: '14px' }}>
+                              {moment.utc(message.datetime).local().format('DD/MM/YYYY')}
+                            </p>
+                          </Divider>
+                        ) : null}
                         <div
+                          ref={message === messages[messages.length - 1] ? lastMessageRef : null}
+                          key={message.chatId}
                           style={{
-                            background: message.senderId === user?.user.userId ? '#d4163c' : '#f0f0f0',
-                            color: message.senderId === user?.user.userId ? 'white' : 'black',
-                            padding: '8px 12px',
-                            borderRadius: '16px',
-                            display: 'inline-block',
-                            maxWidth: '70%',
+                            marginBottom: '10px',
+                            textAlign: message.senderId === user?.user.userId ? 'right' : 'left',
                           }}
                         >
-                          {message.message}
-                          <br />
-                          {(index === messages.length - 1 ||
-                            messages[index].senderId !== messages[index + 1].senderId) && (
-                            <div
-                              style={{
-                                fontSize: '12px',
-                                color: message.senderId === user?.user.userId ? '#dbd5d5' : '#888',
-                                marginTop: '4px',
-                              }}
-                            >
-                              {message.datetime ? moment.utc(message.datetime).local().format('HH:mm') : ''}
-                            </div>
-                          )}
+                          <div
+                            style={{
+                              background: message.senderId === user?.user.userId ? '#d4163c' : '#f0f0f0',
+                              color: message.senderId === user?.user.userId ? 'white' : 'black',
+                              padding: '8px 12px',
+                              borderRadius: '16px',
+                              display: 'inline-block',
+                              maxWidth: '70%',
+                            }}
+                          >
+                            {message.message}
+                            <br />
+                            {(index === messages.length - 1 ||
+                              messages[index].senderId !== messages[index + 1].senderId) && (
+                              <div
+                                style={{
+                                  fontSize: '12px',
+                                  color: message.senderId === user?.user.userId ? '#dbd5d5' : '#888',
+                                  marginTop: '4px',
+                                }}
+                              >
+                                {message.datetime ? moment.utc(message.datetime).local().format('HH:mm') : ''}
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </>
-                  ))}
-                  {messages.length === 0 && <Empty description="Chưa có tin nhắn" style={{ marginTop: 50 }} />}
+                      </>
+                    ))}
+                    {messages.length === 0 && <Empty description="Chưa có tin nhắn" style={{ marginTop: 50 }} />}
+                  </Spin>
                 </div>
                 <div style={{ padding: '10px', borderTop: '1px solid #f0f0f0', display: 'flex' }}>
                   <Input

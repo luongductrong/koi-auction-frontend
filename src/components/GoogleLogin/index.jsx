@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, App } from 'antd';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../../configs';
 import googleIcon from '../../assets/images/google.svg';
 
@@ -13,7 +13,8 @@ const btnStyle = { width: '100%', height: '40px' };
 const spanStyle = { display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-evenly' };
 
 function GoogleLogin() {
-  const { message } = App.useApp();
+  const { message, notification } = App.useApp();
+  const location = useLocation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,11 +46,31 @@ function GoogleLogin() {
       });
 
       if (loginResponse.status === 200) {
+        const role = loginResponse?.data?.role;
+        if (role !== 'User' && role !== 'Breeder') {
+          navigate('/access-denied');
+          return;
+        }
+
+        if (loginResponse?.data?.address === null || loginResponse?.data?.address === '') {
+          notification.warning({
+            message: 'Cập nhật thông tin cá nhân',
+            description: 'Thông tin cá nhân của bạn hiện chưa đầy đủ, vui lòng cập nhật lại thông tin.',
+            placement: 'bottomRight',
+            duration: 0,
+            rtl: true,
+          });
+        }
         message.success(t('component.google_login.login_success'));
         console.log('Login Response:', loginResponse.data);
 
         dispatch(setUser(loginResponse.data));
-        navigate('/');
+        const redirect = new URLSearchParams(location.search).get('redirect');
+        if (redirect) {
+          navigate(redirect !== '/login' && redirect !== '/register' ? redirect : '/');
+        } else {
+          navigate('/');
+        }
       } else {
         message.error(t('component.google_login.login_failure'));
         console.error('Login Error:', loginResponse.data);

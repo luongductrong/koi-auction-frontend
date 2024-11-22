@@ -91,7 +91,7 @@ function Wallet() {
 
   const columns = [
     {
-      title: 'ID Giao dịch',
+      title: 'ID',
       dataIndex: 'id',
       key: 'id',
     },
@@ -156,6 +156,11 @@ function Wallet() {
           : text === 'Refund'
           ? 'Hoàn cọc'
           : text,
+    },
+    {
+      title: 'ID đấu giá',
+      dataIndex: 'auctionID',
+      key: 'auctionId',
     },
   ];
 
