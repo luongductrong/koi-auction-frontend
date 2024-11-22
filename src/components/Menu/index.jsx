@@ -21,6 +21,7 @@ function Menu() {
       className: styles.subMenu,
       style: { backgroundColor: 'var(--primary-color)' },
       children: [
+        { key: 'all', label: <Link to="/auction">{t('component.menu.all_auctions')}</Link> },
         { key: 'schedule', label: <Link to="/auction?status=scheduled">{t('component.menu.scheduled_auction')}</Link> },
         { key: 'current', label: <Link to="/auction?status=ongoing">{t('component.menu.ongoing_auction')}</Link> },
         { key: 'past', label: <Link to="/auction?status=closed">{t('component.menu.closed_auction')}</Link> },

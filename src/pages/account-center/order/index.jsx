@@ -1,34 +1,36 @@
-import { useState } from 'react';
-import { Layout, Table, Tag, Button, Space } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
+import { Layout, Table, Tag, Button, Space, App, Spin } from 'antd';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
+import api from '../../../configs';
 import styles from './order.module.scss';
 
 const { Content } = Layout;
 
 function Order() {
-  const [orders, setOrders] = useState([
-    {
-      key: '1',
-      orderId: 'ORD123',
-      customerName: 'Nguyễn Văn A',
-      status: 'Đã giao',
-      createdAt: '2023-10-01',
-    },
-    {
-      key: '2',
-      orderId: 'ORD124',
-      customerName: 'Trần Thị B',
-      status: 'Chưa giao',
-      createdAt: '2023-10-02',
-    },
-    {
-      key: '3',
-      orderId: 'ORD125',
-      customerName: 'Lê Văn C',
-      status: 'Đang giao',
-      createdAt: '2023-10-03',
-    },
-  ]);
+  const user = useSelector((state) => state.user.user);
+  const { message } = App.useApp();
+  const [loading, setLoading] = useState(true);
+  const [btnLoading, setBtnLoading] = useState(false);
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      setLoading(true);
+      try {
+        const response = await api.get('/order', { requiresAuth: true });
+        setOrders(response.data);
+      } catch (error) {
+        console.error('Failed to fetch orders:', error);
+        message.error('Lỗi khi tải danh sách đơn hàng!');
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (user) {
+      fetchOrders();
+    }
+  }, [user]);
 
   const columns = [
     {
@@ -37,48 +39,91 @@ function Order() {
       key: 'orderId',
     },
     {
-      title: 'Tên khách hàng',
-      dataIndex: 'customerName',
-      key: 'customerName',
-    },
-    {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
       render: (status) => {
         let color = 'green';
-        if (status === 'Chưa giao') {
-          color = 'volcano';
-        } else if (status === 'Đang giao') {
-          color = 'blue';
-        }
-        return <Tag color={color}>{status}</Tag>;
+        return (
+          <Tag color={color}>
+            {status === 'Pending'
+              ? 'Đang chuẩn bị'
+              : status === 'Shipping'
+              ? 'Đang giao'
+              : status === 'Done'
+              ? 'Hoàn thành'
+              : status === 'Dispute'
+              ? 'Tranh chấp'
+              : status}
+          </Tag>
+        );
       },
     },
     {
       title: 'Ngày tạo',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
+      dataIndex: 'date',
+      key: 'date',
+      render: (date) => moment(date).format('DD/MM/YYYY'),
+    },
+    {
+      title: 'Mã đấu giá',
+      dataIndex: 'auctionId',
+      key: 'auctionId',
+    },
+    {
+      title: 'Loại đơn hàng',
+      dataIndex: 'bidderId',
+      key: 'bidderId',
+      render: (bidderId) => {
+        return bidderId != user?.userId ? 'Đơn gửi' : 'Đơn nhận';
+      },
     },
     {
       title: 'Hành động',
       key: 'action',
-      render: (text, record) => (
-        <Space size="middle">
-          <Button icon={<EditOutlined />} type="primary">
-            Sửa
-          </Button>
-          <Button icon={<DeleteOutlined />} type="danger" onClick={() => handleDelete(record.key)}>
-            Xóa
-          </Button>
-        </Space>
-      ),
+      render: (_, record) => {
+        if (
+          (record.bidderId === user?.userId && record.status === 'Shipping') ||
+          (record.bidderId !== user?.userId && record.status === 'Pending')
+        ) {
+          return (
+            <Space size="middle">
+              <Button type="primary" ghost onClick={() => handleDone(record)} loading={btnLoading}>
+                {record.bidderId === user?.userId ? 'Đã nhận' : 'Đã giao'}
+              </Button>
+            </Space>
+          );
+        }
+      },
     },
   ];
 
-  const handleDelete = (key) => {
-    const newOrders = orders.filter((order) => order.key !== key);
-    setOrders(newOrders);
+  const handleDone = async (order) => {
+    try {
+      setBtnLoading(true);
+      console.log('Order:', `/order/${order.orderId}/${user?.userId === order?.bidderId ? 'done' : 'shipping'}`);
+      const response = await api.post(
+        `/order/${order.orderId}/${user?.userId === order?.bidderId ? 'done' : 'shipping'}`,
+        null,
+        {
+          requiresAuth: true,
+        },
+      );
+      if (response) {
+        message.success('Đã hoàn thành đơn hàng!');
+        setOrders((prevOrders) => [
+          ...prevOrders.filter((o) => o.orderId !== order.orderId),
+          (prevOrders.filter((o) => o.orderId === order.orderId)[0].status === user?.userId) === order?.bidderId
+            ? 'Done'
+            : 'Shipping',
+        ]);
+      }
+    } catch (error) {
+      console.error('Failed to mark order as done:', error);
+      message.error('Đánh dấu đơn hàng hoàn thành thất bại!');
+    } finally {
+      setBtnLoading(false);
+    }
   };
 
   return (

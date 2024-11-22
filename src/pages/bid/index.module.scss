@@ -5,6 +5,7 @@
   align-items: center;
   width: 100%;
   margin-top: 16px;
+  margin-bottom: 16px;
   aspect-ratio: 1/1;
   overflow: hidden;
   border-radius: 5px;
@@ -94,5 +95,14 @@
     text-align: center;
     font-size: 40px;
     color: var(--primary-color);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .carousel {
+    display: none !important;
+  }
+  .infoCard {
+    margin-top: 16px;
   }
 }

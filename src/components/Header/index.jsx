@@ -42,10 +42,10 @@ function Header() {
         //   key: '1-3',
         //   label: <Link to="/account-center/schedule">{t('component.header.schedule_management')}</Link>,
         // },
-        // {
-        //   key: '1-4',
-        //   label: <Link to="/account-center/order">{t('component.header.order_management')}</Link>,
-        // },
+        {
+          key: '1-4',
+          label: <Link to="/account-center/order">{t('component.header.order_management')}</Link>,
+        },
         ...(isBreeder
           ? [
               {

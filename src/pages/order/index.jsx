@@ -15,14 +15,16 @@ function Order() {
   const location = useLocation();
   const navigate = useNavigate();
   const { onUnauthorized } = useAuth();
-  const auctionId = new URLSearchParams(location.search).get('auction-id');
+  const auctionId = new URLSearchParams(location.search).get('id');
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
   const [auctionInfo, setAuctionInfo] = useState({});
   const [loading, setLoading] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
+  const [btnPayLoading, setBtnPayLoading] = useState(false);
   const [dataLoading, setDataLoading] = useState(false);
+  const [isPayment, setIsPayment] = useState(false);
 
   useEffect(() => {
     const fetchAuctionInfo = async () => {
@@ -44,6 +46,44 @@ function Order() {
       navigate('/404');
     }
   }, []);
+
+  useEffect(() => {
+    const checkPayment = async () => {
+      try {
+        const response = await api.get(`/wallet/checkPaymentStatus/${auctionId}`, {
+          requiresAuth: true,
+        });
+        setIsPayment(response?.data || false);
+      } catch (error) {
+        if (error.response?.status === 402) {
+          message.info('Bạn chưa thanh toán.');
+          setIsPayment(false);
+        } else {
+          console.error('Failed to check payment status:', error);
+          message.error('Lỗi khi kiểm tra trạng thái thanh toán!');
+        }
+      }
+    };
+    if (auctionId) {
+      checkPayment();
+    }
+  }, [auctionId]);
+
+  const payment = async () => {
+    try {
+      setBtnPayLoading(true);
+      await api.post(`wallet/payment?auctionId=${auctionId}`, null, {
+        requiresAuth: true,
+      });
+      message.success('Thanh toán thành công!');
+      setIsPayment(true);
+    } catch (error) {
+      console.error('Failed to make payment:', error);
+      message.error('Lỗi khi thanh toán!');
+    } finally {
+      setBtnPayLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchProvinces = async () => {
@@ -172,6 +212,9 @@ function Order() {
                   <Text strong>{`Tổng tiền thanh toán: ${(
                     auctionInfo?.finalPrice - auctionInfo?.bidderDeposit || 0
                   ).toLocaleString('vi-VN')} VND`}</Text>
+                  <Button type="primary" loading={btnPayLoading} disabled={isPayment} onClick={payment}>
+                    Thanh toán
+                  </Button>
                 </Space>
               </div>
             </Space>
@@ -269,8 +312,9 @@ function Order() {
                   size="large"
                   style={{ width: '100%' }}
                   loading={btnLoading}
+                  disabled={!isPayment}
                 >
-                  Thanh toán
+                  Tạo đơn hàng
                 </Button>
               </Form.Item>
             </Form>

@@ -36,6 +36,10 @@ function CountdownTimer({ startTime, endTime, status, onStatusChange }) {
     } else {
       setCurrentTarget(null);
       setTimerTitle({ isRedColor: true, title: '[Lỗi dữ liệu đầu vào]' });
+      const interval = setInterval(() => {
+        onStatusChange('Closed');
+        clearInterval(interval);
+      }, 1000);
     }
   }, []);
 
@@ -88,11 +92,6 @@ function CountdownTimer({ startTime, endTime, status, onStatusChange }) {
       }, 1000);
 
       return () => clearInterval(interval); // Xóa interval khi component unmount hoặc currentTarget thay đổi
-    } else {
-      const interval = setInterval(() => {
-        onStatusChange('Closed');
-        clearInterval(interval);
-      }, 1000);
     }
   }, [currentTarget, kickoff, deadline]);
 
