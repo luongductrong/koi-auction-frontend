@@ -128,12 +128,10 @@ function BidGroup({ user, auctionDetails, currentPrice = 0, onBuyoutCompleted, i
         </Button>
       )}
       <Modal title="Xác nhận mua ngay" open={modalOpen} onOk={handleBuyout} onCancel={() => setModalOpen(false)}>
-        <p>{`Xác định mua ngay với giá ${
-          auctionDetails?.buyoutPrice ? auctionDetails.buyoutPrice.toLocaleString() : 0
-        } VND?`}</p>
+        <p>{`Xác nhận mua ngay`}</p>
       </Modal>
       <Modal title="Xác nhận đặt giá" open={showBidConfirm} onOk={bid} onCancel={() => setShowBidConfirm(false)}>
-        <p>{`Bạn chắc chắn muốn đặt giá ${bidAmount ? bidAmount.toLocaleString() : 0} VND?`}</p>
+        <p>{`Bạn chắc chắn muốn đặt giá?`}</p>
       </Modal>
     </div>
   );

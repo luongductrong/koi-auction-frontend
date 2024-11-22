@@ -401,17 +401,8 @@ const AuctionForm = ({ open, onCancel, mode = 'create', auctionId, onSuccess }) 
         onOk={() => onCreate(modalValues)}
         onCancel={() => setModalOpen(false)}
       >
-        <strong>{`Tổng số tiền cọc và phí là ${(
-          auctionAmount?.auctionFee +
-          auctionAmount.depositFee *
-            (form.getFieldValue().auctionMethod === 'Fixed-price'
-              ? form.getFieldValue().buyoutPrice * 0.5
-              : form.getFieldValue().auctionMethod === 'Descending'
-              ? form.getFieldValue().buyoutPrice
-              : form.getFieldValue().startingPrice || 0)
-        ).toLocaleString()} VND`}</strong>
         <br />
-        <span>Số tiền trên sẽ được trừ thẳng vào ví của bạn</span>
+        <span>Số tiền cọc sẽ được trừ thẳng vào ví của bạn</span>
       </Modal>
     </Drawer>
   );
