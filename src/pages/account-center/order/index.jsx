@@ -89,7 +89,7 @@ function Order() {
           return (
             <Space size="middle">
               <Button type="primary" ghost onClick={() => handleDone(record)} loading={btnLoading}>
-                {record.bidderId === user?.userId ? 'Đã nhận' : 'Đã giao'}
+                {record.bidderId === user?.userId ? 'Đã nhận được hàng' : 'Xác nhận đã giao'}
               </Button>
             </Space>
           );

@@ -5,6 +5,7 @@ import 'moment/locale/vi';
 import api from '../../configs';
 import useAuth from '../../hook/useAuth';
 import { handleFormVisibleConfig } from './formConfig';
+import { set } from 'lodash';
 
 const { Option } = Select;
 
@@ -13,8 +14,10 @@ const AuctionForm = ({ open, onCancel, mode = 'create', auctionId, onSuccess }) 
   const { onUnauthorized } = useAuth();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [cancelLoading, setCancelLoading] = useState(false);
   const [auctionInfo, setAuctionInfo] = useState({});
   const [koiActiveList, setKoiActiveList] = useState([]);
+  const [winner, setWinner] = useState(null);
   const [auctionAmount, setAuctionAmount] = useState({ auctionFee: 0, depositFee: 0 });
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -35,6 +38,9 @@ const AuctionForm = ({ open, onCancel, mode = 'create', auctionId, onSuccess }) 
 
   const onClose = () => {
     setAuctionMethod('Ascending');
+    setKoiAuctionData([]);
+    setAuctionInfo({});
+    setWinner(null);
     form.resetFields();
     onCancel();
   };
@@ -42,6 +48,24 @@ const AuctionForm = ({ open, onCancel, mode = 'create', auctionId, onSuccess }) 
   useEffect(() => {
     setFormVisibleConfig(handleFormVisibleConfig(auctionMethod));
   }, [auctionMethod]);
+
+  useEffect(() => {
+    const fetchWinner = async () => {
+      try {
+        const response = await api.get(`/auction/${auctionId}/winner`, {
+          requiresAuth: true,
+          onUnauthorizedCallback: onUnauthorizedCallback,
+        });
+        setWinner(response.data);
+      } catch (error) {
+        console.error('Failed to fetch winner:', error);
+        message.error('Lỗi khi tải thông tin người chiến thắng!');
+      }
+    };
+    if (mode === 'update' && auctionId && auctionInfo?.winnerID) {
+      fetchWinner();
+    }
+  }, [auctionId, form, mode, open, auctionInfo]);
 
   useEffect(() => {
     console.log('AuctionId', auctionId);
@@ -157,6 +181,28 @@ const AuctionForm = ({ open, onCancel, mode = 'create', auctionId, onSuccess }) 
     }
   };
 
+  const onUpdate = async (values) => {
+    try {
+      setLoading(true);
+      await api.put(`/auction/${auctionId}`, values, {
+        requiresAuth: true,
+        onUnauthorizedCallback: onUnauthorizedCallback,
+      });
+      message.success('Cập nhật phiên đấu giá thành công!');
+      form.resetFields();
+      setModalOpen(false);
+      onSuccess();
+      onClose();
+    } catch (error) {
+      console.error('Failed to create auction:', error);
+      message.error('Lỗi khi cập nhật phiên đấu giá!');
+      setModalOpen(false);
+      onClose();
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = () => {
     console.log('Form values before validate:', form.getFieldsValue());
     form
@@ -173,14 +219,38 @@ const AuctionForm = ({ open, onCancel, mode = 'create', auctionId, onSuccess }) 
           koiIds: values.koiIds,
         };
         console.log('Form values:', values);
-        if (mode === 'create') {
-          setModalValues(values);
-          setModalOpen(true);
-        }
+        setModalValues(values);
+        setModalOpen(true);
       })
       .catch((info) => {
         console.log('Validate Failed:', info);
       });
+  };
+
+  const handleCancel = async () => {
+    if (auctionId) {
+      try {
+        setCancelLoading(true);
+        const response = await api.delete(`/auction/${auctionId}`, {
+          requiresAuth: true,
+          onUnauthorizedCallback: onUnauthorizedCallback,
+        });
+        if (response) {
+          message.success('Huỷ phiên đấu giá thành công!');
+          onSuccess();
+          onClose();
+        }
+      } catch (error) {
+        if (error.response?.status === 400) {
+          message.error('Không thể huỷ phiên đấu giá này!');
+        } else {
+          console.error('Failed to cancel auction:', error);
+          message.error('Lỗi khi huỷ phiên đấu giá!');
+        }
+      } finally {
+        setCancelLoading(false);
+      }
+    }
   };
 
   return (
@@ -199,14 +269,21 @@ const AuctionForm = ({ open, onCancel, mode = 'create', auctionId, onSuccess }) 
           <Button onClick={onClose} style={{ marginRight: 8 }}>
             Hủy
           </Button>
-          {mode === 'update' && (
-            <Button onClick={() => alert('Chưa hỗ trợ')} type="primary" ghost style={{ marginRight: 8 }}>
+          {mode === 'update' && auctionInfo?.status === 'Pending' && (
+            <Button onClick={handleCancel} type="primary" ghost style={{ marginRight: 8 }}>
               Yêu cầu huỷ
             </Button>
           )}
-          <Button onClick={() => handleSubmit()} type="primary">
-            {mode === 'create' ? 'Gửi yêu cầu' : 'Cập nhật'}
-          </Button>
+          {mode === 'update' && auctionInfo?.status === 'Pending' && (
+            <Button onClick={() => handleSubmit()} type="primary" style={{ marginRight: 8 }}>
+              Cập nhật
+            </Button>
+          )}
+          {mode === 'create' && (
+            <Button onClick={() => handleSubmit()} type="primary">
+              Gửi yêu cầu
+            </Button>
+          )}
         </div>
       }
     >
@@ -223,7 +300,7 @@ const AuctionForm = ({ open, onCancel, mode = 'create', auctionId, onSuccess }) 
               </span>
               <br />
               <span style={{ marginLeft: '16px' }}>
-                - Số tiền cọc trước: {auctionAmount.depositFee * 100}% tương ứng với giá khởi điểm hoặc giá cố định.
+                - Số tiền cọc trước: {auctionAmount.depositFee * 100}% tương ứng với giá khởi điểm hoặc 1/2 giá cố định.
               </span>
               <br />
               2. Tiền cọc sẽ được hoàn trả sau khi phiên đấu giá kết thúc.
@@ -233,6 +310,21 @@ const AuctionForm = ({ open, onCancel, mode = 'create', auctionId, onSuccess }) 
               4. Trong trường hợp xảy ra sự cố, quyết định của hệ thống sẽ là quyết định cuối cùng.
               <br />
               5. Vui lòng đọc kỹ các quy định để đảm bảo tuân thủ và tránh các tình huống không mong muốn xảy ra.
+            </span>
+          </Form.Item>
+        )}
+        {mode == 'update' && winner && (
+          <Form.Item>
+            <span style={{ fontStyle: 'italic', color: 'gray' }}>
+              <strong>Thông tin người thắng đấu giá:</strong>
+              <br />
+              Họ và tên: {winner.fullName}
+              <br />
+              Số điện thoại: {winner.phoneNumber}
+              <br />
+              Email: {winner.email}
+              <br />
+              Địa chỉ: {winner.address ? JSON.parse(winner.address).province : ''}
             </span>
           </Form.Item>
         )}
@@ -398,7 +490,10 @@ const AuctionForm = ({ open, onCancel, mode = 'create', auctionId, onSuccess }) 
       <Modal
         title={'Xác nhận gửi yêu cầu'}
         open={modalOpen}
-        onOk={() => onCreate(modalValues)}
+        onOk={() => {
+          if (mode === 'create') onCreate(modalValues);
+          else onUpdate(modalValues);
+        }}
         onCancel={() => setModalOpen(false)}
       >
         <br />

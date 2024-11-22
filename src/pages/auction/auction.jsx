@@ -63,7 +63,11 @@ function Auction() {
         states.forEach((state) => {
           if (state === 'all') return;
           params.append('status', state);
-          if (state === 'closed') params.append('status', 'finished');
+          if (state === 'closed') {
+            params.append('status', 'finished');
+            params.append('status', 'paid');
+            params.append('status', 'failed');
+          }
         });
 
         // Thêm các phương thức vào params
