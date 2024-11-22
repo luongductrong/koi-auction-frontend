@@ -16,12 +16,13 @@ class WebSocketService {
     this.stompClient.connect({}, (frame) => {
       console.log('Connected to WebSocket:', frame);
 
-      this.stompClient.subscribe('/topic/auction/' + auctionId + '/bids', function (message) {
+      this.stompClient.subscribe(`/topic/auction/${auctionId}/bids`, function (message) {
         const bidUpdate = JSON.parse(message.body);
         displayBidUpdate(bidUpdate);
       });
 
-      this.stompClient.subscribe('/topic/auction/' + auctionId, function (message) {
+      this.stompClient.subscribe(`/topic/auction/${auctionId}`, function (message) {
+        console.log('Notification:', message);
         const notification = JSON.parse(message.body);
         displayNotification(notification);
       });

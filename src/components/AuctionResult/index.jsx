@@ -4,9 +4,8 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import api from '../../configs';
 import styles from './index.module.scss';
-import { method } from 'lodash';
 
-function AuctionResult({ auctionId, winnerId, amount, deadline, method }) {
+function AuctionResult({ auctionId, breederID, winnerId, amount, deadline, method }) {
   const user = useSelector((state) => state.user.user);
   const [registered, setRegistered] = useState(false);
   const navigate = useNavigate();
@@ -17,15 +16,7 @@ function AuctionResult({ auctionId, winnerId, amount, deadline, method }) {
   date.setDate(date.getDate() + 2);
 
   const payment = async () => {
-    try {
-      await api.post(`wallet/payment?auctionId=${auctionId}`, null, {
-        requiresAuth: true,
-      });
-      navigate('/auction/order?id=' + auctionId);
-    } catch (error) {
-      message.error('Lỗi khi thanh toán! Vui lòng thử lại sau.');
-      console.error('Payment Error:', error?.response ? error.response.data : error.message);
-    }
+    navigate('/auction/order?id=' + auctionId);
   };
 
   useEffect(() => {
@@ -47,6 +38,22 @@ function AuctionResult({ auctionId, winnerId, amount, deadline, method }) {
       checkRegistered();
     }
   }, [user, auctionId]);
+
+  if (breederID === user?.userId)
+    return (
+      <Card
+        title={<span className={styles.cardTitle}>Thông tin người thắng đấu giá</span>}
+        bordered={false}
+        className={styles.cardContainer}
+      >
+        <p>
+          <strong>Tên người dùng:</strong>
+        </p>
+        <p>
+          <strong>Họ và tên:</strong>
+        </p>
+      </Card>
+    );
 
   if (!user && !registered && !amount) return <></>;
   if (!user) {
@@ -85,6 +92,7 @@ function AuctionResult({ auctionId, winnerId, amount, deadline, method }) {
       </Card>
     );
   }
+
   return (
     <Card
       title={<span className={styles.cardTitle}>Kết quả cuộc đấu giá</span>}

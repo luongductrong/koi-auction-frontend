@@ -60,9 +60,9 @@ function AccountSider() {
             {/* <Menu.Item key="/account-center/schedule" icon={<ScheduleOutlined />} className={styles.menuItem}>
               <Link to="schedule">Quản lý lịch</Link>
             </Menu.Item> */}
-            {/* <Menu.Item key="/account-center/order" icon={<ShoppingCartOutlined />} className={styles.menuItem}>
+            <Menu.Item key="/account-center/order" icon={<ShoppingCartOutlined />} className={styles.menuItem}>
               <Link to="order">Quản lý đơn hàng</Link>
-            </Menu.Item> */}
+            </Menu.Item>
             {user && user?.role?.toLowerCase() === 'breeder' && (
               <>
                 <Menu.Item key="/account-center/auction" icon={<UserOutlined />} className={styles.menuItem}>

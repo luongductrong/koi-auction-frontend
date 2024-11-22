@@ -49,12 +49,14 @@ function BidPage() {
       }
     };
 
+    const displayNotification = (notification) => {
+      console.error('New notification:', notification);
+      message.info('Đấu giá đã kết thúc!');
+      closeAuction(notification?.winderId);
+    };
+
     if (auctionId && auctionDetails && auctionDetails?.status === 'Ongoing') {
-      WebSocketService.connect(auctionId, displayBidUpdate, (notification) => {
-        console.log('New notification:', notification);
-        message.info('Đấu giá đã kết thúc!');
-        closeAuction(notification?.winderId);
-      });
+      WebSocketService.connect(auctionId, displayBidUpdate, displayNotification);
     }
     return () => {
       WebSocketService.disconnect();
@@ -198,7 +200,7 @@ function BidPage() {
             </Col>
           </Row>
           <Row gutter={16}>
-            <Col span={12}>
+            <Col md={12} sm={24}>
               <CountdownTimer
                 startTime={auctionDetails?.startTime}
                 endTime={auctionDetails?.endTime}
@@ -207,16 +209,17 @@ function BidPage() {
                   setAuctionDetails({ ...auctionDetails, status });
                 }}
               />
-              {(auctionDetails?.status === 'Finished' || auctionDetails?.status === 'Closed') && (
+              {['Finished', 'Closed', 'Paid'].includes(auctionDetails?.status) && (
                 <AuctionResult
                   auctionId={auctionId}
+                  breederID={auctionDetails?.breederID}
                   winnerId={winnerId || auctionDetails?.winnerID}
                   method={auctionDetails?.auctionMethod}
                   amount={currentPrice ? currentPrice - auctionDetails?.bidderDeposit : null}
                   deadline={auctionDetails?.endTime}
                 />
               )}
-              <Carousel dots autoplay draggable>
+              <Carousel dots autoplay draggable className={styles.carousel}>
                 {koiMedias.map(
                   (media, index) =>
                     media.mediaType === 'Image Detail' && (
@@ -240,8 +243,13 @@ function BidPage() {
                 />
               )}
             </Col>
-            <Col span={12}>
-              <Card title={'Thông tin của cuộc đấu giá'} bordered={false} style={{ border: '1px solid #ddd' }}>
+            <Col md={12} sm={24}>
+              <Card
+                title={'Thông tin của cuộc đấu giá'}
+                bordered={false}
+                style={{ border: '1px solid #ddd' }}
+                className={styles.infoCard}
+              >
                 <div className={styles.detailsBox}>
                   {auctionDetails?.auctionMethod !== 'Fixed-price' && (
                     <>
