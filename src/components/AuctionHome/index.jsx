@@ -75,8 +75,21 @@ function AuctionList({ auctions, type = 'scheduled', loading }) {
               }
             >
               <Title level={5} className={styles.auctionId}>
-                {`${t('component.home_auction.auction_number')} ${auction.auctionId}`}
+                {`Đấu giá ${auction?.koiInfoList?.map((koi) => koi.koiName).join(', ')}`}
               </Title>
+              <Text type="secondary">
+                Phương thức:{' '}
+                <Text strong>
+                  {auction?.method === 'Ascending'
+                    ? 'Trả giá lên'
+                    : auction?.method === 'Descending'
+                    ? 'Đặt giá xuống'
+                    : auction?.method === 'Fixed-price'
+                    ? 'Bán giá xác định'
+                    : 'Trả giá một lần'}
+                </Text>
+                <br />
+              </Text>
               {auction?.method !== 'Fixed-price' && (
                 <Text type="secondary">
                   {t('component.home_auction.starting_price')}{' '}
