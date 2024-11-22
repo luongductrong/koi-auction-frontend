@@ -13,6 +13,7 @@ function Order() {
   const [loading, setLoading] = useState(true);
   const [btnLoading, setBtnLoading] = useState(false);
   const [orders, setOrders] = useState([]);
+  const [fetch, setFetch] = useState(false);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -30,7 +31,7 @@ function Order() {
     if (user) {
       fetchOrders();
     }
-  }, [user]);
+  }, [user, fetch]);
 
   const columns = [
     {
@@ -111,12 +112,7 @@ function Order() {
       );
       if (response) {
         message.success('Đã hoàn thành đơn hàng!');
-        setOrders((prevOrders) => [
-          ...prevOrders.filter((o) => o.orderId !== order.orderId),
-          (prevOrders.filter((o) => o.orderId === order.orderId)[0].status === user?.userId) === order?.bidderId
-            ? 'Done'
-            : 'Shipping',
-        ]);
+        setFetch(!fetch);
       }
     } catch (error) {
       console.error('Failed to mark order as done:', error);
