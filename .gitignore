@@ -27,5 +27,8 @@ dist-ssr
 .env
 .env.*
 
+# Allow .env.example
+!.env.example
+
 src/*html
 index2.jsx
