@@ -1,9 +1,6 @@
-import React from 'react';
-import { Layout, Card, Button, Segmented } from 'antd';
+import { Card, Button, Segmented } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import styles from './schedule.module.scss';
-
-const { Header, Content } = Layout;
 
 function Schedule() {
   return (

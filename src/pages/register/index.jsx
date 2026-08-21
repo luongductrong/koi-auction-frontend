@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { Button, Form, App, Steps, Input, Checkbox } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import debounce from 'lodash/debounce';
-import api from '../../configs';
+import api from '@/configs';
 import styles from './index.module.scss';
 
 const { Step } = Steps;
@@ -57,7 +57,7 @@ function Register() {
       if (requestId === useLatestRequestId.current) {
         onSuccess();
       }
-    } catch (error) {
+    } catch {
       if (requestId === useLatestRequestId.current) {
         onError();
       }

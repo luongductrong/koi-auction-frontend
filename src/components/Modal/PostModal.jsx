@@ -1,4 +1,3 @@
-import React from 'react';
 import { Input, Upload, Modal } from 'antd';
 import { VerticalAlignTopOutlined } from '@ant-design/icons';
 

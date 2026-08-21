@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { App, Form, Input, Button, Flex, ConfigProvider } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import api from '../../configs';
+import api from '@/configs';
 import styles from './index.module.scss';
 import clsx from 'clsx';
 

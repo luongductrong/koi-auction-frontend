@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Layout, Input, Button, ConfigProvider, Dropdown } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
@@ -7,8 +6,8 @@ import { useSelector } from 'react-redux';
 import { useNetworkStatus } from 'hook';
 import styles from './index.module.scss';
 
-import Logo from '../Logo';
-import Menu from '../Menu';
+import Logo from '@/components/Logo';
+import Menu from '@/components/Menu';
 
 const { Header: AntHeader } = Layout;
 

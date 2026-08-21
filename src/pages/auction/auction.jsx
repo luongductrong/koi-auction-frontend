@@ -5,8 +5,8 @@ import { Layout, Pagination, Input, DatePicker, Checkbox, Button, Card } from 'a
 import { Row, Col, Empty, Select, Spin } from 'antd';
 import { AppstoreOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import moment from 'moment';
-import Cover from '../../components/AuctionCover';
-import api from '../../configs';
+import Cover from '@/components/AuctionCover';
+import api from '@/configs';
 import styles from './index.module.scss';
 import Meta from 'antd/es/card/Meta';
 

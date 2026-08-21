@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, Button, Form, Input, message } from 'antd';
+import { Modal, Button, Form, Input } from 'antd';
 
 const InputModal = ({
   inputType = 'text',

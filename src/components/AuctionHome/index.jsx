@@ -1,4 +1,3 @@
-import React from 'react';
 import { Row, Col, Card, Button, Typography, Space, Statistic, App, Image, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -83,10 +82,10 @@ function AuctionList({ auctions, type = 'scheduled', loading }) {
                   {auction?.method === 'Ascending'
                     ? 'Trả giá lên'
                     : auction?.method === 'Descending'
-                    ? 'Đặt giá xuống'
-                    : auction?.method === 'Fixed-price'
-                    ? 'Bán giá xác định'
-                    : 'Trả giá một lần'}
+                      ? 'Đặt giá xuống'
+                      : auction?.method === 'Fixed-price'
+                        ? 'Bán giá xác định'
+                        : 'Trả giá một lần'}
                 </Text>
                 <br />
               </Text>

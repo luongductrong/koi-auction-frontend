@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 import { ConfigProvider, Layout } from 'antd';
-import AntSider from '../../components/AccountSider';
-import NotFound from '../not-found';
+import AntSider from '@/components/AccountSider';
+import NotFound from '@/pages/not-found';
 import Profile from './profile';
 import Wallet from './wallet';
 import Schedule from './schedule';
 import Order from './order';
 import AuctionManage from './auction-manage';
 import KoiManage from './koi-manage';
-import PrivateRoute from '../../components/PrivateRoute';
+import PrivateRoute from '@/components/PrivateRoute';
 import styles from './index.module.scss';
 
 const { Content: AntContent } = Layout;

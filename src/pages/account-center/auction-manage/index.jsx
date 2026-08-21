@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Table, Button, App, Pagination } from 'antd';
-import api from '../../../configs';
-import useAuth from '../../../hook/useAuth';
-import AuctionForm from '../../../components/AuctionForm';
+import api from '@/configs';
+import useAuth from '@/hook/useAuth';
+import AuctionForm from '@/components/AuctionForm';
 import styles from './auction.module.scss';
 
 const AuctionManage = () => {

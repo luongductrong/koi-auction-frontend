@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { clearUser } from '../redux/userSlice';
+import { clearUser } from '@/redux/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { App } from 'antd';
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { InputNumber, Button, Modal, App } from 'antd';
-import api from '../../configs';
+import api from '@/configs';
 
 const style = { width: '100%', marginTop: '10px', fontWeight: '500' };
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FloatButton, Popover, Avatar, Form, Input, List, Button, Flex, ConfigProvider } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
-import Comment from '../../components/Comment';
+import Comment from '@/components/Comment';
 import { MessageOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
 

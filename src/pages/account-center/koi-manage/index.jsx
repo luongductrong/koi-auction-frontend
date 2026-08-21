@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Table, Button, Image, App, Pagination } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import api from '../../../configs';
-import KoiForm from '../../../components/KoiForm';
+import api from '@/configs';
+import KoiForm from '@/components/KoiForm';
 import styles from './koi.module.scss';
 import defaultImage from '../../../assets/images/400x400.svg';
 

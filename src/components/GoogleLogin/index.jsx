@@ -3,9 +3,9 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { useTranslation } from 'react-i18next';
 import { Button, App } from 'antd';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../redux/userSlice';
+import { setUser } from '@/redux/userSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
-import api from '../../configs';
+import api from '@/configs';
 import googleIcon from '../../assets/images/google.svg';
 
 const btnStyle = { width: '100%', height: '40px' };

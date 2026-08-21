@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Layout, Flex, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import ChatFloatButton from '../ChatFloatButton';
+import ChatFloatButton from '@/components/ChatFloatButton';
 import i18n from 'i18next';
 import styles from './index.module.scss';
 

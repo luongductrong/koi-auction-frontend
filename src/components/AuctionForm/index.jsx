@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Drawer, Form, Input, Select, Button, DatePicker, App, InputNumber, Modal } from 'antd';
 import moment from 'moment';
 import 'moment/locale/vi';
-import api from '../../configs';
-import useAuth from '../../hook/useAuth';
+import api from '@/configs';
+import useAuth from '@/hook/useAuth';
 import { handleFormVisibleConfig } from './formConfig';
 
 const { Option } = Select;

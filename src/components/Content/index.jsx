@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Layout } from 'antd';
-import Breadcrumb from '../Breadcrumb';
-import BackToTopButton from '../BackToTop';
+import Breadcrumb from '@/components/Breadcrumb';
+import BackToTopButton from '@/components/BackToTop';
 import styles from './index.module.scss';
 
 const { Content: AntContent } = Layout;

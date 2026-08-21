@@ -1,4 +1,3 @@
-import React from 'react';
 import { Tag, Flex, Image } from 'antd';
 import moment from 'moment';
 import fallback from '../../assets/images/auction-image-df.jpg';

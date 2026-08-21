@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { Flex, Space, Typography, Avatar, ConfigProvider, message } from 'antd';
 import { Form, Input, Button, Select, DatePicker } from 'antd';
 import { UserOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import useAuth from '../../../hook/useAuth';
+import useAuth from '@/hook/useAuth';
 import moment from 'moment';
-import api, { provinceApi } from '../../../configs';
-import PasswordChangeDrawer from '../../../components/PasswordChangeDrawer';
+import api, { provinceApi } from '@/configs';
+import PasswordChangeDrawer from '@/components/PasswordChangeDrawer';
 import styles from './profile.module.scss';
 
 const { Title } = Typography;
@@ -53,7 +53,7 @@ function Profile() {
 
       try {
         decodeAddress = JSON.parse(profile.address ? profile.address : '{}');
-      } catch (error) {
+      } catch (_error) {
         decodeAddress = { address: profile.address };
       }
 

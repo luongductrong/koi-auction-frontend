@@ -4,9 +4,9 @@ import { Button, Form, Input, Checkbox, App } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { setUser, clearUser } from '../../redux/userSlice';
-import GoogleLogin from '../../components/GoogleLogin';
-import api from '../../configs';
+import { setUser, clearUser } from '@/redux/userSlice';
+import GoogleLogin from '@/components/GoogleLogin';
+import api from '@/configs';
 import styles from './index.module.scss';
 
 function Login() {

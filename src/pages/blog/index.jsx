@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Input, Avatar, Carousel } from 'antd';
-import UserPopover from '../../components/Popover/UserPopover';
-import PostModal from '../../components/Modal/PostModal';
+import UserPopover from '@/components/Popover/UserPopover';
+import PostModal from '@/components/Modal/PostModal';
 import styles from './index.module.scss';
 
 const Blog = () => {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Drawer, Form, Input, Button, App } from 'antd';
 import { LockOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import api from '../../configs';
+import api from '@/configs';
 
 function PasswordChangeDrawer({ open = false, onClose = () => {} }) {
   const { message } = App.useApp();

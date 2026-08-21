@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Introduction from '../../components/Introduction';
-import AuctionHome from '../../components/AuctionHome';
-import Partner from '../../components/Partner';
-import ViewAllButton from '../../components/ViewAllButton';
-import api from '../../configs';
+import Introduction from '@/components/Introduction';
+import AuctionHome from '@/components/AuctionHome';
+import Partner from '@/components/Partner';
+import ViewAllButton from '@/components/ViewAllButton';
+import api from '@/configs';
 
 function Home() {
   const [scheduledAuctions, setScheduledAuctions] = useState([]);

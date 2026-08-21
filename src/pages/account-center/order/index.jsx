@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Layout, Table, Tag, Button, Space, App } from 'antd';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import api from '../../../configs';
+import api from '@/configs';
 import styles from './order.module.scss';
 
 const { Content } = Layout;

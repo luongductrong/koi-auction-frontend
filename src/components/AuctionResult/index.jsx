@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button, Card, message } from 'antd';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import api from '../../configs';
+import api from '@/configs';
 import styles from './index.module.scss';
 
 function AuctionResult({ auctionId, breederID, winnerId, amount, deadline, method }) {

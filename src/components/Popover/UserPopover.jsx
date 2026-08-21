@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Popover, Spin, Avatar, Button } from 'antd';
 import { StarFilled } from '@ant-design/icons';
-import api from '../../configs';
+import api from '@/configs';
 import styles from './index.module.scss';
 
 const UserPopover = ({ userId, children }) => {

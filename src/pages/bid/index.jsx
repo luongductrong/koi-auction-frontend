@@ -3,14 +3,14 @@ import { Row, Col, List, Tooltip, Card, Collapse } from 'antd';
 import { Spin, Carousel, Image, Flex, Empty, App, Divider } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import WebSocketService from '../../services/WebSocketService';
-import AuctionResult from '../../components/AuctionResult';
-import CountdownTimer from '../../components/CountdownTimer';
-import BidGroup from '../../components/BidGroup';
-import api from '../../configs';
+import WebSocketService from '@/services/WebSocketService';
+import AuctionResult from '@/components/AuctionResult';
+import CountdownTimer from '@/components/CountdownTimer';
+import BidGroup from '@/components/BidGroup';
+import api from '@/configs';
 import moment from 'moment';
 import 'moment/locale/vi';
-import { fromNow } from '../../utils/momentCustom';
+import { fromNow } from '@/utils/momentCustom';
 import styles from './index.module.scss';
 
 function BidPage() {

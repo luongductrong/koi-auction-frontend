@@ -1,4 +1,3 @@
-import React from 'react';
 import { Breadcrumb as AntBreadcrumb, ConfigProvider } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';

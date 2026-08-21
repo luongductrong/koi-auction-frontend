@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Carousel, Row, Col, Avatar, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
-import api from '../../configs';
+import api from '@/configs';
 import styles from './index.module.scss';
 import fallback from '../../assets/images/favicon.png';
 

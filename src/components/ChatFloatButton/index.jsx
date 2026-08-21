@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { FloatButton, Drawer, List, Avatar, Input, Button, Empty, App, Divider, Spin } from 'antd';
-import WebSocketService from '../../services/WebSocketService';
+import WebSocketService from '@/services/WebSocketService';
 import { MessageOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import api from '../../configs';
+import api from '@/configs';
 
 function ChatFloatButton() {
   const user = useSelector((state) => state.user);

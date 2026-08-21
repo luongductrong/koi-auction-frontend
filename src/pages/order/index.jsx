@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Button, Form, Input, Typography, Space, Row, Col, Select, App, Spin } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hook';
+import { useAuth } from '@/hook';
 import { ShoppingCartOutlined } from '@ant-design/icons';
-import api, { provinceApi } from '../../configs';
+import api, { provinceApi } from '@/configs';
 import styles from './index.module.scss';
-import shipping from '../../assets/images/arriving-soon-delivery.gif';
+import shipping from '@/assets/images/arriving-soon-delivery.gif';
 
 const { Title, Text } = Typography;
 

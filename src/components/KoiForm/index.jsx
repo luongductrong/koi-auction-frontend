@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Drawer, Form, Input, Select, Button, DatePicker, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import api from '../../configs';
+import api from '@/configs';
 import moment from 'moment';
 
 const { Option } = Select;
