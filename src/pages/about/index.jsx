@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Typography, Layout, Space, Card, Row, Col, List } from 'antd';
 import { TeamOutlined, SafetyOutlined, TrophyOutlined, GlobalOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';

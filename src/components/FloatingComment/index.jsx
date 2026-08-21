@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FloatButton, Popover, Avatar, Form, Input, List, Button, Flex, ConfigProvider } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import Comment from '../../components/Comment';

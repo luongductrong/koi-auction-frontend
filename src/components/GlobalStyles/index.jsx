@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { ConfigProvider, theme } from 'antd';
 import viVN from 'antd/es/locale/vi_VN';
@@ -17,12 +17,12 @@ function GlobalStyles({ children }) {
       storedLocale === 'vi-VN' || storedLocale === 'vi'
         ? viVN
         : storedLocale === 'th-TH' || storedLocale === 'th'
-        ? thTH
-        : storedLocale === 'ja-JP' || storedLocale === 'ja'
-        ? jaJP
-        : storedLocale === 'zh-CN' || storedLocale === 'zh'
-        ? zhCN
-        : enUS,
+          ? thTH
+          : storedLocale === 'ja-JP' || storedLocale === 'ja'
+            ? jaJP
+            : storedLocale === 'zh-CN' || storedLocale === 'zh'
+              ? zhCN
+              : enUS,
     );
   }, []);
 

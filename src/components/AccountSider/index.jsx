@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Layout, Menu, ConfigProvider } from 'antd';
-import { UserOutlined, CreditCardOutlined, ScheduleOutlined } from '@ant-design/icons';
+import { UserOutlined, CreditCardOutlined } from '@ant-design/icons';
 import { ShoppingCartOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';

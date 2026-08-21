@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Table, Button, App, Pagination } from 'antd';
 import api from '../../../configs';
 import useAuth from '../../../hook/useAuth';
@@ -116,12 +116,12 @@ const AuctionManage = () => {
         method === 'Ascending'
           ? 'Trả giá lên'
           : method === 'Descending'
-          ? 'Bỏ giá xuống'
-          : method === 'Fixed-price'
-          ? 'Giá cố định'
-          : method === 'First-come'
-          ? 'Trả giá một lần'
-          : method,
+            ? 'Bỏ giá xuống'
+            : method === 'Fixed-price'
+              ? 'Giá cố định'
+              : method === 'First-come'
+                ? 'Trả giá một lần'
+                : method,
     },
     {
       title: 'Số lượng cá',
@@ -137,22 +137,22 @@ const AuctionManage = () => {
         status === 'Ongoing'
           ? 'Đang diễn ra'
           : status === 'Closed'
-          ? 'Đã kết thúc'
-          : status === 'Pending'
-          ? 'Đang kiểm duyệt'
-          : status === 'Scheduled'
-          ? 'Sắp diễn ra'
-          : status === 'Reject' // Rejected
-          ? 'Bị từ chối'
-          : status === 'Canceled'
-          ? 'Đã hủy'
-          : status === 'Failed'
-          ? 'Thất bại'
-          : status === 'Paid'
-          ? 'Đã thanh toán'
-          : status === 'Finished'
-          ? 'Thành công'
-          : status,
+            ? 'Đã kết thúc'
+            : status === 'Pending'
+              ? 'Đang kiểm duyệt'
+              : status === 'Scheduled'
+                ? 'Sắp diễn ra'
+                : status === 'Reject' // Rejected
+                  ? 'Bị từ chối'
+                  : status === 'Canceled'
+                    ? 'Đã hủy'
+                    : status === 'Failed'
+                      ? 'Thất bại'
+                      : status === 'Paid'
+                        ? 'Đã thanh toán'
+                        : status === 'Finished'
+                          ? 'Thành công'
+                          : status,
     },
     {
       title: 'Hành động',

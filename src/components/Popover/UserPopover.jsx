@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Popover, Spin, Avatar, Button } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import api from '../../configs';

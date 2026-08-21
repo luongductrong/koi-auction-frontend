@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Table, Button, Image, App, Pagination } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../configs';

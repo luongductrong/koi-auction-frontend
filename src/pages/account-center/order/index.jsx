@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Layout, Table, Tag, Button, Space, App, Spin } from 'antd';
+import { useEffect, useState } from 'react';
+import { Layout, Table, Tag, Button, Space, App } from 'antd';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import api from '../../../configs';
@@ -50,12 +50,12 @@ function Order() {
             {status === 'Pending'
               ? 'Đang chuẩn bị'
               : status === 'Shipping'
-              ? 'Đang giao'
-              : status === 'Done'
-              ? 'Hoàn thành'
-              : status === 'Dispute'
-              ? 'Tranh chấp'
-              : status}
+                ? 'Đang giao'
+                : status === 'Done'
+                  ? 'Hoàn thành'
+                  : status === 'Dispute'
+                    ? 'Tranh chấp'
+                    : status}
           </Tag>
         );
       },

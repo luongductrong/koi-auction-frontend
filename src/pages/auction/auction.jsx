@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Layout, Pagination, Input, DatePicker, Checkbox, Button, Card } from 'antd';
-import { Row, Col, Empty, Avatar, Select, Spin } from 'antd';
-import { UserOutlined, AppstoreOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { Row, Col, Empty, Select, Spin } from 'antd';
+import { AppstoreOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import Cover from '../../components/AuctionCover';
 import api from '../../configs';
@@ -339,10 +339,10 @@ function Auction() {
                                 {auction.status === 'Scheduled'
                                   ? t('page.auction.main.auction_card.status_scheduled')
                                   : auction.status === 'Ongoing'
-                                  ? t('page.auction.main.auction_card.status_ongoing')
-                                  : auction.status === 'Closed'
-                                  ? t('page.auction.main.auction_card.status_closed')
-                                  : t('page.auction.main.auction_card.status_unknown')}
+                                    ? t('page.auction.main.auction_card.status_ongoing')
+                                    : auction.status === 'Closed'
+                                      ? t('page.auction.main.auction_card.status_closed')
+                                      : t('page.auction.main.auction_card.status_unknown')}
                               </p>
                             )}
                             <p>
@@ -352,12 +352,12 @@ function Auction() {
                                   auction?.method === 'Ascending'
                                     ? 'Trả giá lên'
                                     : auction?.method === 'Descending'
-                                    ? 'Đặt giá xuống'
-                                    : auction?.method === 'Fixed-price'
-                                    ? 'Giá cố định'
-                                    : auction?.method === 'First-come'
-                                    ? 'Trả giá một lần'
-                                    : 'Không xác định'
+                                      ? 'Đặt giá xuống'
+                                      : auction?.method === 'Fixed-price'
+                                        ? 'Giá cố định'
+                                        : auction?.method === 'First-come'
+                                          ? 'Trả giá một lần'
+                                          : 'Không xác định'
                                 }`}{' '}
                               </span>
                             </p>

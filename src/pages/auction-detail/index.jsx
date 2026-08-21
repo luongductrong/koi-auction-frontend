@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Row, Col, Carousel, Image, Button, Modal } from 'antd';
 import { App, Collapse, Card, Spin, Empty, Tag, Divider } from 'antd';
 import { PlayCircleFilled } from '@ant-design/icons';
@@ -310,12 +310,12 @@ function AuctionPage() {
                     {auctionDetails?.auctionMethod === 'Ascending'
                       ? 'Trả giá lên'
                       : auctionDetails?.auctionMethod === 'Descending'
-                      ? 'Đặt giá xuống'
-                      : auctionDetails?.auctionMethod === 'Fixed-price'
-                      ? 'Giá cố định'
-                      : auctionDetails?.auctionMethod === 'First-come'
-                      ? 'Trả giá một lần'
-                      : 'Không xác định'}
+                        ? 'Đặt giá xuống'
+                        : auctionDetails?.auctionMethod === 'Fixed-price'
+                          ? 'Giá cố định'
+                          : auctionDetails?.auctionMethod === 'First-come'
+                            ? 'Trả giá một lần'
+                            : 'Không xác định'}
                   </p>
 
                   <strong className={styles.keyTitle}>Thời gian bắt đầu:</strong>
@@ -357,10 +357,10 @@ function AuctionPage() {
                     {auctionDetails?.status === 'Ongoing'
                       ? 'Đang diễn ra'
                       : ['Scheduled', 'Pending'].includes(auctionDetails?.status)
-                      ? 'Sắp diễn ra'
-                      : ['Closed', 'Finished', 'Paid', 'Failed'].includes(auctionDetails?.status)
-                      ? 'Đã kết thúc'
-                      : 'Không xác định'}
+                        ? 'Sắp diễn ra'
+                        : ['Closed', 'Finished', 'Paid', 'Failed'].includes(auctionDetails?.status)
+                          ? 'Đã kết thúc'
+                          : 'Không xác định'}
                   </p>
                 </div>
 

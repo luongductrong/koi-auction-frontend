@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Carousel, Row, Col, Avatar, Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 import api from '../../configs';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Modal, Button, Typography, Checkbox, Form, App } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import api from '../../configs';

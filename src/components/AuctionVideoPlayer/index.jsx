@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 const AuctionVideoPlayer = ({ src, open, onClose }) => {
   const videoRef = useRef(null);

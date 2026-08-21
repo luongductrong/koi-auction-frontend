@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Typography, Layout, Row, Col, Card, Space } from 'antd';
 import { MailOutlined, PhoneOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { FacebookOutlined, InstagramOutlined } from '@ant-design/icons';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Row, Col, List, Tooltip, Card, Collapse } from 'antd';
 import { Spin, Carousel, Image, Flex, Empty, App, Divider } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -283,12 +283,12 @@ function BidPage() {
                     {auctionDetails?.auctionMethod === 'Ascending'
                       ? 'Trả giá lên'
                       : auctionDetails?.auctionMethod === 'Descending'
-                      ? 'Đặt giá xuống'
-                      : auctionDetails?.auctionMethod === 'Fixed-price'
-                      ? 'Giá cố định'
-                      : auctionDetails?.auctionMethod === 'First-come'
-                      ? 'Trả giá một lần'
-                      : 'Không xác định'}
+                        ? 'Đặt giá xuống'
+                        : auctionDetails?.auctionMethod === 'Fixed-price'
+                          ? 'Giá cố định'
+                          : auctionDetails?.auctionMethod === 'First-come'
+                            ? 'Trả giá một lần'
+                            : 'Không xác định'}
                   </p>
                 </div>
                 <Flex vertical>
@@ -299,8 +299,8 @@ function BidPage() {
                         {auctionDetails?.status === 'Scheduled'
                           ? 'Giá khởi điểm'
                           : auctionDetails?.status === 'Ongoing'
-                          ? 'Mức giá hiện tại'
-                          : 'Mức giá cuối cùng'}
+                            ? 'Mức giá hiện tại'
+                            : 'Mức giá cuối cùng'}
                       </strong>
                       <p className={styles.currentPriceValue}>
                         {currentPrice.toLocaleString()} <span style={{ fontSize: '14px' }}>VND</span>

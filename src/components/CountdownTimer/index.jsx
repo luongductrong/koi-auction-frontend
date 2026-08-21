@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Typography, Divider } from 'antd';
 import dayjs from 'dayjs';
 import styles from './index.module.scss';

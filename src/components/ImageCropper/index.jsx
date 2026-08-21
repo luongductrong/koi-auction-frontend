@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
 import { Button, Upload, Card, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';

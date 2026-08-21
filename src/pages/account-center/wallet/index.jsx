@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Layout, Card, Button, Table, App, Spin } from 'antd';
+import { Layout, Card, Table, App, Spin } from 'antd';
 import { DollarOutlined } from '@ant-design/icons';
 import { InputModal } from '../../../components/Modal';
 import api from '../../../configs';
@@ -148,14 +148,14 @@ function Wallet() {
         text === 'Top-up'
           ? 'Nạp tiền'
           : text === 'Withdraw'
-          ? 'Rút tiền'
-          : text === 'Payment'
-          ? 'Thanh toán'
-          : text === 'Deposit'
-          ? 'Cọc tiền'
-          : text === 'Refund'
-          ? 'Hoàn cọc'
-          : text,
+            ? 'Rút tiền'
+            : text === 'Payment'
+              ? 'Thanh toán'
+              : text === 'Deposit'
+                ? 'Cọc tiền'
+                : text === 'Refund'
+                  ? 'Hoàn cọc'
+                  : text,
     },
     {
       title: 'ID đấu giá',

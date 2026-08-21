@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input, Avatar, Carousel } from 'antd';
 import UserPopover from '../../components/Popover/UserPopover';
 import PostModal from '../../components/Modal/PostModal';
