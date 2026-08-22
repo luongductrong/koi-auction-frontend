@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getMockApi } from './mock-api';
 
 const baseURL = import.meta.env.VITE_API_URL || '';
 const provinceURL = import.meta.env.VITE_PROVINCE_API_URL || '';
@@ -32,11 +33,15 @@ const requestInterceptors = (store) => {
       } else if (config.requiresAuth) {
         console.error('Token not available!');
       }
+
+      const mockApiPath = getMockApi(config.url);
+      if (mockApiPath) {
+        config.url = mockApiPath;
+      }
+
       return config;
     },
-    (error) => {
-      return Promise.reject(error);
-    },
+    (error) => Promise.reject(error),
   );
 };
 
@@ -58,24 +63,3 @@ api.interceptors.response.use(
 
 export { requestInterceptors, provinceApi };
 export default api;
-
-// api.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   (error) => {
-//     if (error.response && error.response.status === 401) {
-
-//       if (error.config.url.includes('/login')) {
-//         console.error('Sai mật khẩu!');
-//         /////........................
-//       } else {
-//         console.error('Unauthorized! Redirecting to login...');
-//         if (error.config.onUnauthorizedCallback) {
-//           error.config.onUnauthorizedCallback();
-//         }
-//       }
-//     }
-//     return Promise.reject(error);
-//   },
-// );

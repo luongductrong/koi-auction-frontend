@@ -1,0 +1,32 @@
+[
+  {
+    "userId": 1,
+    "fullName": "Dainichi Koi Farm",
+    "auctionCount": 15
+  },
+  {
+    "userId": 2,
+    "fullName": "Sakai Fish Farm",
+    "auctionCount": 23
+  },
+  {
+    "userId": 3,
+    "fullName": "Momotaro Koi Farm",
+    "auctionCount": 8
+  },
+  {
+    "userId": 4,
+    "fullName": "Omosako Koi Farm",
+    "auctionCount": 5
+  },
+  {
+    "userId": 5,
+    "fullName": "Isa Koi Farm",
+    "auctionCount": 12
+  },
+  {
+    "userId": 6,
+    "fullName": "Marudo Koi Farm",
+    "auctionCount": 10
+  }
+]

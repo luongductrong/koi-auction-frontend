@@ -1,0 +1,64 @@
+{
+  "auctions": [
+    {
+      "auctionId": 1,
+      "startTime": "2028-01-01T10:00:00Z",
+      "endTime": 1861833600000,
+      "method": "Ascending",
+      "startPrice": 1500000,
+      "buyoutPrice": 5000000,
+      "status": "scheduled",
+      "koiInfoList": [
+        {
+          "koiName": "Kohaku size 40cm",
+          "headerImageUrl": ""
+        }
+      ]
+    },
+    {
+      "auctionId": 2,
+      "startTime": "2028-01-05T09:00:00Z",
+      "endTime": 1861920000000,
+      "method": "Descending",
+      "startPrice": 8000000,
+      "buyoutPrice": 8000000,
+      "status": "scheduled",
+      "koiInfoList": [
+        {
+          "koiName": "Showa Sanshoku",
+          "headerImageUrl": ""
+        }
+      ]
+    },
+    {
+      "auctionId": 3,
+      "startTime": "2024-08-20T10:00:00Z",
+      "endTime": 1862006400000,
+      "method": "Ascending",
+      "startPrice": 1200000,
+      "buyoutPrice": 4500000,
+      "status": "ongoing",
+      "koiInfoList": [
+        {
+          "koiName": "Asagi",
+          "headerImageUrl": ""
+        }
+      ]
+    },
+    {
+      "auctionId": 4,
+      "startTime": "2024-08-21T09:00:00Z",
+      "endTime": 1862092800000,
+      "method": "Descending",
+      "startPrice": 10000000,
+      "buyoutPrice": 10000000,
+      "status": "ongoing",
+      "koiInfoList": [
+        {
+          "koiName": "Bekko",
+          "headerImageUrl": ""
+        }
+      ]
+    }
+  ]
+}
