@@ -22,8 +22,16 @@ export function getMockApi(url) {
   if (url.startsWith('/forgot-password/verifyAndChangePassword')) {
     return `${baseUrl}forgot-change.json`;
   }
-  if (url.startsWith('/auction/filter') && url.includes('size=4')) {
+  if (url.startsWith('/auction/filter')) { // && url.includes('size=4')
     return `${baseUrl}auctions-home.json`;
+  } else if (url.startsWith('/auction/')) {
+    return `${baseUrl}auction-detail.json`;
+  }
+  if (url.startsWith('/auction/user/check-participant-for-auction')) {
+    return `${baseUrl}auction-participant.json`;
+  }
+  if (url.startsWith('/bid/get-all')) {
+    return `${baseUrl}bid.json`;
   }
   if (url.startsWith('/breeder/user')) {
     return `${baseUrl}breeder-home.json`;

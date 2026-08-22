@@ -45,7 +45,7 @@ function AuctionPage() {
         const [auctionResponse, registerResponse] = await Promise.allSettled([
           api.get(`/auction/${auctionId}`),
           user
-            ? api.get(`auction/user/check-participant-for-auction?auctionId=${auctionId}`, {
+            ? api.get(`/auction/user/check-participant-for-auction?auctionId=${auctionId}`, {
                 requiresAuth: true,
                 onUnauthorizedCallback: () =>
                   onUnauthorized({

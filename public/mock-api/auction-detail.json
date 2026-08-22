@@ -1,0 +1,36 @@
+{
+  "id": 101,
+  "breederAddress": "{\"province\": \"Hồ Chí Minh\", \"district\": \"Quận 1\"}",
+  "breederFullName": "Trại Koi Yamaguchi",
+  "status": "Ongoing",
+  "startTime": "2026-08-20T10:00:00Z",
+  "endTime": 1788220800000,
+  "startingPrice": 1500000,
+  "bidderDeposit": 300000,
+  "bidStep": 100000,
+  "buyoutPrice": 5000000,
+  "auctionMethod": "Ascending",
+  "koiData": [
+    {
+      "id": 201,
+      "koiName": "Kohaku Sakura",
+      "koiType": "Kohaku",
+      "country": "JP",
+      "weight": 2.5,
+      "length": 45,
+      "sex": "Female",
+      "birthday": "2024-01-15T00:00:00Z",
+      "description": "Một chú cá Kohaku tuyệt đẹp với hoa văn độc đáo, dòng dõi xuất sắc từ Nhật Bản.",
+      "koiMedia": [
+        {
+          "mediaType": "Image Detail",
+          "url": ""
+        },
+        {
+          "mediaType": "Video",
+          "url": ""
+        }
+      ]
+    }
+  ]
+}

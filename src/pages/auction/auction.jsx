@@ -258,10 +258,11 @@ function Auction() {
                       onChange={(value) => {
                         setSort(value === 'oldToNew' ? 'asc' : 'desc');
                       }}
-                    >
-                      <Option value="oldToNew">{t('page.auction.main.sort_old_to_new')}</Option>
-                      <Option value="newToOld">{t('page.auction.main.sort_new_to_old')}</Option>
-                    </Select>
+                      options={[
+                        { value: 'oldToNew', label: <span>{t('page.auction.main.sort_old_to_new')}</span> },
+                        { value: 'newToOld', label: <span>{t('page.auction.main.sort_new_to_old')}</span> },
+                      ]}
+                    />
                   </Col>
                   <Col>
                     <Button style={{ padding: '4px 8px' }}>
@@ -287,7 +288,7 @@ function Auction() {
                         />
                       }
                       actions={[
-                        <Link to={`/auction/detail?id=${auction.auctionId}`}>
+                        <Link key={auction.auctionId} to={`/auction/detail?id=${auction.auctionId}`}>
                           <Button color="primary" variant="filled" style={{ width: '80%' }}>
                             {t('page.auction.main.auction_card.detail_button')}
                           </Button>

@@ -1,0 +1,26 @@
+[
+  {
+    "bidderId": 10,
+    "fullName": "Nguyễn Văn A",
+    "amount": 1600000,
+    "bidTime": "2026-08-20T10:05:00Z"
+  },
+  {
+    "bidderId": 15,
+    "fullName": "Trần Thị B",
+    "amount": 1700000,
+    "bidTime": "2026-08-20T10:10:00Z"
+  },
+  {
+    "bidderId": 10,
+    "fullName": "Nguyễn Văn A",
+    "amount": 1800000,
+    "bidTime": "2026-08-20T10:15:00Z"
+  },
+  {
+    "bidderId": 22,
+    "fullName": "Lê Văn C",
+    "amount": 1900000,
+    "bidTime": "2026-08-20T10:20:00Z"
+  }
+]

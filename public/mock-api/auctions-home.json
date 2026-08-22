@@ -1,13 +1,16 @@
 {
+  "currentPage": 0,
+  "totalPages": 1,
+  "totalElements": 4,
   "auctions": [
     {
       "auctionId": 1,
-      "startTime": "2028-01-01T10:00:00Z",
-      "endTime": 1861833600000,
+      "startTime": "2026-09-01T10:00:00Z",
+      "endTime": 1788220800000,
       "method": "Ascending",
       "startPrice": 1500000,
       "buyoutPrice": 5000000,
-      "status": "scheduled",
+      "status": "Scheduled",
       "koiInfoList": [
         {
           "koiName": "Kohaku size 40cm",
@@ -17,12 +20,12 @@
     },
     {
       "auctionId": 2,
-      "startTime": "2028-01-05T09:00:00Z",
-      "endTime": 1861920000000,
+      "startTime": "2026-09-05T09:00:00Z",
+      "endTime": 1788566400000,
       "method": "Descending",
       "startPrice": 8000000,
       "buyoutPrice": 8000000,
-      "status": "scheduled",
+      "status": "Scheduled",
       "koiInfoList": [
         {
           "koiName": "Showa Sanshoku",
@@ -31,13 +34,13 @@
       ]
     },
     {
-      "auctionId": 3,
-      "startTime": "2024-08-20T10:00:00Z",
-      "endTime": 1862006400000,
+      "auctionId": 5,
+      "startTime": "2026-08-20T10:00:00Z",
+      "endTime": 1787184000000,
       "method": "Ascending",
       "startPrice": 1200000,
       "buyoutPrice": 4500000,
-      "status": "ongoing",
+      "status": "Ongoing",
       "koiInfoList": [
         {
           "koiName": "Asagi",
@@ -46,13 +49,13 @@
       ]
     },
     {
-      "auctionId": 4,
-      "startTime": "2024-08-21T09:00:00Z",
-      "endTime": 1862092800000,
+      "auctionId": 6,
+      "startTime": "2026-08-21T09:00:00Z",
+      "endTime": 1787270400000,
       "method": "Descending",
       "startPrice": 10000000,
       "buyoutPrice": 10000000,
-      "status": "ongoing",
+      "status": "Ongoing",
       "koiInfoList": [
         {
           "koiName": "Bekko",

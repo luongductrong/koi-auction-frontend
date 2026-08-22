@@ -24,7 +24,7 @@ function BidPage() {
   const [koiMedias, setKoiMedias] = useState([]);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [bidHistory, setBidHistory] = useState([]);
-  const [winnerId, setWinnerId] = useState(null);
+  const [winnerId, _setWinnerId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isFirstComeBided, setIsFirstComeBided] = useState(false);
 
@@ -150,6 +150,7 @@ function BidPage() {
       console.log('Current Desc Price:', currentPrice, buyoutPrice);
       return Math.max(currentPrice, buyoutPrice);
     } catch (error) {
+      const { startingPrice } = auctionDetails || {};
       console.error('Error calculating descending price:', error);
       return startingPrice; // Return starting price if error occurs
     }
