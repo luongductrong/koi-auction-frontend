@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "message": "User registered successfully",
+  "data": {
+    "userName": "mock_user",
+    "email": "mockuser@example.com"
+  }
+}

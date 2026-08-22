@@ -10,19 +10,17 @@ import api from '@/configs';
 import styles from './index.module.scss';
 
 function Login() {
-  console.log('Login render');
-
   const { message, notification } = App.useApp();
   const location = useLocation();
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [_rememberMe, setRememberMe] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(clearUser());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     document.title = t('page.login.dom_title');

@@ -1,0 +1,11 @@
+{
+  "id": 101,
+  "userName": "mock_user",
+  "fullName": "Mock User",
+  "email": "mockuser@example.com",
+  "role": "User",
+  "address": "123 Mock Street, HCM City",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.mock_token.signature_here",
+  "phone": "0123456789",
+  "avatarUrl": null
+}
