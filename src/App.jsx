@@ -20,7 +20,7 @@ function App() {
       <PersistGate loading={null} persistor={persistor}>
         <GoogleOAuthProvider clientId={clientId}>
           <GlobalStyles>
-            <BrowserRouter>
+            <BrowserRouter basename={import.meta.env.BASE_URL || '/'}>
               <AntApp>
                 <Layout style={{ minHeight: '100vh' }}>
                   <Header />
