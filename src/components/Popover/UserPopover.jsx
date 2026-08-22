@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Popover, Spin, Avatar, Button } from 'antd';
+import { Popover, Avatar, Button } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import api from '@/configs';
 import styles from './index.module.scss';
 
 const UserPopover = ({ userId, children }) => {
   const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
 
   const fetchUserData = async () => {
     if (!userData) {

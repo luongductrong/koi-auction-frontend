@@ -84,7 +84,7 @@ function Profile() {
     fetchProvinces();
   }, []);
 
-  const handleProvinceChange = (value, option) => {
+  const handleProvinceChange = (_value, option) => {
     form.setFieldsValue({
       province: option.label,
       district: null,
@@ -119,7 +119,7 @@ function Profile() {
     fetchWards();
   };
 
-  const handleWardChange = (value, option) => {
+  const handleWardChange = (_value, option) => {
     form.setFieldsValue({
       ward: option.label,
     });

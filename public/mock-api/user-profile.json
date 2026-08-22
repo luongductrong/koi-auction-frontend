@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "userName": "tester",
+  "fullName": "Demo User Nguyễn Văn A",
+  "phoneNumber": "0123456789",
+  "email": "test@example.com",
+  "role": "User",
+  "address": "{\"address\":\"123 Đường Số 1\",\"province\":\"Thành phố Hồ Chí Minh\",\"district\":\"Quận 1\",\"ward\":\"Phường Bến Nghé\"}",
+  "createAt": "2024-01-01T00:00:00Z"
+}

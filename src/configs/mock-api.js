@@ -4,6 +4,15 @@ export function getMockApi(url) {
   if (url.startsWith('/security/login')) {
     return `${baseUrl}login.json`;
   }
+  if (url.startsWith('/security/password')) {
+    return `${baseUrl}change-password.json`;
+  }
+  if (url.startsWith('/user/get-profile')) {
+    return `${baseUrl}user-profile.json`;
+  }
+  if (url.startsWith('/user/profile')) {
+    return `${baseUrl}user-profile-update.json`;
+  }
   if (url.startsWith('/security/register')) {
     return `${baseUrl}register-user.json`;
   }
